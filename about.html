@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Niki Beck</title>
+  <meta name="description" content="Senior UI/UX Designer and front-end developer based in Birmingham, AL." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-nav">
+    <div class="site-nav__inner">
+      <a href="index.html" class="site-nav__logo">Niki Beck</a>
+      <nav>
+        <ul class="site-nav__links">
+          <li><a href="index.html#work">Work</a></li>
+          <li><a href="about.html" class="active">About</a></li>
+          <li><a href="NikiBeck_Resume.pdf" target="_blank">Resume</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── Hero ── -->
+    <section class="section" style="padding-top: 64px;">
+      <div class="page-wrap">
+        <div class="hero-animate">
+          <p class="eyebrow">About</p>
+          <h1 class="display" style="margin-bottom: 20px;">Hi. I'm Niki.</h1>
+          <p class="subhead">Senior UI/UX designer who builds. Most designers stop at the handoff — I cross that line, which means my designs ship closer to what I intended.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Bio ── -->
+    <section class="section">
+      <div class="page-wrap">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;">
+          <div class="reveal">
+            <p class="body-text">I've spent 8+ years designing digital products, with a particular focus on custom B2B applications and consumer-facing websites. My background in both design and front-end development gives me a perspective most designers don't have: I understand what's technically feasible, how components get built, and where designs break in the browser.</p>
+            <p class="body-text">At Trinity Apparel, I lead all digital product design — from warehouse operations tools to client-facing apps — and work directly with engineering teams using React. Before that, at Hamburger Creative, I designed and built responsive websites solo for clients across industries.</p>
+            <p class="body-text">I'm currently open to senior UX/UI and product design roles, especially in health, wellness, or SaaS. Based in Birmingham, AL — open to remote.</p>
+            <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-top: 28px;">
+              <a href="NikiBeck_Resume.pdf" target="_blank" class="btn btn--primary">Download resume</a>
+              <a href="mailto:niki@wearehamburger.com" class="btn btn--ghost">Get in touch →</a>
+            </div>
+          </div>
+          <div class="reveal reveal-delay-1">
+            <!-- REPLACE: swap this placeholder for a real photo -->
+            <div class="img-slot" style="height: 500px; border-radius: 12px;">
+              <span class="img-slot__sub">Your headshot here</span>
+              <img src="./assets/nbeckheadshot.JPG" alt="Headshot of Niki Beck" style="width:100%;height:100%;object-fit:cover;display:none;border-radius:12px;" onload="this.style.display='block'; this.previousElementSibling.style.display='none';" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Skills ── -->
+    <section class="section">
+      <div class="page-wrap">
+        <p class="section__label">Skills &amp; tools</p>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;" class="reveal">
+
+          <div style="background: var(--white); border: 0.5px solid var(--rule); border-radius: var(--radius); padding: 20px 22px;">
+            <p style="font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 12px;">Design</p>
+            <p style="font-size: 13px; color: var(--muted); line-height: 1.9;">Figma · Atomic design systems · Advanced prototyping · Illustrator · Photoshop · Premiere Pro · Lightroom</p>
+          </div>
+
+          <div style="background: var(--white); border: 0.5px solid var(--rule); border-radius: var(--radius); padding: 20px 22px;">
+            <p style="font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 12px;">Front-end development</p>
+            <p style="font-size: 13px; color: var(--muted); line-height: 1.9;">React · HTML · CSS / Sass · JavaScript · Git · REST APIs · Component-based architecture</p>
+          </div>
+
+          <div style="background: var(--white); border: 0.5px solid var(--rule); border-radius: var(--radius); padding: 20px 22px;">
+            <p style="font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 12px;">Research &amp; QA</p>
+            <p style="font-size: 13px; color: var(--muted); line-height: 1.9;">Contextual inquiry · User interviews · Sentry · Hotjar · Google Analytics · Cross-device testing</p>
+          </div>
+
+          <div style="background: var(--white); border: 0.5px solid var(--rule); border-radius: var(--radius); padding: 20px 22px;">
+            <p style="font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 12px;">AI tools</p>
+            <p style="font-size: 13px; color: var(--muted); line-height: 1.9;">Claude · Figma Make · Replit · Midjourney · Notion AI</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Experience ── -->
+    <section class="section">
+      <div class="page-wrap">
+        <p class="section__label">Experience</p>
+
+        <div style="padding: 24px 0; border-top: 0.5px solid var(--rule);" class="reveal">
+          <div style="display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start;">
+            <div>
+              <p style="font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 3px;">Senior UI/UX Designer</p>
+              <p style="font-size: 13px; color: var(--subtle); margin-bottom: 12px;">Trinity Custom Apparel — Remote</p>
+              <ul style="list-style: none; padding: 0;">
+                <li style="font-size: 13px; color: var(--muted); line-height: 1.8; padding-left: 16px; position: relative; margin-bottom: 2px;"><span style="position:absolute;left:0;color:var(--stone);">—</span>Lead designer across all digital product and print needs</li>
+                <li style="font-size: 13px; color: var(--muted); line-height: 1.8; padding-left: 16px; position: relative; margin-bottom: 2px;"><span style="position:absolute;left:0;color:var(--stone);">—</span>Built atomic design system in Figma; React component handoff docs</li>
+                <li style="font-size: 13px; color: var(--muted); line-height: 1.8; padding-left: 16px; position: relative; margin-bottom: 2px;"><span style="position:absolute;left:0;color:var(--stone);">—</span>Integrated Sentry QA into pre-release design review process</li>
+                <li style="font-size: 13px; color: var(--muted); line-height: 1.8; padding-left: 16px; position: relative;"><span style="position:absolute;left:0;color:var(--stone);">—</span>Shipped multiple internal tools from concept to production</li>
+              </ul>
+            </div>
+            <p style="font-size: 12px; color: var(--ghost); white-space: nowrap; padding-top: 2px;">2022 – Present</p>
+          </div>
+        </div>
+
+        <div style="padding: 24px 0; border-top: 0.5px solid var(--rule);" class="reveal reveal-delay-1">
+          <div style="display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start;">
+            <div>
+              <p style="font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 3px;">Web Designer &amp; Developer</p>
+              <p style="font-size: 13px; color: var(--subtle); margin-bottom: 12px;">Hamburger Creative — Birmingham, AL</p>
+              <ul style="list-style: none; padding: 0;">
+                <li style="font-size: 13px; color: var(--muted); line-height: 1.8; padding-left: 16px; position: relative; margin-bottom: 2px;"><span style="position:absolute;left:0;color:var(--stone);">—</span>Designed, built, and launched responsive client websites end-to-end</li>
+                <li style="font-size: 13px; color: var(--muted); line-height: 1.8; padding-left: 16px; position: relative; margin-bottom: 2px;"><span style="position:absolute;left:0;color:var(--stone);">—</span>Built React components integrating client APIs and animations</li>
+                <li style="font-size: 13px; color: var(--muted); line-height: 1.8; padding-left: 16px; position: relative; margin-bottom: 2px;"><span style="position:absolute;left:0;color:var(--stone);">—</span>Mentored junior designers on responsive design best practices</li>
+                <li style="font-size: 13px; color: var(--muted); line-height: 1.8; padding-left: 16px; position: relative;"><span style="position:absolute;left:0;color:var(--stone);">—</span>Managed multiple concurrent client projects, balancing design and dev</li>
+              </ul>
+            </div>
+            <p style="font-size: 12px; color: var(--ghost); white-space: nowrap; padding-top: 2px;">2018 – 2022</p>
+          </div>
+        </div>
+
+        <div style="padding: 24px 0; border-top: 0.5px solid var(--rule);" class="reveal reveal-delay-2">
+          <div style="display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start;">
+            <div>
+              <p style="font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 3px;">B.A. Digital Media &amp; Design</p>
+              <p style="font-size: 13px; color: var(--subtle); margin-bottom: 6px;">Southeastern University</p>
+              <p style="font-size: 13px; color: var(--muted);">Full-Stack Development Bootcamp (2020) · Front-End Development Bootcamp (in progress) · Bootcamp Final Project Winner: Tasky App</p>
+            </div>
+            <p style="font-size: 12px; color: var(--ghost); white-space: nowrap; padding-top: 2px;">Education</p>
+          </div>
+        </div>
+
+        <div style="border-top: 0.5px solid var(--rule);"></div>
+
+      </div>
+    </section>
+
+    <!-- ── Contact ── -->
+    <section class="section" style="border-bottom: none;">
+      <div class="page-wrap">
+        <div class="reveal" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 32px; flex-wrap: wrap;">
+          <h2 class="headline" style="max-width: 300px;">Want to work together?</h2>
+          <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-end; padding-top: 4px;">
+            <a href="mailto:niki@wearehamburger.com" style="font-size: 14px; color: var(--subtle); transition: color 0.15s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--subtle)'">niki@wearehamburger.com</a>
+            <a href="https://www.linkedin.com/in/niki-beck-49bb80b8/" target="_blank" style="font-size: 14px; color: var(--subtle); transition: color 0.15s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--subtle)'">LinkedIn ↗</a>
+            <a href="https://github.com/Nikibeck1" target="_blank" style="font-size: 14px; color: var(--subtle); transition: color 0.15s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--subtle)'">GitHub ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <span class="site-footer__copy">© 2026 Niki Beck</span>
+    <nav>
+      <ul class="site-footer__links">
+        <li><a href="index.html#work">Work</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="mailto:niki@wearehamburger.com">Contact</a></li>
+      </ul>
+    </nav>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

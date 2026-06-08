@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Final Shipments Manager — Niki Beck</title>
+  <meta name="description" content="Touch-optimized warehouse UI for gloved hands, mounted tablets, and zero-tolerance for shipping errors." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <header class="site-nav">
+    <div class="site-nav__inner">
+      <a href="index.html" class="site-nav__logo">Niki Beck</a>
+      <nav>
+        <ul class="site-nav__links">
+          <li><a href="index.html#work">Work</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="NikiBeck_Resume.pdf" target="_blank">Resume</a></li>
+          <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── Hero ── -->
+    <section class="section" style="padding-top: 64px;">
+      <div class="page-wrap">
+        <a href="index.html" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--subtle); margin-bottom: 32px; transition: color 0.15s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--subtle)'">← Back to work</a>
+        <div class="hero-animate">
+          <p class="eyebrow">Case study · 01</p>
+          <h1 class="display" style="margin-bottom: 16px;">Final Shipments Manager</h1>
+          <p class="subhead" style="margin-bottom: 0;">Touch-optimized warehouse UI for gloved hands, mounted tablets, and zero tolerance for shipping errors.</p>
+        </div>
+        <div class="meta-grid" style="margin-top: 32px;">
+          <div class="meta-grid__cell">
+            <p class="meta-grid__label">Role</p>
+            <p class="meta-grid__value">Lead designer</p>
+          </div>
+          <div class="meta-grid__cell">
+            <p class="meta-grid__label">Platform</p>
+            <p class="meta-grid__value">Tablet / web app</p>
+          </div>
+          <div class="meta-grid__cell">
+            <p class="meta-grid__label">Skills</p>
+            <p class="meta-grid__value">UX, UI, React handoff</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Hero image ── -->
+    <div class="page-wrap">
+      <div class="img-slot reveal" style="height: 380px; margin: 3 3 3;">
+        <img src="./assets/HeroFS.png" alt="Final Shipments Manager on iPad Pro" style="width:100%; height:100%; object-fit:cover; border-radius: var(--radius);">
+      </div>
+    </div>
+
+    <!-- ── Problem ── -->
+    <section class="section">
+      <div class="page-wrap">
+        <p class="section__label">The problem</p>
+        <p class="body-text reveal">Warehouse workers were shipping hundreds of packages a day using a desktop-oriented interface that had never been designed for gloves, mounted tablets, or a standing workflow. Every tap required precision. Every mistake meant a mislabeled package going out the door.</p>
+        <p class="body-text reveal reveal-delay-1">The existing system buried printer selection four clicks deep, offered no visual confirmation when a scan registered, and gave workers no way to self-diagnose errors — every problem meant calling IT.</p>
+        <div class="constraint-grid reveal reveal-delay-2">
+          <div class="constraint-card">
+            <p class="constraint-card__title">Physical constraints</p>
+            <ul class="constraint-card__list">
+              <li>Workers wear gloves</li>
+              <li>Tablets mounted on carts or walls</li>
+              <li>Standing, often holding packages</li>
+              <li>Variable lighting and glare</li>
+            </ul>
+          </div>
+          <div class="constraint-card">
+            <p class="constraint-card__title">Operational constraints</p>
+            <ul class="constraint-card__list">
+              <li>Hundreds of scans per shift</li>
+              <li>Speed is non-negotiable</li>
+              <li>Wrong package = real cost</li>
+              <li>Multi-device environment</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Research ── -->
+    <section class="section">
+      <div class="page-wrap">
+        <p class="section__label">Research</p>
+        <p class="body-text reveal">I spent time on-site during peak shipping hours — watching, not just interviewing. The things workers couldn't articulate became obvious in context: the double-tap to confirm a scan they weren't sure had registered, the detour to a desktop to switch printers, the resigned shrug when something went wrong.</p>
+        <br>
+        <div class="img-single reveal reveal-delay-1">
+          <div class="img-slot" style="height: 380px;">
+            <img src="./assets/researchFS.png" alt="On-site research notes and field observations">
+          </div>
+        </div>
+        <br>
+        <p class="body-text reveal reveal-delay-2">Key finding: the workflow itself was sound — pick, scan, print, ship, bin. The interface just didn't match it. Every design decision after that traced back to one question: <em>does this survive a glove and a moving cart?</em></p>
+      </div>
+    </section>
+
+    <!-- ── Key decisions ── -->
+    <section class="section">
+      <div class="page-wrap">
+        <p class="section__label">Key decisions</p>
+        <div class="decision-list">
+
+          <div class="decision-item reveal">
+            <p class="decision-item__num">01</p>
+            <p class="decision-item__title">60px minimum touch targets throughout</p>
+            <p class="decision-item__body">The primary scan button is 100×100px. Table rows are 80px tall. Every tappable element is oversized on purpose — gloved fingers are imprecise and the cost of a mis-tap in a shipping workflow is high.</p>
+            <div class="decision-item__tags">
+              <span class="tag">Touch-first</span>
+              <span class="tag">Accessibility</span>
+            </div>
+          </div>
+
+          <div class="decision-item reveal reveal-delay-1">
+            <p class="decision-item__num">02</p>
+            <p class="decision-item__title">Printer selector on the main screen, always visible</p>
+            <p class="decision-item__body">Workers ship to 4 carriers with different label sizes — switching printers was happening dozens of times per hour. Moving it from a 4-click settings detour to a persistent dropdown on the main view eliminated an entire category of delay.</p>
+            <div class="decision-item__tags">
+              <span class="tag">Workflow efficiency</span>
+              <span class="tag">Frequency mapping</span>
+            </div>
+          </div>
+
+          <div class="decision-item reveal reveal-delay-2">
+            <p class="decision-item__num">03</p>
+            <p class="decision-item__title">Three input methods, one primary</p>
+            <p class="decision-item__body">USB scanner → camera → manual entry, in priority order. The primary path is optimized for speed; the fallbacks ensure the workflow is never blocked by a dead scanner or a damaged barcode.</p>
+            <div class="decision-item__tags">
+              <span class="tag">Error prevention</span>
+              <span class="tag">Resilience</span>
+            </div>
+          </div>
+
+          <div class="decision-item reveal reveal-delay-3">
+            <p class="decision-item__num">04</p>
+            <p class="decision-item__title">Toggle-able console for transparent error recovery</p>
+            <p class="decision-item__body">Workers couldn't see what was happening when things went wrong. A collapsible console — hidden by default, one tap to reveal — shows live API responses, scanner events, and printer status. Controversial with stakeholders initially, it became the most-praised feature in worker feedback.</p>
+            <div class="decision-item__tags">
+              <span class="tag">Transparency</span>
+              <span class="tag">Error recovery</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ── The interface ── -->
+    <section class="section">
+      <div class="page-wrap">
+        <p class="section__label">The interface</p>
+
+        <div class="img-pair reveal">
+          <div class="img-slot" style="height: 250px; overflow: hidden;">
+            <img src="./assets/LayoutFS.png" alt="Current shipments tab" style="width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius); background: white;">
+          </div>
+          <div class="img-slot" style="height: 250px; overflow: hidden;">
+            <img src="./assets/FS Components.png" alt="History tab" style="width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius); background: white;">
+          </div>
+        </div>
+
+        <div class="img-single reveal reveal-delay-1">
+          <div class="img-slot" style="height: 250px; overflow: hidden;">
+            <img src="./assets/userGuideFS.png" alt="User flow: scan, print, ship, confirm" style="width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius); background: white;">
+          </div>
+        </div>
+
+        <div class="quote-block reveal reveal-delay-2">
+          <p class="quote-block__text">"When something goes wrong, I can fix it myself now."</p>
+          <p class="quote-block__attr">Warehouse worker, post-launch feedback</p>
+        </div>
+
+        <div class="proto-cta reveal reveal-delay-3">
+          <div>
+            <p class="proto-cta__label">Interactive prototype</p>
+            <p class="proto-cta__title">Try the working interface →</p>
+          </div>
+          <a href="https://finalshipments.staging.trinity-apparel.com/login" target="_blank" class="proto-cta__btn">Open prototype ↗</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Outcomes ── -->
+    <section class="section">
+      <div class="page-wrap">
+        <p class="section__label">Outcomes</p>
+        <p class="body-text reveal">The redesign shipped to production. Worker adoption was immediate — no retraining required beyond a 30-minute walkthrough, down from a half-day onboarding.</p>
+        <div class="outcome-row reveal reveal-delay-1">
+          <div class="outcome-card">
+            <p class="outcome-card__stat">2–3</p>
+            <p class="outcome-card__desc">Taps to complete a full shipment, down from 8+</p>
+          </div>
+          <div class="outcome-card">
+            <p class="outcome-card__stat">30 min</p>
+            <p class="outcome-card__desc">New worker onboarding, down from half a day</p>
+          </div>
+          <div class="outcome-card">
+            <p class="outcome-card__stat">↓ IT</p>
+            <p class="outcome-card__desc">Workers self-diagnose via console — fewer escalations</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Reflections ── -->
+    <section class="section">
+      <div class="page-wrap">
+        <p class="section__label">Reflections</p>
+        <div class="reflection-grid reveal">
+          <div class="reflection-card">
+            <p class="reflection-card__head">What worked</p>
+            <ul class="reflection-card__list">
+              <li>On-site observation caught things no interview would have</li>
+              <li>Touch-first constraint sharpened every decision</li>
+              <li>Console view: controversial to ship, loved in use</li>
+            </ul>
+          </div>
+          <div class="reflection-card">
+            <p class="reflection-card__head">What I'd do differently</p>
+            <ul class="reflection-card__list">
+              <li>Test prototype in the warehouse environment earlier</li>
+              <li>Strengthen status colors with shape/icon backups</li>
+              <li>Instrument analytics from day one</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Next project ── -->
+    <div class="page-wrap">
+      <a href="case-study-cloud-closet.html" style="display: block; text-decoration: none; border-top: 0.5px solid var(--rule);">
+        <div class="next-project reveal">
+          <div>
+            <p class="next-project__label">Next case study</p>
+            <p class="next-project__title">Cloud Closet — dual-mode sales tool</p>
+          </div>
+          <span class="next-project__arrow">→</span>
+        </div>
+      </a>
+    </div>
+
+  </main>
+
+  <footer class="site-footer">
+    <span class="site-footer__copy">© 2026 Niki Beck</span>
+    <nav>
+      <ul class="site-footer__links">
+        <li><a href="index.html#work">Work</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="mailto:niki@wearehamburger.com">Contact</a></li>
+      </ul>
+    </nav>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
