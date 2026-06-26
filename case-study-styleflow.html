@@ -3,17 +3,94 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Styleflow - Niki Beck</title>
-  <meta name="description" content="Designing and building Styleflow: a custom garment visualizer that helps users explore thousands of fabrics and place confident orders." />
+  <title>Client Work — Niki Beck</title>
+  <meta name="description" content="Five responsive websites across four years as a solo designer-developer at Hamburger Creative." />
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    @media (max-width: 600px) {
-      .img-slot {
+    /* ── Client sites-specific styles ── */
+    .site-entry {
+      padding: 48px 0;
+      border-top: 0.5px solid var(--rule);
+    }
+    .site-entry:first-of-type { border-top: none; }
+
+    .site-entry__header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .site-entry__num {
+      font-size: 11px;
+      color: var(--ghost);
+      margin-bottom: 5px;
+    }
+    .site-entry__name {
+      font-family: var(--serif);
+      font-size: 26px;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+    .site-entry__type {
+      font-size: 13px;
+      color: var(--subtle);
+    }
+    .site-entry__link {
+      font-size: 13px;
+      color: var(--subtle);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      white-space: nowrap;
+      transition: color 0.15s;
+      margin-top: 2px;
+      display: inline-block;
+    }
+    .site-entry__link:hover { color: var(--ink); }
+
+    .site-entry__imgs {
+      display: grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .site-entry__body {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 14px;
+      max-width: 560px;
+    }
+    .site-entry__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .skills-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .hb-hero-bar {
+      width: 40px;
+      height: 3px;
+      background: #fccd0f;
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 560px) {
+      .site-entry__imgs { grid-template-columns: 1fr; }
+      .site-entry__imgs .img-slot {
         height: auto !important;
       }
-      .img-slot img {
-        width: 100% !important;
-        height: auto !important;
+      .site-entry__imgs .img-slot img {
+        width: 100%;
+        height: auto;
       }
     }
   </style>
@@ -36,203 +113,192 @@
 
   <main>
 
-    <!-- Hero -->
+    <!-- ── Hero ── -->
     <section class="section" style="padding-top: 64px;">
       <div class="page-wrap">
         <a href="index.html" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--subtle); margin-bottom: 32px; transition: color 0.15s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--subtle)'">← Back to work</a>
         <div class="hero-animate">
-          <p class="eyebrow">Case study - 03</p>
-          <h1 class="display" style="margin-bottom: 16px;">Styleflow</h1>
-          <p class="subhead" style="margin-bottom: 0;">A custom garment visualizer designed and built to help users explore thousands of fabrics, compare options quickly, and place production-ready orders with confidence.</p>
+          <div class="hb-hero-bar"></div>
+          <p class="eyebrow">Case study · 04</p>
+          <h1 class="display" style="margin-bottom: 16px;">Client work —<br>Hamburger Creative</h1>
+          <p class="subhead" style="margin-bottom: 0;">Four years designing and building responsive websites for clients across industries. Solo designer-developer on every project — strategy, visual design, and front-end code.</p>
         </div>
-        <div class="meta-grid" style="margin-top: 32px;">
+        <div class="meta-grid">
           <div class="meta-grid__cell">
             <p class="meta-grid__label">Role</p>
-            <p class="meta-grid__value">Lead UI/UX + Front-end</p>
+            <p class="meta-grid__value">Designer + developer</p>
           </div>
           <div class="meta-grid__cell">
-            <p class="meta-grid__label">Platform</p>
-            <p class="meta-grid__value">Web app configurator</p>
+            <p class="meta-grid__label">Timeline</p>
+            <p class="meta-grid__value">2018 – 2022</p>
           </div>
           <div class="meta-grid__cell">
-            <p class="meta-grid__label">Skills</p>
-            <p class="meta-grid__value">UX strategy, IA, React build</p>
+            <p class="meta-grid__label">Projects</p>
+            <p class="meta-grid__value">5 selected sites</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Hero image -->
-    <div class="page-wrap">
-      <div class="img-slot reveal" style="height: 300px; overflow: hidden;">
-        <img src="./assets/sthero.png" alt="Styleflow garment visualizer overview" style="width: 100%; height: 100%; object-fit: contain; background: white;" />
-      </div>
-    </div>
-
-    <!-- Problem -->
+    <!-- ── Overview ── -->
     <section class="section">
       <div class="page-wrap">
-        <p class="section__label">The problem</p>
-        <p class="body-text reveal">Customers needed to choose garments from thousands of fabric and trim combinations, but the previous buying flow relied on static photos, disconnected PDFs, and back-and-forth emails. Users could not confidently answer a simple question: "What will my final garment actually look like?"</p>
-        <p class="body-text reveal reveal-delay-1">That uncertainty slowed decisions, increased revision cycles, and created avoidable ordering errors. Sales teams spent too much time translating visual intent into production details instead of moving orders forward.</p>
-        <div class="constraint-grid reveal reveal-delay-2">
-          <div class="constraint-card">
-            <p class="constraint-card__title">User constraints</p>
-            <ul class="constraint-card__list">
-              <li>Massive option sets are hard to compare</li>
-              <li>Visual outcomes were unclear before ordering</li>
-              <li>Non-technical users needed guided decisions</li>
-              <li>Too many steps to complete one style</li>
-            </ul>
-          </div>
-          <div class="constraint-card">
-            <p class="constraint-card__title">Business constraints</p>
-            <ul class="constraint-card__list">
-              <li>Thousands of fabric/trim combinations</li>
-              <li>Complex garment rules by style type</li>
-              <li>Need for production-ready order data</li>
-              <li>Fast quote-to-order conversion required</li>
-            </ul>
-          </div>
+        <p class="section__label">Overview</p>
+        <p class="body-text reveal">Running design and development solo meant owning the full lifecycle on every project — discovery, visual design, front-end build, and launch. Each project below shows a different constraint, industry, or problem type.</p>
+        <div class="skills-row reveal reveal-delay-1">
+          <span class="pill">React</span>
+          <span class="pill">HTML / CSS / Sass</span>
+          <span class="pill">JavaScript</span>
+          <span class="pill">Brand identity</span>
+          <span class="pill">WordPress / CMS</span>
+          <span class="pill">Responsive design</span>
+          <span class="pill">Client management</span>
         </div>
       </div>
     </section>
 
-    <!-- Approach -->
-    <section class="section">
+    <!-- ── Sites ── -->
+    <section class="section" style="padding-top: 0; border-bottom: none;">
       <div class="page-wrap">
-        <p class="section__label">Approach</p>
-        <p class="body-text reveal">I designed Styleflow as a guided visual workflow: choose a base garment, filter fabrics by real constraints, preview the garment in context, then generate an order summary that maps directly to production fields.</p>
-        <p class="body-text reveal reveal-delay-1">The key design principle was progressive complexity. New users see only the decisions they need at each step, while power users can jump between sections without losing state.</p>
-        <div class="img-single reveal reveal-delay-2">
-          <div class="img-slot" style="height: 300px; overflow: hidden;">
-            <img src="./assets/st1.png" alt="Styleflow step-by-step garment configuration flow" style="width: 100%; height: 100%; object-fit: contain; background: white;" />
+
+        <!-- Site 01 -->
+        <div class="site-entry reveal">
+          <div class="site-entry__header">
+            <div>
+              <p class="site-entry__num">01</p>
+              <p class="site-entry__name">Soma Massage</p>
+              <p class="site-entry__type">Industry · Brand + web</p>
+            </div>
+            <!-- REPLACE href with actual live URL -->
+            <a class="site-entry__link" href="https://www.somabodyworks.co/" target="_blank">Visit site ↗</a>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Key decisions -->
-    <section class="section">
-      <div class="page-wrap">
-        <p class="section__label">Key decisions</p>
-        <div class="decision-list">
-
-          <div class="decision-item reveal">
-            <p class="decision-item__num">01</p>
-            <p class="decision-item__title">Filter-first fabric exploration</p>
-            <p class="decision-item__body">Instead of dumping every fabric upfront, users start with high-signal filters like material family, weight, and use case. This reduced option overload and made large catalogs feel navigable.</p>
-            <div class="decision-item__tags">
-              <span class="tag">Information architecture</span>
-              <span class="tag">Catalog UX</span>
+          <div class="site-entry__imgs">
+            <div class="img-slot" style="height: 300px;">
+              <img src="./assets/Soma1.png" alt="[Client name] desktop view">
+            </div>
+            <div class="img-slot" style="height: 300px;">
+              <img src="./assets/Soma2.png" alt="[Client name] mobile view">
             </div>
           </div>
+          <br>
+          <p class="site-entry__body">Soma Massage is a wellness brand specializing in therapeutic massage services. The project involved creating a modern, responsive website that reflects the brand's identity and provides an intuitive booking experience for clients.
+            The main goal was simplicity and ease of use, ensuring that visitors could quickly find information about services, therapists, and easily book appointments. I focused on a clean design with calming colors and smooth animations to enhance the user experience while maintaining the brand's aesthetic.
+          </p>
+          <div class="site-entry__tags">
+            <span class="tag">React</span>
+            <span class="tag">Brand identity</span>
+            <span class="tag">Responsive</span>
+          </div>
+        </div>
 
-          <div class="decision-item reveal reveal-delay-1">
-            <p class="decision-item__num">02</p>
-            <p class="decision-item__title">Live garment preview with state persistence</p>
-            <p class="decision-item__body">Every material and trim update immediately re-renders the garment preview. Users can test combinations quickly without losing prior selections, which encouraged exploration while preserving confidence.</p>
-            <div class="decision-item__tags">
-              <span class="tag">Visual feedback</span>
-              <span class="tag">Interaction design</span>
+        <!-- Site 02 -->
+        <div class="site-entry reveal">
+          <div class="site-entry__header">
+            <div>
+              <p class="site-entry__num">02</p>
+              <p class="site-entry__name">Tiger Mechanics</p>
+              <p class="site-entry__type">Industry · Brand + web</p>
+            </div>
+            <!-- REPLACE href with actual live URL -->
+            <a class="site-entry__link" href="https://tiger-mechanical-service.vercel.app/" target="_blank">Visit site ↗</a>
+          </div>
+          <div class="site-entry__imgs">
+            <div class="img-slot" style="height: 300px;">
+              <img src="./assets/tiger1.png" alt="[Client name] desktop view">
+            </div>
+            <div class="img-slot" style="height: 300px;">
+              <img src="./assets/tiger2.png" alt="[Client name] mobile view">
             </div>
           </div>
+          <br>
+          <p class="site-entry__body">Tiger Mechanics is an automotive repair and maintenance service provider. The project involved creating a modern, responsive website that reflects the brand's identity and provides an intuitive booking experience for clients.
+            The main goal was simplicity and ease of use, ensuring that visitors could quickly find information about services, mechanics, and easily book appointments. I focused on a clean design with bold colors and smooth animations to enhance the user experience while maintaining the brand's aesthetic.
+          </p>
+          <div class="site-entry__tags">
+            <span class="tag">React</span>
+            <span class="tag">Brand identity</span>
+            <span class="tag">Responsive</span>
+          </div>
+        </div>
 
-          <div class="decision-item reveal reveal-delay-2">
-            <p class="decision-item__num">03</p>
-            <p class="decision-item__title">Order summary as source of truth</p>
-            <p class="decision-item__body">The final step translates the visual build into line-item order data with selected components, quantities, and notes. This closed the gap between what users saw and what operations needed to produce.</p>
-            <div class="decision-item__tags">
-              <span class="tag">System design</span>
-              <span class="tag">Error prevention</span>
+       <!-- Site 03 -->
+        <div class="site-entry reveal">
+          <div class="site-entry__header">
+            <div>
+              <p class="site-entry__num">03</p>
+              <p class="site-entry__name">Overhead Door</p>
+              <p class="site-entry__type">Industry · Brand + web</p>
+            </div>
+            <!-- REPLACE href with actual live URL -->
+            <a class="site-entry__link" href="https://overhead-door.vercel.app/" target="_blank">Visit site ↗</a>
+          </div>
+          <div class="site-entry__imgs">
+            <div class="img-slot" style="height: 300px;">
+              <img src="./assets/overhead1.png" alt="[Client name] desktop view">
+            </div>
+            <div class="img-slot" style="height: 300px;">
+              <img src="./assets/overhead2.png" alt="[Client name] mobile view">
             </div>
           </div>
-
+          <br>
+          <p class="site-entry__body">Overhead Door is a company specializing in garage door solutions. The project involved creating a modern, responsive website that reflects the brand's identity and provides an intuitive experience for clients.
+            The main goal was simplicity and ease of use, ensuring that visitors could quickly find information about products, services, and easily contact the company. I focused on a clean design with bold colors and smooth animations to enhance the user experience while maintaining the brand's aesthetic.
+          </p>
+          <div class="site-entry__tags">
+            <span class="tag">React</span>
+            <span class="tag">Brand identity</span>
+            <span class="tag">Responsive</span>
+          </div>
         </div>
+
+         <!-- Site 04 -->
+        <div class="site-entry reveal">
+          <div class="site-entry__header">
+            <div>
+              <p class="site-entry__num">04</p>
+              <p class="site-entry__name">Hello Web</p>
+              <p class="site-entry__type">Industry · Brand + web</p>
+            </div>
+            <!-- REPLACE href with actual live URL -->
+            <a class="site-entry__link" href="https://www.hellowebb.com/" target="_blank">Visit site ↗</a>
+          </div>
+          <div class="site-entry__imgs">
+            <div class="img-slot" style="height: 300px;">
+              <img src="./assets/hweb1.png" alt="[Client name] desktop view">
+            </div>
+            <div class="img-slot" style="height: 300px;">
+              <img src="./assets/hweb2.png" alt="[Client name] mobile view">
+            </div>
+          </div>
+          <br>
+          <p class="site-entry__body">Hello Web is a company specializing in web solutions. The project involved creating a modern, responsive website that reflects the brand's identity and provides an intuitive experience for clients.
+            The main goal was simplicity and ease of use, ensuring that visitors could quickly find information about products, services, and easily contact the company. I focused on a clean design with bold colors and smooth animations to enhance the user experience while maintaining the brand's aesthetic.
+          </p>
+          <div class="site-entry__tags">
+            <span class="tag">React</span>
+            <span class="tag">Brand identity</span>
+            <span class="tag">Responsive</span>
+          </div>
+        </div>
+
       </div>
     </section>
 
-    <!-- Interface -->
-    <section class="section">
-      <div class="page-wrap">
-        <p class="section__label">The interface</p>
-
-        <div class="img-pair reveal">
-          <div class="img-slot" style="height: 280px; overflow: hidden;">
-            <img src="./assets/st2.png" alt="Styleflow fabric library and filter panel" style="width: 100%; height: 100%; object-fit: contain; background: white;" />
-          </div>
-          <div class="img-slot" style="height: 280px; overflow: hidden;">
-            <img src="./assets/st3.png" alt="Styleflow garment configuration and live preview" style="width: 100%; height: 100%; object-fit: contain; background: white;" />
-          </div>
-        </div>
-
-        <div class="img-single reveal reveal-delay-1">
-          <div class="img-slot" style="height: 300px; overflow: hidden;">
-            <img src="./assets/stmobile.png" alt="Styleflow order summary and production handoff view" style="width: 100%; height: 100%; object-fit: contain; background: white;" />
-          </div>
-        </div>
-
-        <div class="quote-block reveal reveal-delay-2">
-          <p class="quote-block__text">"I can finally show customers exactly what they are ordering before we submit."</p>
-          <p class="quote-block__attr">Sales team feedback</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Outcomes -->
-    <section class="section">
-      <div class="page-wrap">
-        <p class="section__label">Outcomes</p>
-        <p class="body-text reveal">Styleflow replaced a fragmented ordering experience with a single visual workflow. Teams could move from concept to order with fewer manual clarifications and clearer production inputs.</p>
-        <div class="outcome-row reveal reveal-delay-1">
-          <div class="outcome-card">
-            <p class="outcome-card__stat">Faster</p>
-            <p class="outcome-card__desc">Fabric exploration and comparison across large catalogs</p>
-          </div>
-          <div class="outcome-card">
-            <p class="outcome-card__stat">Clearer</p>
-            <p class="outcome-card__desc">Visual confidence before committing to final order</p>
-          </div>
-          <div class="outcome-card">
-            <p class="outcome-card__stat">Fewer errors</p>
-            <p class="outcome-card__desc">More accurate handoff from configuration to production</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Reflections -->
-    <section class="section">
-      <div class="page-wrap">
-        <p class="section__label">Reflections</p>
-        <div class="reflection-grid reveal">
-          <div class="reflection-card">
-            <p class="reflection-card__head">What worked</p>
-            <ul class="reflection-card__list">
-              <li>Progressive disclosure kept large option sets manageable</li>
-              <li>Live preview dramatically improved decision confidence</li>
-              <li>Order summary aligned design intent with operations</li>
-            </ul>
-          </div>
-          <div class="reflection-card">
-            <p class="reflection-card__head">Next iteration</p>
-            <ul class="reflection-card__list">
-              <li>Add saved looks and comparison mode for teams</li>
-              <li>Introduce smarter recommendations based on prior orders</li>
-              <li>Expand analytics on drop-off points in the flow</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Next project -->
-    <div class="page-wrap">
-      <a href="case-study-client-sites.html" style="display: block; text-decoration: none; border-top: 0.5px solid var(--rule);">
+    <!-- ── Next project (loops back) ── -->
+    <div class="page-wrap" style="border-top: 0.5px solid var(--rule);">
+<<<<<<< HEAD
+      <a href="case-study-trinity-pocket.html" style="display: block; text-decoration: none;">
         <div class="next-project reveal">
           <div>
-            <p class="next-project__label">Next case study</p>
-            <p class="next-project__title">Client work - Hamburger Creative</p>
+            <p class="next-project__label">Back to top</p>
+            <p class="next-project__title">Trinity Pocket Mobile App</p>
+=======
+      <a href="case-study-final-shipments.html" style="display: block; text-decoration: none;">
+        <div class="next-project reveal">
+          <div>
+            <p class="next-project__label">Back to top</p>
+            <p class="next-project__title">Final Shipments Manager</p>
+>>>>>>> 639277f293ad93ae46170e75a462368a6332c50d
           </div>
           <span class="next-project__arrow">→</span>
         </div>
