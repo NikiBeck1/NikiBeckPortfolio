@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trinity Pocket — Niki Beck</title>
+  <meta name="description" content="Designing and building Trinity Pocket: a native B2B mobile app for apparel sales reps, built from a full audit of an existing competitor app." />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── Violet brand token ── */
+    :root {
+      --violet:     #7C3AED;
+      --violet-lt:  #f5f0ff;
+      --violet-mid: #ede9fe;
+    }
+
+    /* ── Hero accent bar ── */
+    .tp-hero-bar {
+      width: 40px;
+      height: 3px;
+      background: var(--violet);
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    /* ── Before / After comparison ── */
+    .before-after {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+    .before-after__cell {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .before-after__label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ghost);
+    }
+    .before-after__label--new {
+      color: var(--violet);
+    }
+    .before-after__img {
+      width: 100%;
+      border-radius: 12px;
+      border: 0.5px solid var(--rule);
+      background: #f8f8f8;
+      object-fit: contain;
+    }
+    /* Subtle violet glow on the "after" image */
+    .before-after__cell--new .before-after__img {
+      box-shadow: 0 0 0 2px var(--violet-mid);
+    }
+
+    /* ── Annotated critique images ── */
+    .critique-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+    .critique-pair__img {
+      width: 100%;
+      border-radius: 12px;
+      border: 0.5px solid var(--rule);
+      object-fit: contain;
+      background: #fafafa;
+    }
+
+    /* ── Screen overview ── */
+    .screen-overview {
+      width: 100%;
+      border-radius: 12px;
+      border: 0.5px solid var(--rule);
+      object-fit: contain;
+      background: #0a0a0f;
+      margin-top: 24px;
+    }
+
+    /* ── Scope badge strip ── */
+    .scope-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+    .scope-badge {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 0.5px solid var(--rule);
+      color: var(--subtle);
+      background: transparent;
+    }
+    .scope-badge--active {
+      border-color: var(--violet);
+      color: var(--violet);
+      background: var(--violet-lt);
+    }
+
+    /* ── ADR callout — violet left border ── */
+    .adr-callout {
+      border-left: 3px solid var(--violet);
+      background: var(--violet-lt);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin-top: 20px;
+    }
+    .adr-callout__label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--violet);
+      margin-bottom: 6px;
+    }
+    .adr-callout__text {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-style: italic;
+      font-size: 15px;
+      color: #3b1a6e;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* ── Outcome cards — first stat gets violet treatment ── */
+    .outcome-card:first-child .outcome-card__stat {
+      color: var(--violet);
+    }
+
+    /* ── Decision item numbers — violet ── */
+    .decision-item__num {
+      color: var(--violet) !important;
+      font-weight: 700;
+    }
+
+    /* ── Section label accent dot ── */
+    .section__label--violet::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--violet);
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    /* ── Quote block override — violet left border ── */
+    .quote-block--violet {
+      border-left-color: var(--violet);
+      background: var(--violet-lt);
+    }
+    .quote-block--violet .quote-block__text {
+      color: #3b1a6e;
+    }
+
+    @media (max-width: 600px) {
+      .before-after,
+      .critique-pair {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="site-nav__inner">
+    <a href="index.html" class="site-nav__logo">Niki Beck</a>
+    <nav>
+      <ul class="site-nav__links">
+        <li><a href="index.html#work">Work</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="NikiBeck_Resume.pdf" target="_blank">Resume</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ── Hero ── -->
+  <section class="section" style="padding-top: 64px;">
+    <div class="page-wrap">
+      <a href="index.html" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--subtle); margin-bottom: 32px; transition: color 0.15s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--subtle)'">← Back to work</a>
+      <div class="hero-animate">
+        <div class="tp-hero-bar"></div>
+        <p class="eyebrow">Case study · Mobile</p>
+        <h1 class="display" style="margin-bottom: 16px;">Trinity Pocket</h1>
+        <p class="subhead" style="margin-bottom: 0;">A native B2B mobile app for apparel sales reps — designed and architected from scratch after a full audit of the existing third-party app it replaced. From codebase gap analysis to sprint-sequenced production build.</p>
+      </div>
+      <div class="meta-grid" style="margin-top: 32px;">
+        <div class="meta-grid__cell">
+          <p class="meta-grid__label">Role</p>
+          <p class="meta-grid__value">Lead Designer &amp; Mobile Architect</p>
+        </div>
+        <div class="meta-grid__cell">
+          <p class="meta-grid__label">Platform</p>
+          <p class="meta-grid__value">iOS + Android (Expo React Native)</p>
+        </div>
+        <div class="meta-grid__cell">
+          <p class="meta-grid__label">Skills</p>
+          <p class="meta-grid__value">Product strategy, UX, system architecture, React Native</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Hero image: login before / after ── -->
+  <div class="page-wrap">
+    <div class="reveal">
+      <div class="before-after">
+        <div class="before-after__cell">
+          <p class="before-after__label">Before — Skiffle</p>
+          <img class="before-after__img" src="./assets/skold.png" alt="Skiffle app login screen — minimal branding, username/password only, no SSO" />
+        </div>
+        <div class="before-after__cell before-after__cell--new">
+          <p class="before-after__label before-after__label--new">After — Trinity Pocket</p>
+          <img class="before-after__img" src="./assets/tpnew.png" alt="Trinity Pocket login screen — branded shield icon, email/password, Google and Apple SSO, biometric path" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Background ── -->
+  <section class="section">
+    <div class="page-wrap">
+      <p class="section__label">Background</p>
+      <p class="body-text reveal">Trinity Custom Apparel's field sales reps were using a third-party mobile app called Skiffle to manage clients, browse fabrics, and reference orders on the go. The app was not built by or for Trinity — it was a licensed product with a generic identity, limited feature coverage, and no path to native mobile capabilities like biometric login, push notifications, or camera access.</p>
+      <p class="body-text reveal reveal-delay-1">Trinity needed to own the mobile experience. My job was to define what that meant, scope what to build, and lead the design and architecture of the replacement from the ground up.</p>
+    </div>
+  </section>
+
+  <!-- ── The audit ── -->
+  <section class="section">
+    <div class="page-wrap">
+      <p class="section__label">The audit — reading the existing app</p>
+      <p class="body-text reveal">Before wireframing anything, I did a full structural analysis of Skiffle: mapping every screen, its route in the codebase, and how it compared to Trinity's own dealer web app. The goal was to understand exactly what existed, what was missing, and what Trinity's own backend already supported that Skiffle never exposed.</p>
+      <p class="body-text reveal reveal-delay-1">I documented the gap analysis screen-by-screen: 22 screens in Trinity's dealer web app had no equivalent in Skiffle at all. Three Skiffle-only screens were mobile-native patterns worth carrying forward. Payment management, Styleflow, and the dashboard were entirely absent.</p>
+
+      <div class="critique-pair reveal reveal-delay-2">
+        <img class="critique-pair__img" src="./assets/Reviewone.jpg" alt="Handwritten critique of Skiffle login screen — notes to rename app, add Google SSO, fix error handling, address Apply Now destination" />
+        <img class="critique-pair__img" src="./assets/Reviewtwo.jpg" alt="Handwritten critique of Skiffle dashboard — notes on notification section load, address hierarchy, layout questions for mobile" />
+      </div>
+
+      <div class="img-single reveal reveal-delay-3" style="margin-top: 32px;">
+        <img class="screen-overview" src="./assets/Old2.png" alt="Full overview of Skiffle app screens mapped against Trinity Dealer app — showing gaps across Home, Orders, Clients, Fabrics, Styleflow, Payments, and Library" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Scope decisions ── -->
+  <section class="section">
+    <div class="page-wrap">
+      <p class="section__label">Turning the audit into a scope</p>
+      <p class="body-text reveal">The audit produced a classification system for everything in Trinity's existing web app: features that should become native screens, features that could bridge through a WebView temporarily, features that should be permanently omitted from mobile, and net-new capabilities that only make sense on a phone.</p>
+
+      <div class="constraint-grid reveal reveal-delay-1">
+        <div class="constraint-card">
+          <p class="constraint-card__title">Native builds</p>
+          <ul class="constraint-card__list">
+            <li>Home dashboard with order pulse and bulletins</li>
+            <li>Orders list and order detail</li>
+            <li>Clients directory and client detail</li>
+            <li>Fabric explorer and fabric detail</li>
+            <li>Styleflow garment configurator</li>
+            <li>Rankings screen</li>
+          </ul>
+        </div>
+        <div class="constraint-card">
+          <p class="constraint-card__title">Permanent boundaries</p>
+          <ul class="constraint-card__list">
+            <li>Order creation stays on desktop — not an MVP constraint, a product boundary</li>
+            <li>Trend Reports omitted entirely</li>
+            <li>Role-switching out of scope for v1</li>
+            <li>Styleflow AI endpoint deferred to v2</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="adr-callout reveal reveal-delay-2">
+        <p class="adr-callout__label">Architecture Decision Record · ADR 0003</p>
+        <p class="adr-callout__text">"Trinity Pocket is a field tool — dealers use it to manage relationships, present fabrics, and track orders. Order creation stays on desktop where dealers have the full configuration interface they need to get it right."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Key design decisions ── -->
+  <section class="section">
+    <div class="page-wrap">
+      <p class="section__label">Key design decisions</p>
+
+      <div class="decision-list">
+        <div class="decision-item reveal">
+          <p class="decision-item__num">01</p>
+          <p class="decision-item__title">Five-tab nav — no more, no less</p>
+          <p class="decision-item__body">Skiffle had a fragmented navigation model that didn't reflect how reps actually work. I mapped dealer workflows to five intent-based tabs: Home, Orders, Tools, Clients, Fabrics. The Account screen lives behind a dealer avatar in the Home header — preserving the five-tab constraint while giving payments and profile a clear home.</p>
+          <div class="decision-item__tags">
+            <span class="tag">Information architecture</span>
+            <span class="tag">Navigation design</span>
+          </div>
+        </div>
+
+        <div class="decision-item reveal reveal-delay-1">
+          <p class="decision-item__num">02</p>
+          <p class="decision-item__title">Native-first auth with biometric path</p>
+          <p class="decision-item__body">Skiffle used a basic username/password form. Trinity Pocket implements Google and Apple SSO via native OAuth sheets, biometric login via Face ID on return visits, and a graceful password fallback — all without a WebView in sight. The login screen became the clearest signal that this is a different product entirely.</p>
+          <div class="decision-item__tags">
+            <span class="tag">Native capabilities</span>
+            <span class="tag">Auth UX</span>
+          </div>
+        </div>
+
+        <div class="decision-item reveal reveal-delay-2">
+          <p class="decision-item__num">03</p>
+          <p class="decision-item__title">Styleflow — rack-based garment configurator</p>
+          <p class="decision-item__body">Styleflow was entirely absent from Skiffle. I designed a rack-based architecture: each garment (jacket, trouser, vest) is a configurable Rack with fabric, lining, buttons, and thread selections. Racks group into Stylepages. Picario XPO renders photorealistic previews server-side via Trinity's backend — the mobile app never constructs image URLs directly.</p>
+          <div class="decision-item__tags">
+            <span class="tag">System design</span>
+            <span class="tag">Visual configurator</span>
+            <span class="tag">API integration</span>
+          </div>
+        </div>
+
+        <div class="decision-item reveal reveal-delay-3">
+          <p class="decision-item__num">04</p>
+          <p class="decision-item__title">Sprint sequencing as a design decision</p>
+          <p class="decision-item__body">I sequenced five sprints in dependency order: Auth → Core read-only (12 screens) → Dashboard, Payments, Rankings → Styleflow → Rack Builder and push notifications. Each sprint produces a testable TestFlight build. Dealer access is gated until Sprint 3 payments direction is resolved — so dealers never see an alert they can't act on.</p>
+          <div class="decision-item__tags">
+            <span class="tag">Product strategy</span>
+            <span class="tag">Scope management</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── The interface ── -->
+  <section class="section">
+    <div class="page-wrap">
+      <p class="section__label">The interface</p>
+      <p class="body-text reveal">The production design uses violet <code style="font-size: 12px; font-family: monospace; background: #f1f5f9; padding: 2px 5px; border-radius: 4px;">#7C3AED</code> as the locked brand color — a deliberate break from the navy-and-grey world of Skiffle. Every interactive state, active tab, and CTA uses violet. The tab bar never disappears during normal browsing. Styleflow uses navy filter chips to feel visually distinct from the rest of the app — a creative tool, not a reference screen.</p>
+
+      <div class="scope-strip reveal reveal-delay-1">
+        <span class="scope-badge scope-badge--active">Expo React Native</span>
+        <span class="scope-badge scope-badge--active">NativeWind</span>
+        <span class="scope-badge scope-badge--active">ShadCN UI for RN</span>
+        <span class="scope-badge scope-badge--active">Expo Router</span>
+        <span class="scope-badge scope-badge--active">Supabase</span>
+        <span class="scope-badge">EAS</span>
+        <span class="scope-badge">PostHog</span>
+        <span class="scope-badge">Picario XPO</span>
+      </div>
+
+      <div class="quote-block quote-block--violet reveal reveal-delay-2">
+        <p class="quote-block__text">"A field tool a sales rep is proud to open in front of a client."</p>
+        <p class="quote-block__attr">Product brief — Trinity Pocket</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Outcomes ── -->
+  <section class="section">
+    <div class="page-wrap">
+      <p class="section__label">Outcomes</p>
+      <p class="body-text reveal">Trinity Pocket is currently in active development with Sprint 1 (authentication) in progress. The scope, tech stack, navigation architecture, and nine Architecture Decision Records are locked. The Figma Make prototype covers all twelve Sprint 2 screens and the full Styleflow configurator flow.</p>
+      <div class="outcome-row reveal reveal-delay-1">
+        <div class="outcome-card">
+          <p class="outcome-card__stat">22</p>
+          <p class="outcome-card__desc">Screens identified as missing from the existing app through the gap analysis</p>
+        </div>
+        <div class="outcome-card">
+          <p class="outcome-card__stat">9 ADRs</p>
+          <p class="outcome-card__desc">Architecture decisions locked before a line of production code was written</p>
+        </div>
+        <div class="outcome-card">
+          <p class="outcome-card__stat">5 sprints</p>
+          <p class="outcome-card__desc">Sequenced from auth to full Rack Builder, scoped to a January 2027 launch</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Reflections ── -->
+  <section class="section">
+    <div class="page-wrap">
+      <p class="section__label">Reflections</p>
+      <div class="reflection-grid reveal">
+        <div class="reflection-card">
+          <p class="reflection-card__head">What worked</p>
+          <ul class="reflection-card__list">
+            <li>Auditing the competitor app before designing anything surfaced gaps the team hadn't formally named</li>
+            <li>Locking ADRs early prevented scope from being relitigated at every PR review</li>
+            <li>Treating sprint sequencing as a UX decision — dealer access gates protect the experience</li>
+          </ul>
+        </div>
+        <div class="reflection-card">
+          <p class="reflection-card__head">Next challenges</p>
+          <ul class="reflection-card__list">
+            <li>Translating Figma Make prototype components to their NativeWind/rnr equivalents at scale</li>
+            <li>Native Braintree integration vs. WebView bridge — a Sprint 3 team decision</li>
+            <li>Validating the Styleflow configurator flow with real dealer feedback once TestFlight ships</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Next project ── -->
+  <div class="page-wrap">
+    <a href="case-study-final-shipments.html" style="display: block; text-decoration: none; border-top: 0.5px solid var(--rule);">
+      <div class="next-project reveal">
+        <div>
+          <p class="next-project__label">Next case study</p>
+          <p class="next-project__title">Final Shipments Manager</p>
+        </div>
+        <span class="next-project__arrow">→</span>
+      </div>
+    </a>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <span class="site-footer__copy">© 2026 Niki Beck</span>
+  <nav>
+    <ul class="site-footer__links">
+      <li><a href="index.html#work">Work</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="mailto:niki@wearehamburger.com">Contact</a></li>
+    </ul>
+  </nav>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
