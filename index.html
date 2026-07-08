@@ -118,14 +118,6 @@
         color: var(--muted);
       }
     }
-    .hp-hero__actions .btn--primary {
-      background: var(--gradient-hero);
-      color: #ffffff;
-      border: none;
-    }
-    .hp-hero__actions .btn--primary:hover {
-      opacity: 0.88;
-    }
     .hp-hero__sub {
       font-size: 16px;
       color: var(--muted);
@@ -454,11 +446,11 @@
     }
     .hp-contact__link:hover { color: var(--ink); border-color: var(--stone); }
     .hp-contact__link--primary {
-      background: var(--accent);
+      background: var(--gradient-hero);
       color: #ffffff;
-      border-color: var(--accent);
+      border-color: transparent;
     }
-    .hp-contact__link--primary:hover { background: #7A4FD4; color: #ffffff; border-color: #7A4FD4; }
+    .hp-contact__link--primary:hover { filter: brightness(0.9); }
 
     /* ── Responsive ── */
     @media (max-width: 640px) {

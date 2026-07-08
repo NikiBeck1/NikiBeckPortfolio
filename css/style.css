@@ -137,7 +137,7 @@ a { color: inherit; text-decoration: none; }
   left: 0;
   width: 0;
   height: 1px;
-  background: var(--ink);
+  background: var(--gradient-hero);
   transition: width 0.2s ease;
 }
 
@@ -272,10 +272,10 @@ a { color: inherit; text-decoration: none; }
 .btn:active { transform: scale(0.97); }
 
 .btn--primary {
-  background: var(--ink);
-  color: var(--cream);
+  background: var(--gradient-hero);
+  color: #ffffff;
 }
-.btn--primary:hover { background: #D8D3CC; }
+.btn--primary:hover { filter: brightness(0.9); }
 
 .btn--ghost {
   background: none;
@@ -368,7 +368,7 @@ a { color: inherit; text-decoration: none; }
 .quote-block {
   background: var(--white);
   border: 0.5px solid var(--rule);
-  border-left: 3px solid var(--ink);
+  border-left: 3px solid var(--coral);
   border-radius: 0 var(--radius) var(--radius) 0;
   padding: 20px 24px;
   margin: 28px 0;
@@ -466,7 +466,11 @@ a { color: inherit; text-decoration: none; }
 .outcome-card__stat {
   font-family: var(--serif);
   font-size: 32px;
-  color: var(--ink);
+  background: var(--gradient-hero);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
   margin-bottom: 6px;
   line-height: 1;
 }
@@ -505,17 +509,17 @@ a { color: inherit; text-decoration: none; }
   font-size: 13px;
   font-weight: 500;
   padding: 10px 20px;
-  background: var(--cream);
-  color: var(--ink);
+  background: var(--gradient-hero);
+  color: #ffffff;
   border: none;
   border-radius: var(--radius);
   cursor: pointer;
   white-space: nowrap;
-  transition: background 0.15s;
+  transition: filter 0.15s;
   text-decoration: none;
   display: inline-block;
 }
-.proto-cta__btn:hover { background: var(--dust); }
+.proto-cta__btn:hover { filter: brightness(0.9); }
 
 /* ─── Reflection grid ─── */
 .reflection-grid {
@@ -601,7 +605,7 @@ a { color: inherit; text-decoration: none; }
   top: 0;
   bottom: 0;
   width: 3px;
-  background: var(--violet);
+  background: linear-gradient(180deg, var(--coral-lt), var(--accent));
   border-radius: 0 2px 2px 0;
   transform: scaleY(0);
   transform-origin: top;
@@ -621,7 +625,7 @@ a { color: inherit; text-decoration: none; }
   padding: 20px 22px;
   transition: border-color 0.18s, background-color 0.18s;
 }
-.skill-card:hover { border-color: var(--ghost); }
+.skill-card:hover { border-color: var(--coral); }
 
 /* ─── Footer ─── */
 .site-footer {
