@@ -447,13 +447,98 @@
       .hp-case__num { font-size: 12px; }
       .hp-work__header { flex-direction: column; gap: 4px; }
     }
+
+    /* ── Pill nav (homepage only) ── */
+    .site-nav {
+      background: transparent;
+      border-bottom: none;
+      display: flex;
+      justify-content: center;
+      padding: 20px var(--page-x);
+    }
+    .site-nav__inner {
+      max-width: none;
+      width: auto;
+      height: auto;
+      justify-content: flex-start;
+      background: rgba(28, 25, 23, 0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 0.5px solid var(--stone);
+      border-radius: 999px;
+      padding: 5px;
+      gap: 0;
+    }
+    .site-nav__logo {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 14px 5px 5px;
+      border-right: 0.5px solid var(--rule);
+      margin-right: 4px;
+    }
+    .site-nav__logo::after { display: none; }
+    .nav-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: top;
+      flex-shrink: 0;
+    }
+    .site-nav__links { gap: 0; }
+    .site-nav__links a {
+      padding: 7px 14px;
+      border-radius: 999px;
+    }
+    .site-nav__links a::after { display: none; }
+    .site-nav__links a:hover { background: rgba(240, 236, 230, 0.08); }
+    .site-nav__links a.active { background: rgba(240, 236, 230, 0.06); }
+
+    /* ── Hero two-column layout ── */
+    .hp-hero__inner {
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 48px;
+      align-items: end;
+    }
+    .hp-hero__label {
+      font-size: 16px;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--muted);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .hp-hero__label::before { display: none; }
+    .hp-hero__img {
+      width: 260px;
+      height: 360px;
+      object-fit: cover;
+      object-position: center 8%;
+      border-radius: 20px;
+      display: block;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+    }
+    @media (max-width: 640px) {
+      .hp-hero__inner { grid-template-columns: 1fr; }
+      .hp-hero__img { display: none; }
+    }
   </style>
 </head>
 <body>
 
   <header class="site-nav">
     <div class="site-nav__inner">
-      <a href="index.html" class="site-nav__logo">Niki Beck</a>
+      <a href="index.html" class="site-nav__logo">
+        <img src="assets/nbeckheadshot.JPG" class="nav-avatar" alt="Niki Beck">
+        Niki
+      </a>
       <nav>
         <ul class="site-nav__links">
           <li><a href="#work">Work</a></li>
@@ -472,21 +557,25 @@
     ══════════════════════════════ -->
     <section class="hp-hero">
       <div class="page-wrap">
-        <p class="hp-hero__label">Senior Product Designer · Birmingham, AL</p>
-        <h1 class="hp-hero__title hero-animate">
-          Hi, I'm Niki.<br>
-          <em>I turn complex ideas into thoughtful products.</em>
-        </h1>
-        <p class="hp-hero__sub hero-animate" style="transition-delay:0.1s;">
-          8+ years building B2B tools, mobile apps, and production interfaces
-          where the wrong design decision has real consequences.
-        </p>
-        <div class="hp-hero__actions hero-animate" style="transition-delay:0.2s;">
-          <a href="#work" class="btn btn--primary" style="background:var(--accent);border-color:var(--accent);">See the work</a>
-          <a href="#contact" class="hp-hero__scroll">
-            Get in touch
-            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
+        <div class="hp-hero__inner">
+          <div class="hp-hero__content">
+            <p class="hp-hero__label">👋 Hey, I'm Niki</p>
+            <h1 class="hp-hero__title hero-animate">
+              Senior product<br><em>designer</em> who builds.
+            </h1>
+            <p class="hp-hero__sub hero-animate" style="transition-delay:0.1s;">
+              8+ years building B2B tools, mobile apps, and production interfaces
+              where the wrong design decision has real consequences.
+            </p>
+            <div class="hp-hero__actions hero-animate" style="transition-delay:0.2s;">
+              <a href="#work" class="btn btn--primary" style="background:var(--accent);border-color:var(--accent);">See the work</a>
+              <a href="#contact" class="hp-hero__scroll">
+                Get in touch
+                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </div>
+          <img src="assets/personal.JPG" alt="Niki Beck" class="hp-hero__img">
         </div>
       </div>
     </section>
