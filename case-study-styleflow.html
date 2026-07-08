@@ -3,30 +3,400 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Styleflow - Niki Beck</title>
-  <meta name="description" content="Designing and building Styleflow: a custom garment visualizer that helps users explore thousands of fabrics and place confident orders." />
+  <title>Styleflow — Niki Beck</title>
+  <meta name="description" content="How a live garment visualizer replaced static PDFs and back-and-forth emails, giving dealers visual confidence before every order." />
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    .sf-hero-bar {
-      width: 40px;
+
+    /* ── Progress bar ── */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
       height: 3px;
-      background: #005eff;
-      border-radius: 2px;
-      margin-bottom: 20px;
+      background: var(--ink);
+      width: 0%;
+      z-index: 200;
+      transition: width 0.05s linear;
     }
 
-    @media (max-width: 600px) {
-      .img-slot {
-        height: auto !important;
-      }
-      .img-slot img {
-        width: 100% !important;
-        height: auto !important;
-      }
+    /* ── Back link ── */
+    .cs-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--subtle);
+      margin-bottom: 40px;
+      transition: color 0.15s;
+    }
+    .cs-back:hover { color: var(--ink); }
+
+    /* ── Hero ── */
+    .cs-hero { padding: 72px 0 0; border-bottom: 0.5px solid var(--rule); }
+    .cs-hero__kicker {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 20px;
+    }
+    .cs-hero__title {
+      font-family: var(--serif);
+      font-size: clamp(42px, 7vw, 72px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    .cs-hero__desc {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 540px;
+      margin-bottom: 40px;
+    }
+    .cs-meta-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 0.5px solid var(--rule);
+    }
+    .cs-meta-item {
+      padding: 18px 20px 18px 0;
+      border-right: 0.5px solid var(--rule);
+    }
+    .cs-meta-item:last-child { border-right: none; }
+    .cs-meta-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 5px;
+    }
+    .cs-meta-value { font-size: 13px; font-weight: 500; color: var(--ink); }
+    .cs-hero__image { margin-top: 48px; }
+    .cs-hero__image img {
+      width: 100%;
+      height: 380px;
+      object-fit: contain;
+      background: white;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      display: block;
+    }
+
+    /* ── Sticky section nav ── */
+    .cs-section-nav {
+      position: sticky;
+      top: 61px;
+      z-index: 50;
+      background: var(--cream);
+      border-bottom: 0.5px solid var(--rule);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .cs-section-nav::-webkit-scrollbar { display: none; }
+    .cs-section-nav__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--page-x);
+      display: flex;
+    }
+    .cs-nav-link {
+      font-size: 12px;
+      color: var(--ghost);
+      padding: 13px 16px;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+      cursor: pointer;
+    }
+    .cs-nav-link:hover { color: var(--ink); }
+    .cs-nav-link.active { color: var(--ink); border-bottom-color: var(--ink); }
+
+    /* ── Stats ── */
+    .cs-stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .cs-stat { background: var(--white); padding: 28px 24px; }
+    .cs-stat__num {
+      font-family: var(--serif);
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .cs-stat__label { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .cs-stat__sublabel { font-size: 11px; color: var(--ghost); margin-top: 4px; }
+
+    /* ── Role card ── */
+    .cs-role-card {
+      background: var(--white);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .cs-role-block__label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 8px;
+    }
+    .cs-role-block__text { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+    /* ── Pull quote ── */
+    .cs-pull-quote {
+      padding: 40px 0;
+      border-top: 0.5px solid var(--rule);
+      border-bottom: 0.5px solid var(--rule);
+      margin: 40px 0;
+    }
+    .cs-pull-quote__text {
+      font-family: var(--serif);
+      font-size: clamp(22px, 4vw, 32px);
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      font-style: italic;
+    }
+
+    /* ── Insight callout ── */
+    .cs-insight {
+      background: var(--ink);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      margin: 32px 0;
+    }
+    .cs-insight__label {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 12px;
+    }
+    .cs-insight__text {
+      font-family: var(--serif);
+      font-size: clamp(18px, 3vw, 24px);
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+      font-style: italic;
+      color: var(--cream);
+    }
+
+    /* ── Process flow ── */
+    .cs-flow {
+      display: flex;
+      align-items: center;
+      margin: 32px 0 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .cs-flow-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .cs-flow-step__bubble {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 0.5px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .cs-flow-step__bubble.gate {
+      background: var(--ink);
+      color: var(--cream);
+      border-color: var(--ink);
+    }
+    .cs-flow-step__label { font-size: 11px; color: var(--subtle); text-align: center; white-space: nowrap; }
+    .cs-flow-arrow {
+      flex-shrink: 0;
+      width: 28px;
+      height: 1px;
+      background: var(--rule);
+      position: relative;
+      top: -12px;
+    }
+    .cs-flow-arrow::after {
+      content: '';
+      position: absolute;
+      right: -1px;
+      top: -3px;
+      width: 6px;
+      height: 6px;
+      border-right: 1px solid var(--stone);
+      border-top: 1px solid var(--stone);
+      transform: rotate(45deg);
+    }
+
+    /* ── Decision cards ── */
+    .cs-decision-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--rule);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .cs-decision {
+      background: var(--white);
+      padding: 28px 28px 28px 0;
+      display: grid;
+      grid-template-columns: 80px 1fr;
+    }
+    .cs-decision__num {
+      font-family: var(--serif);
+      font-size: 28px;
+      color: var(--ghost);
+      letter-spacing: -0.02em;
+      padding: 0 24px;
+      padding-top: 2px;
+    }
+    .cs-decision__title { font-size: 15px; font-weight: 500; color: var(--ink); margin-bottom: 10px; line-height: 1.4; }
+    .cs-decision__context { font-size: 13px; color: var(--ghost); margin-bottom: 10px; line-height: 1.6; }
+    .cs-decision__rationale { font-size: 14px; color: var(--muted); line-height: 1.7; }
+    .cs-decision__tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+
+    /* ── Engineering grid ── */
+    .cs-eng-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .cs-eng-card {
+      background: var(--white);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+    .cs-eng-card__label {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 8px;
+    }
+    .cs-eng-card__text { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* ── Results ── */
+    .cs-results-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .cs-result { background: var(--white); padding: 24px; }
+    .cs-result__num {
+      font-family: var(--serif);
+      font-size: clamp(24px, 4vw, 36px);
+      line-height: 1;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .cs-result__desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ── Reflection list ── */
+    .cs-reflection-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--rule);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-top: 24px;
+    }
+    .cs-reflection-item {
+      background: var(--white);
+      padding: 20px 24px;
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .cs-reflection-item__dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--stone);
+      margin-top: 7px;
+    }
+    .cs-reflection-item__text { font-size: 14px; color: var(--muted); line-height: 1.75; }
+    .cs-reflection-item__text strong { color: var(--ink); font-weight: 500; }
+
+    /* ── Takeaways ── */
+    .cs-takeaway-list { display: flex; flex-direction: column; gap: 28px; margin-top: 24px; }
+    .cs-takeaway { display: grid; grid-template-columns: 48px 1fr; gap: 16px; align-items: start; }
+    .cs-takeaway__num { font-family: var(--serif); font-size: 24px; color: var(--ghost); letter-spacing: -0.02em; padding-top: 2px; }
+    .cs-takeaway__text { font-size: 15px; color: var(--muted); line-height: 1.75; }
+    .cs-takeaway__text strong { display: block; font-size: 15px; color: var(--ink); font-weight: 500; margin-bottom: 6px; }
+
+    /* ── Figure caption ── */
+    .cs-figure { margin: 32px 0; }
+    .cs-figure img { width: 100%; border-radius: var(--radius-lg); display: block; }
+    .cs-figure-caption { font-size: 12px; color: var(--ghost); margin-top: 10px; line-height: 1.5; padding: 0 2px; }
+
+    /* ── Next project ── */
+    .cs-next {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 32px 0;
+      border-top: 0.5px solid var(--rule);
+      gap: 16px;
+      transition: opacity 0.15s;
+    }
+    .cs-next:hover { opacity: 0.7; }
+    .cs-next__label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ghost); margin-bottom: 6px; }
+    .cs-next__title { font-family: var(--serif); font-size: 22px; color: var(--ink); letter-spacing: -0.01em; }
+    .cs-next__arrow { font-size: 22px; color: var(--stone); flex-shrink: 0; }
+
+    /* ── Reveal ── */
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .cs-meta-strip { grid-template-columns: 1fr 1fr; }
+      .cs-stat-row { grid-template-columns: 1fr; }
+      .cs-decision { grid-template-columns: 48px 1fr; }
+      .cs-decision__num { font-size: 20px; padding: 0 12px; }
+      .cs-eng-grid { grid-template-columns: 1fr; }
+      .cs-results-grid { grid-template-columns: 1fr; }
+      .cs-role-card { grid-template-columns: 1fr; }
+      .cs-hero__image img { height: 200px; }
+      .cs-section-nav { display: none; }
     }
   </style>
 </head>
 <body>
+
+  <div id="progress-bar"></div>
 
   <header class="site-nav">
     <div class="site-nav__inner">
@@ -42,118 +412,261 @@
     </div>
   </header>
 
+  <!-- ── Hero ── -->
+  <section class="cs-hero" id="hero">
+    <div class="page-wrap">
+      <a href="index.html" class="cs-back">← All work</a>
+      <p class="cs-hero__kicker">Case study · 03 · Styleflow</p>
+      <h1 class="cs-hero__title">A garment configurator built for confidence, not complexity.</h1>
+      <p class="cs-hero__desc">Dealers were choosing from thousands of fabric and trim combinations using static PDFs and back-and-forth emails. I designed and built a live visualizer that made the right choice obvious — and the order accurate.</p>
+      <div class="cs-meta-strip">
+        <div class="cs-meta-item">
+          <p class="cs-meta-label">Role</p>
+          <p class="cs-meta-value">Lead UI/UX + Front-end</p>
+        </div>
+        <div class="cs-meta-item">
+          <p class="cs-meta-label">Platform</p>
+          <p class="cs-meta-value">Web app · Dealer portal</p>
+        </div>
+        <div class="cs-meta-item">
+          <p class="cs-meta-label">Skills</p>
+          <p class="cs-meta-value">UX strategy, IA, React build</p>
+        </div>
+        <div class="cs-meta-item">
+          <p class="cs-meta-label">Status</p>
+          <p class="cs-meta-value">Shipped to production</p>
+        </div>
+      </div>
+    </div>
+    <div class="cs-hero__image page-wrap">
+      <img src="./assets/sthero.png" alt="Styleflow garment visualizer — two-panel layout with live Picario render and fabric selector" />
+    </div>
+  </section>
+
+  <!-- ── Sticky nav ── -->
+  <nav class="cs-section-nav" id="cs-section-nav">
+    <div class="cs-section-nav__inner">
+      <a class="cs-nav-link" data-target="summary">Summary</a>
+      <a class="cs-nav-link" data-target="challenge">Challenge</a>
+      <a class="cs-nav-link" data-target="discovery">Discovery</a>
+      <a class="cs-nav-link" data-target="strategy">Strategy</a>
+      <a class="cs-nav-link" data-target="ia">Architecture</a>
+      <a class="cs-nav-link" data-target="decisions">Decisions</a>
+      <a class="cs-nav-link" data-target="engineering">Engineering</a>
+      <a class="cs-nav-link" data-target="results">Results</a>
+      <a class="cs-nav-link" data-target="reflection">Reflection</a>
+    </div>
+  </nav>
+
   <main>
 
-    <!-- Hero -->
-    <section class="section" style="padding-top: 64px;">
+    <!-- ── Executive Summary ── -->
+    <section class="section" id="summary">
       <div class="page-wrap">
-        <a href="index.html" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--subtle); margin-bottom: 32px; transition: color 0.15s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--subtle)'">← Back to work</a>
-        <div class="hero-animate">
-          <div class="sf-hero-bar"></div>
-          <p class="eyebrow">Case study - 03</p>
-          <h1 class="display" style="margin-bottom: 16px;">Styleflow</h1>
-          <p class="subhead" style="margin-bottom: 0;">A custom garment visualizer designed and built to help users explore thousands of fabrics, compare options quickly, and place production-ready orders with confidence.</p>
+        <p class="section__label">Executive summary</p>
+        <div class="cs-stat-row reveal">
+          <div class="cs-stat">
+            <p class="cs-stat__num">1000s</p>
+            <p class="cs-stat__label">Fabric and trim combinations navigable through one guided flow</p>
+            <p class="cs-stat__sublabel">Previously: static PDFs and manual back-and-forth</p>
+          </div>
+          <div class="cs-stat">
+            <p class="cs-stat__num">Live</p>
+            <p class="cs-stat__label">Picario render updates on every material selection</p>
+            <p class="cs-stat__sublabel">No page reload. No guesswork about the final look.</p>
+          </div>
+          <div class="cs-stat">
+            <p class="cs-stat__num">↓ errors</p>
+            <p class="cs-stat__label">Fewer ordering mistakes in the production handoff</p>
+            <p class="cs-stat__sublabel">Order summary maps directly to production fields</p>
+          </div>
         </div>
-        <div class="meta-grid" style="margin-top: 32px;">
-          <div class="meta-grid__cell">
-            <p class="meta-grid__label">Role</p>
-            <p class="meta-grid__value">Lead UI/UX + Front-end</p>
+        <p class="body-text reveal">Styleflow is a garment configurator built into Trinity's dealer portal. Dealers select a base garment, filter a fabric catalog, pick trims, and watch a Picario-rendered preview update in real time. The final configuration generates a production-ready order summary. I designed and built every part of it — from the UX flow to the React components.</p>
+        <p class="body-text reveal">The problem it replaced wasn't a bad interface. It was no interface at all. Dealers were making thousands-of-dollars purchasing decisions by emailing static fabric swatches back and forth and hoping the final garment matched the mental image.</p>
+      </div>
+    </section>
+
+    <!-- ── My Role ── -->
+    <section class="section" id="my-role">
+      <div class="page-wrap">
+        <p class="section__label">My role</p>
+        <div class="cs-role-card reveal">
+          <div class="cs-role-block">
+            <p class="cs-role-block__label">What I owned</p>
+            <p class="cs-role-block__text">End-to-end design and front-end implementation. UX flows, Figma prototypes, every React component in the Styleflow feature — Browse, Visualize, Fabrics, Materials, Buttons, Threads, Zippers, Ribknits, Rack, Stylepage. Also built the admin analytics view for tracking usage.</p>
           </div>
-          <div class="meta-grid__cell">
-            <p class="meta-grid__label">Platform</p>
-            <p class="meta-grid__value">Web app configurator</p>
-          </div>
-          <div class="meta-grid__cell">
-            <p class="meta-grid__label">Skills</p>
-            <p class="meta-grid__value">UX strategy, IA, React build</p>
+          <div class="cs-role-block">
+            <p class="cs-role-block__label">What I collaborated on</p>
+            <p class="cs-role-block__text">The Picario rendering pipeline, the <code style="font-size:12px;font-family:monospace;background:var(--dust);padding:2px 5px;border-radius:4px;">relevantMaterials</code> API design that drives dynamic trim steps, and the Dry::Validation contracts on the visualizer API endpoints. The backend data model already existed — my job was designing how the interface responded to it.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Hero image -->
-    <div class="page-wrap">
-      <div class="img-slot reveal" style="height: 300px; overflow: hidden;">
-        <img src="./assets/sthero.png" alt="Styleflow garment visualizer overview" style="width: 100%; height: 100%; object-fit: contain; background: white;" />
-      </div>
-    </div>
-
-    <!-- Problem -->
-    <section class="section">
+    <!-- ── The Challenge ── -->
+    <section class="section" id="challenge">
       <div class="page-wrap">
-        <p class="section__label">The problem</p>
-        <p class="body-text reveal">Customers needed to choose garments from thousands of fabric and trim combinations, but the previous buying flow relied on static photos, disconnected PDFs, and back-and-forth emails. Users could not confidently answer a simple question: "What will my final garment actually look like?"</p>
-        <p class="body-text reveal reveal-delay-1">That uncertainty slowed decisions, increased revision cycles, and created avoidable ordering errors. Sales teams spent too much time translating visual intent into production details instead of moving orders forward.</p>
-        <div class="constraint-grid reveal reveal-delay-2">
+        <p class="section__label">The challenge</p>
+        <p class="body-text reveal">The previous buying experience wasn't broken — it was absent. Dealers browsed a physical sample book or a static PDF catalog, emailed a fabric code to a sales rep, and waited. There was no visual preview, no trim selection interface, and no production-ready output. The gap between "what I think I ordered" and "what arrives" was entirely invisible until the garment was being made.</p>
+        <p class="body-text reveal">The ordering error rate wasn't just a user experience problem. Errors in a custom apparel workflow are expensive — a wrong lining or button selection on a bespoke suit doesn't have a simple return flow. The cost of ambiguity lands on operations.</p>
+        <div class="constraint-grid reveal" style="margin-top: 28px;">
           <div class="constraint-card">
             <p class="constraint-card__title">User constraints</p>
             <ul class="constraint-card__list">
-              <li>Massive option sets are hard to compare</li>
-              <li>Visual outcomes were unclear before ordering</li>
-              <li>Non-technical users needed guided decisions</li>
-              <li>Too many steps to complete one style</li>
+              <li>Thousands of fabric and trim combinations to navigate</li>
+              <li>Visual outcome unclear before ordering</li>
+              <li>Non-technical dealers needed guided decisions</li>
+              <li>Complex garment rules vary by style type</li>
             </ul>
           </div>
           <div class="constraint-card">
-            <p class="constraint-card__title">Business constraints</p>
+            <p class="constraint-card__title">Technical constraints</p>
             <ul class="constraint-card__list">
-              <li>Thousands of fabric/trim combinations</li>
-              <li>Complex garment rules by style type</li>
-              <li>Need for production-ready order data</li>
-              <li>Fast quote-to-order conversion required</li>
+              <li>Picario rendering is external — the UI must handle loading and fallback states</li>
+              <li>Trim options are not static — <code style="font-size:11px;font-family:monospace;">relevantMaterials</code> is API-driven per garment type</li>
+              <li>Output must map to production fields — not just look right</li>
+              <li>MUI component library for all UI primitives</li>
             </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Approach -->
-    <section class="section">
+    <!-- ── Discovery ── -->
+    <section class="section" id="discovery">
       <div class="page-wrap">
-        <p class="section__label">Approach</p>
-        <p class="body-text reveal">I designed Styleflow as a guided visual workflow: choose a base garment, filter fabrics by real constraints, preview the garment in context, then generate an order summary that maps directly to production fields.</p>
-        <p class="body-text reveal reveal-delay-1">The key design principle was progressive complexity. New users see only the decisions they need at each step, while power users can jump between sections without losing state.</p>
-        <div class="img-single reveal reveal-delay-2">
-          <div class="img-slot" style="height: 300px; overflow: hidden;">
-            <img src="./assets/st1.png" alt="Styleflow step-by-step garment configuration flow" style="width: 100%; height: 100%; object-fit: contain; background: white;" />
-          </div>
+        <p class="section__label">Discovery</p>
+        <p class="body-text reveal">Before designing anything, I mapped the full API surface: every endpoint the visualizer would need to call, every response shape, and every constraint the backend imposed. Two things became clear immediately.</p>
+        <p class="body-text reveal">First, the trim steps aren't fixed. A topcoat doesn't have a button step because Picario can't render one on that silhouette — the backend knows this and excludes it from <code style="font-size:12px;font-family:monospace;background:var(--dust);padding:2px 5px;border-radius:4px;">relevantMaterials</code>. The interface had to be dynamic, not templated. Every hardcoded trim step would eventually be wrong for some garment type.</p>
+        <p class="body-text reveal">Second, the garment configurator is actually two products sharing one codebase. Browse mode (finding fabrics) and Visualize mode (configuring a garment) have fundamentally different jobs. Conflating them would have produced an interface that does neither well.</p>
+
+        <div class="cs-insight reveal">
+          <p class="cs-insight__label">Key insight</p>
+          <p class="cs-insight__text">The configurator isn't complex because the product is complex. It's guided because the product is complex. The interface's job is to absorb the complexity so the dealer never has to see it.</p>
         </div>
       </div>
     </section>
 
-    <!-- Key decisions -->
-    <section class="section">
+    <!-- ── Product Strategy ── -->
+    <section class="section" id="strategy">
       <div class="page-wrap">
-        <p class="section__label">Key decisions</p>
-        <div class="decision-list">
+        <p class="section__label">Product strategy</p>
+        <p class="body-text reveal">The strategic frame was progressive complexity. Show only the current decision — not all decisions. Let the dealer move step by step: garment type, collection, fabric, then trims in the order the API defines. At any point they can jump back without losing their selections. Power users can navigate freely. New users are never overwhelmed.</p>
+        <p class="body-text reveal">The two-panel layout — rendered garment image on the left, configuration controls on the right — came from the same principle. The preview is always visible. It's not a confirmation screen at the end; it's a constant feedback loop that updates with every selection. Dealers see the garment becoming real as they configure it.</p>
 
-          <div class="decision-item reveal">
-            <p class="decision-item__num">01</p>
-            <p class="decision-item__title">Filter-first fabric exploration</p>
-            <p class="decision-item__body">Instead of dumping every fabric upfront, users start with high-signal filters like material family, weight, and use case. This reduced option overload and made large catalogs feel navigable.</p>
-            <div class="decision-item__tags">
-              <span class="tag">Information architecture</span>
-              <span class="tag">Catalog UX</span>
+        <div class="cs-pull-quote reveal">
+          <p class="cs-pull-quote__text">"I can finally show customers exactly what they are ordering before we submit."</p>
+          <p style="font-size:12px; color:var(--ghost); margin-top:16px; letter-spacing:0.06em; text-transform:uppercase;">Sales team, post-launch feedback</p>
+        </div>
+
+        <p class="body-text reveal">That quote captures the product goal exactly. Styleflow isn't a tool for Niki or for operations — it's a tool dealers use in front of clients. The interface needed to be presentable, not just functional. A cluttered or confusing configurator reflects on the dealer's professionalism. That shaped every visual decision.</p>
+      </div>
+    </section>
+
+    <!-- ── Information Architecture ── -->
+    <section class="section" id="ia">
+      <div class="page-wrap">
+        <p class="section__label">Information architecture</p>
+        <p class="body-text reveal">The configurator follows a linear path with two entry points and a branching trim section that the API controls.</p>
+
+        <div class="cs-flow reveal">
+          <div class="cs-flow-step">
+            <div class="cs-flow-step__bubble">1</div>
+            <span class="cs-flow-step__label">Browse / filter</span>
+          </div>
+          <div class="cs-flow-arrow"></div>
+          <div class="cs-flow-step">
+            <div class="cs-flow-step__bubble">2</div>
+            <span class="cs-flow-step__label">Collection</span>
+          </div>
+          <div class="cs-flow-arrow"></div>
+          <div class="cs-flow-step">
+            <div class="cs-flow-step__bubble gate">3</div>
+            <span class="cs-flow-step__label">Fabric</span>
+          </div>
+          <div class="cs-flow-arrow"></div>
+          <div class="cs-flow-step">
+            <div class="cs-flow-step__bubble">4</div>
+            <span class="cs-flow-step__label">Trims (dynamic)</span>
+          </div>
+          <div class="cs-flow-arrow"></div>
+          <div class="cs-flow-step">
+            <div class="cs-flow-step__bubble">5</div>
+            <span class="cs-flow-step__label">Save to Rack</span>
+          </div>
+        </div>
+        <p class="cs-figure-caption reveal" style="margin-bottom: 24px;">Step 3 — Fabric — is where the Picario preview first renders. From that point on, every trim selection updates it live.</p>
+
+        <div class="cs-figure reveal">
+          <img src="./assets/st1.png" alt="Styleflow step-by-step garment configuration flow" style="width:100%; height:280px; object-fit:contain; background:white; border-radius:var(--radius-lg); border:0.5px solid var(--rule);" />
+          <p class="cs-figure-caption">The step-by-step configuration flow. Each step maps to one decision. The dealer never sees all decisions at once.</p>
+        </div>
+
+        <p class="body-text reveal">Racks — individual configured garments — group into Stylepages. A dealer building a three-piece suit creates three Racks (jacket, trouser, vest) and saves them together as a Stylepage tied to a client. Stylepages become the persistent artifact — shareable, revisitable, and convertible to an order.</p>
+      </div>
+    </section>
+
+    <!-- ── UX Decisions ── -->
+    <section class="section" id="decisions">
+      <div class="page-wrap">
+        <p class="section__label">UX decisions</p>
+        <p class="body-text reveal" style="margin-bottom: 28px;">Four decisions defined the product. Each one had an argument against it — that's what made them worth making explicitly.</p>
+
+        <div class="cs-decision-list reveal">
+
+          <div class="cs-decision">
+            <p class="cs-decision__num">01</p>
+            <div class="cs-decision__content">
+              <p class="cs-decision__title">Filter-first fabric exploration — filters before the catalog, not after.</p>
+              <p class="cs-decision__context">The obvious alternative: show all fabrics and let dealers search. Simple to build, familiar pattern.</p>
+              <p class="cs-decision__rationale">The catalog is too large for search to feel manageable. Presenting thousands of options and asking dealers to filter down produces a different cognitive experience than presenting a small, filtered set and letting them expand. High-signal filters — material family, weight, use case — reduce the visible option set to something that feels curated rather than overwhelming. Dealers feel like they're finding the right fabric, not eliminating wrong ones.</p>
+              <div class="cs-decision__tags">
+                <span class="tag">Information architecture</span>
+                <span class="tag">Catalog UX</span>
+                <span class="tag">Option overload</span>
+              </div>
             </div>
           </div>
 
-          <div class="decision-item reveal reveal-delay-1">
-            <p class="decision-item__num">02</p>
-            <p class="decision-item__title">Live garment preview with state persistence</p>
-            <p class="decision-item__body">Every material and trim update immediately re-renders the garment preview. Users can test combinations quickly without losing prior selections, which encouraged exploration while preserving confidence.</p>
-            <div class="decision-item__tags">
-              <span class="tag">Visual feedback</span>
-              <span class="tag">Interaction design</span>
+          <div class="cs-decision">
+            <p class="cs-decision__num">02</p>
+            <div class="cs-decision__content">
+              <p class="cs-decision__title">Live Picario preview with full state persistence.</p>
+              <p class="cs-decision__context">The alternative: show a preview at the end, after all selections are made.</p>
+              <p class="cs-decision__rationale">End-of-flow confirmation is a test. Live preview is exploration. When the garment renders immediately and updates with every trim selection, dealers explore combinations they wouldn't have thought to try. The preview changes the nature of the interaction from "filling out a form" to "building something." State persistence — selections survive navigation between steps — removes the anxiety of exploration. Trying a different lining doesn't mean starting over.</p>
+              <div class="cs-decision__tags">
+                <span class="tag">Visual feedback</span>
+                <span class="tag">Interaction design</span>
+                <span class="tag">State management</span>
+              </div>
             </div>
           </div>
 
-          <div class="decision-item reveal reveal-delay-2">
-            <p class="decision-item__num">03</p>
-            <p class="decision-item__title">Order summary as source of truth</p>
-            <p class="decision-item__body">The final step translates the visual build into line-item order data with selected components, quantities, and notes. This closed the gap between what users saw and what operations needed to produce.</p>
-            <div class="decision-item__tags">
-              <span class="tag">System design</span>
-              <span class="tag">Error prevention</span>
+          <div class="cs-decision">
+            <p class="cs-decision__num">03</p>
+            <div class="cs-decision__content">
+              <p class="cs-decision__title">Dynamic trim steps driven by the API — nothing hardcoded.</p>
+              <p class="cs-decision__context">The easy path: build a fixed sequence of trim steps (lining → button → thread) and show all of them every time.</p>
+              <p class="cs-decision__rationale">This breaks for topcoats (no button), casual shirts (different lining logic), and any future garment type the backend adds. The <code style="font-size:12px;font-family:monospace;background:var(--dust);padding:2px 5px;border-radius:4px;">relevantMaterials</code> array in the API response defines exactly which trim steps apply to the selected garment type. The interface reads that array and renders the right steps in order. Adding a new garment type to the backend requires zero front-end changes. That's the right relationship between a UI and an API.</p>
+              <div class="cs-decision__tags">
+                <span class="tag">API-driven UI</span>
+                <span class="tag">System design</span>
+                <span class="tag">Scalability</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="cs-decision">
+            <p class="cs-decision__num">04</p>
+            <div class="cs-decision__content">
+              <p class="cs-decision__title">Order summary as the production source of truth — not a visual recap.</p>
+              <p class="cs-decision__context">Many configurators show a "confirmation" screen that summarizes choices visually. That's for the dealer. Operations needs something different.</p>
+              <p class="cs-decision__rationale">The Rack that Styleflow saves isn't a pretty summary — it's a structured record containing every selected ID: fabric, lining, button, thread, zipper, ribknit, base model, garment type. That data maps directly to the fields that production needs to fulfill the order. There's no translation step, no interpretation, no "what did they mean by this?" Every ambiguity in the old email workflow is eliminated because the output is structured data, not a description of what the dealer chose.</p>
+              <div class="cs-decision__tags">
+                <span class="tag">System design</span>
+                <span class="tag">Error prevention</span>
+                <span class="tag">Production handoff</span>
+              </div>
             </div>
           </div>
 
@@ -161,89 +674,148 @@
       </div>
     </section>
 
-    <!-- Interface -->
-    <section class="section">
+    <!-- ── The interface ── -->
+    <section class="section" id="interface">
       <div class="page-wrap">
         <p class="section__label">The interface</p>
+        <p class="body-text reveal">The two-panel layout keeps the rendered preview permanently visible. The left panel holds the Picario image — zoomable, with a swatch toggle to compare the fabric in isolation. The right panel scrolls through configuration steps via React Router's Outlet, so the URL tracks which step the dealer is on and the browser back button works as expected.</p>
 
-        <div class="img-pair reveal">
-          <div class="img-slot" style="height: 280px; overflow: hidden;">
-            <img src="./assets/st2.png" alt="Styleflow fabric library and filter panel" style="width: 100%; height: 100%; object-fit: contain; background: white;" />
-          </div>
-          <div class="img-slot" style="height: 280px; overflow: hidden;">
-            <img src="./assets/st3.png" alt="Styleflow garment configuration and live preview" style="width: 100%; height: 100%; object-fit: contain; background: white;" />
-          </div>
-        </div>
-
-        <div class="img-single reveal reveal-delay-1">
-          <div class="img-slot" style="height: 300px; overflow: hidden;">
-            <img src="./assets/stmobile.png" alt="Styleflow order summary and production handoff view" style="width: 100%; height: 100%; object-fit: contain; background: white;" />
-          </div>
-        </div>
-
-        <div class="quote-block reveal reveal-delay-2">
-          <p class="quote-block__text">"I can finally show customers exactly what they are ordering before we submit."</p>
-          <p class="quote-block__attr">Sales team feedback</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Outcomes -->
-    <section class="section">
-      <div class="page-wrap">
-        <p class="section__label">Outcomes</p>
-        <p class="body-text reveal">Styleflow replaced a fragmented ordering experience with a single visual workflow. Teams could move from concept to order with fewer manual clarifications and clearer production inputs.</p>
-        <div class="outcome-row reveal reveal-delay-1">
-          <div class="outcome-card">
-            <p class="outcome-card__stat">Faster</p>
-            <p class="outcome-card__desc">Fabric exploration and comparison across large catalogs</p>
-          </div>
-          <div class="outcome-card">
-            <p class="outcome-card__stat">Clearer</p>
-            <p class="outcome-card__desc">Visual confidence before committing to final order</p>
-          </div>
-          <div class="outcome-card">
-            <p class="outcome-card__stat">Fewer errors</p>
-            <p class="outcome-card__desc">More accurate handoff from configuration to production</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Reflections -->
-    <section class="section">
-      <div class="page-wrap">
-        <p class="section__label">Reflections</p>
-        <div class="reflection-grid reveal">
-          <div class="reflection-card">
-            <p class="reflection-card__head">What worked</p>
-            <ul class="reflection-card__list">
-              <li>Progressive disclosure kept large option sets manageable</li>
-              <li>Live preview dramatically improved decision confidence</li>
-              <li>Order summary aligned design intent with operations</li>
-            </ul>
-          </div>
-          <div class="reflection-card">
-            <p class="reflection-card__head">Next iteration</p>
-            <ul class="reflection-card__list">
-              <li>Add saved looks and comparison mode for teams</li>
-              <li>Introduce smarter recommendations based on prior orders</li>
-              <li>Expand analytics on drop-off points in the flow</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Next project -->
-    <div class="page-wrap">
-      <a href="case-study-client-sites.html" style="display: block; text-decoration: none; border-top: 0.5px solid var(--rule);">
-        <div class="next-project reveal">
+        <div class="img-pair reveal" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:24px;">
           <div>
-            <p class="next-project__label">Next case study</p>
-            <p class="next-project__title">Client work - Hamburger Creative</p>
+            <img src="./assets/st2.png" alt="Styleflow fabric library and filter panel" style="width:100%; height:260px; object-fit:contain; background:white; border-radius:var(--radius-lg); border:0.5px solid var(--rule);" />
+            <p class="cs-figure-caption" style="margin-top:8px;">Browse mode — filter panel with collection grid. High-signal filters reduce the visible set before the dealer sees individual fabrics.</p>
           </div>
-          <span class="next-project__arrow">→</span>
+          <div>
+            <img src="./assets/st3.png" alt="Styleflow garment configuration and live preview" style="width:100%; height:260px; object-fit:contain; background:white; border-radius:var(--radius-lg); border:0.5px solid var(--rule);" />
+            <p class="cs-figure-caption" style="margin-top:8px;">Visualize mode — Picario render left, trim selection right. The preview updates immediately on every selection.</p>
+          </div>
+        </div>
+
+        <div class="cs-figure reveal">
+          <img src="./assets/stmobile.png" alt="Styleflow on mobile — stacked layout with fabric swatch and material summary" style="width:100%; height:280px; object-fit:contain; background:white; border-radius:var(--radius-lg); border:0.5px solid var(--rule);" />
+          <p class="cs-figure-caption">Responsive behavior — stacked column layout on mobile and tablet, side-by-side on laptop and up. The preview is always visible, just repositioned.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Engineering ── -->
+    <section class="section" id="engineering">
+      <div class="page-wrap">
+        <p class="section__label">Engineering collaboration</p>
+        <p class="body-text reveal">I built every front-end component and owned the React implementation. The backend visualizer API — Picario rendering, base models, collections, fabric endpoints — already existed. My job was designing the interface's relationship with it.</p>
+
+        <div class="cs-eng-grid reveal">
+          <div class="cs-eng-card">
+            <p class="cs-eng-card__label">Picario rendering</p>
+            <p class="cs-eng-card__text">The rendered garment image is a URI that the backend constructs from selected IDs. The UI hits <code style="font-size:11px;font-family:monospace;">GET visualizer_fabrics/fabric</code> with the full selection state and receives a rendered image URL. Loading states and fallback images are handled at the component level — the dealer always sees something, even during render.</p>
+          </div>
+          <div class="cs-eng-card">
+            <p class="cs-eng-card__label">Dynamic trim steps</p>
+            <p class="cs-eng-card__text">The <code style="font-size:11px;font-family:monospace;">relevantMaterials</code> array in the fabric response drives which trim components render. The component iterates the array, maps each trim type to its endpoint, and renders steps in API-defined order. Zero hardcoded step sequences.</p>
+          </div>
+          <div class="cs-eng-card">
+            <p class="cs-eng-card__label">Edit vs. create mode</p>
+            <p class="cs-eng-card__text">A <code style="font-size:11px;font-family:monospace;">rackId</code> URL parameter signals edit mode — existing selections are pre-loaded, the save action updates rather than creates. New and returning configurations share one component tree; mode is a URL concern, not a structural one.</p>
+          </div>
+          <div class="cs-eng-card">
+            <p class="cs-eng-card__label">React Router Outlet</p>
+            <p class="cs-eng-card__text">The right configuration panel is a nested route Outlet. Each trim step lives at its own URL — browser back works, deep-linking into a specific step works, and the URL becomes an accurate representation of where in the configuration the dealer is.</p>
+          </div>
+        </div>
+
+        <p class="body-text reveal">The most important backend conversation was about the <code style="font-size:12px;font-family:monospace;background:var(--dust);padding:2px 5px;border-radius:4px;">garmentTypeToQuickLookType</code> mapping — which garment types have a QuickLook reference guide and which don't. That's a data question that had to be answered before the component could be built correctly, and it only surfaced because I read the API response rather than assuming the data I needed would be there.</p>
+      </div>
+    </section>
+
+    <!-- ── Results ── -->
+    <section class="section" id="results">
+      <div class="page-wrap">
+        <p class="section__label">Results</p>
+        <div class="cs-results-grid reveal">
+          <div class="cs-result">
+            <p class="cs-result__num">Visual confidence</p>
+            <p class="cs-result__desc">Dealers see the exact garment before submitting — no more ordering by description</p>
+          </div>
+          <div class="cs-result">
+            <p class="cs-result__num">Faster</p>
+            <p class="cs-result__desc">Fabric exploration and comparison across large catalogs — filters over search</p>
+          </div>
+          <div class="cs-result">
+            <p class="cs-result__num">↓ errors</p>
+            <p class="cs-result__desc">Production handoff is structured data, not a description — fewer misinterpretations</p>
+          </div>
+        </div>
+
+        <div class="quote-block reveal">
+          <p class="quote-block__text">"I can finally show customers exactly what they are ordering before we submit."</p>
+          <p class="quote-block__attr">Sales team feedback, post-launch</p>
+        </div>
+
+        <p class="body-text reveal">Styleflow also became the foundation for Trinity Pocket — the Garment Configurator in the mobile app is a direct port of the same rack-based data model and Picario rendering pipeline. Building it well the first time meant the mobile version inherited the architecture rather than reinventing it.</p>
+      </div>
+    </section>
+
+    <!-- ── Reflection ── -->
+    <section class="section" id="reflection">
+      <div class="page-wrap">
+        <p class="section__label">Reflection</p>
+        <p class="body-text reveal">Reading the API before wireframing was the single most valuable thing I did on this project. The dynamic trim step logic — which turned out to be the most technically interesting part of the build — was only possible because I understood <code style="font-size:12px;font-family:monospace;background:var(--dust);padding:2px 5px;border-radius:4px;">relevantMaterials</code> before I drew a single screen.</p>
+        <div class="cs-reflection-list reveal">
+          <div class="cs-reflection-item">
+            <div class="cs-reflection-item__dot"></div>
+            <p class="cs-reflection-item__text"><strong>Add saved looks and comparison mode.</strong> Dealers often want to show a client two or three fabric options side by side. Today, that means building multiple Racks and switching between them. A native comparison view — showing two Picario renders at once — would meaningfully change how Styleflow is used in a sales meeting.</p>
+          </div>
+          <div class="cs-reflection-item">
+            <div class="cs-reflection-item__dot"></div>
+            <p class="cs-reflection-item__text"><strong>Instrument analytics from day one.</strong> The <code style="font-size:12px;font-family:monospace;background:var(--dust);padding:2px 5px;border-radius:4px;">styleflow_stats</code> admin view exists but is lightweight. I don't know which garment types get configured most, where in the flow dealers abandon, or which fabrics get previewed but not ordered. That data should drive every future iteration.</p>
+          </div>
+          <div class="cs-reflection-item">
+            <div class="cs-reflection-item__dot"></div>
+            <p class="cs-reflection-item__text"><strong>Test with real dealers in a real sales context.</strong> The two-panel desktop layout works well in development. The real test is a dealer opening it on a laptop across a table from a client with uncertain wifi. The interaction model assumes a calm, unhurried environment that doesn't always exist in the field.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Key Takeaways ── -->
+    <section class="section" id="takeaways">
+      <div class="page-wrap">
+        <p class="section__label">Key takeaways</p>
+        <div class="cs-takeaway-list reveal">
+          <div class="cs-takeaway">
+            <span class="cs-takeaway__num">1</span>
+            <div class="cs-takeaway__text">
+              <strong>Read the API before you wireframe.</strong>
+              The most important design decisions in Styleflow came from understanding what the API could and couldn't do — not from user research or competitor analysis. The dynamic trim step logic, the edit mode URL parameter, the Picario loading states — all of these came from API-first thinking. Designing against an imagined API and then reconciling with reality produces worse work.
+            </div>
+          </div>
+          <div class="cs-takeaway">
+            <span class="cs-takeaway__num">2</span>
+            <div class="cs-takeaway__text">
+              <strong>Progressive complexity is a system, not a style.</strong>
+              Showing one decision at a time isn't just visually calm — it's an architectural choice. It means the URL tracks state, the back button works, and the component tree reflects the user's actual position in a workflow. Complexity hidden in the UI has a way of reappearing in the code.
+            </div>
+          </div>
+          <div class="cs-takeaway">
+            <span class="cs-takeaway__num">3</span>
+            <div class="cs-takeaway__text">
+              <strong>The output format is part of the design.</strong>
+              Styleflow's order summary isn't a confirmation screen — it's a production artifact. Treating the output as a design surface (what data format does operations actually need?) closed the gap that the old email workflow left open. The interface is only finished when the handoff is right, not just when the experience is right.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Next project ── -->
+    <div class="page-wrap">
+      <a href="case-study-client-sites.html" style="display: block; text-decoration: none;">
+        <div class="cs-next reveal">
+          <div>
+            <p class="cs-next__label">Next case study</p>
+            <p class="cs-next__title">Client Sites — Hamburger Creative</p>
+          </div>
+          <span class="cs-next__arrow">→</span>
         </div>
       </a>
     </div>
@@ -262,5 +834,44 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    // Progress bar
+    const bar = document.getElementById('progress-bar');
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      bar.style.width = (scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0) + '%';
+    }, { passive: true });
+
+    // Sticky nav active section
+    const navLinks = document.querySelectorAll('.cs-nav-link');
+    const sectionIds = ['summary','challenge','discovery','strategy','ia','decisions','engineering','results','reflection'];
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sectionIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 120) current = id;
+      });
+      navLinks.forEach(link => link.classList.toggle('active', link.dataset.target === current));
+    }, { passive: true });
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        const target = document.getElementById(link.dataset.target);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
 </body>
 </html>
