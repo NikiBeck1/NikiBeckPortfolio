@@ -1,5 +1,75 @@
 /* main.js - shared across all pages */
 
+/* ─── Theme picker (runs before DOMContentLoaded for instant restore) ─── */
+(function () {
+  const THEMES = [
+    { id: 'void',   title: 'Void — default dark' },
+    { id: 'aurora', title: 'Aurora — blue-green' },
+    { id: 'ember',  title: 'Ember — warm rust' },
+    { id: 'iris',   title: 'Iris — deep violet' },
+    { id: 'mist',   title: 'Mist — cool slate' },
+  ];
+  const KEY = 'nb-theme';
+
+  function applyTheme(id) {
+    document.body.classList.remove(...THEMES.map(t => 'theme-' + t.id));
+    if (id !== 'void') document.body.classList.add('theme-' + id);
+    document.querySelectorAll('.theme-swatch').forEach(s => {
+      s.classList.toggle('is-active', s.dataset.theme === id);
+    });
+    localStorage.setItem(KEY, id);
+  }
+
+  /* Restore saved theme immediately */
+  const saved = localStorage.getItem(KEY) || 'void';
+  if (saved !== 'void') document.body.classList.add('theme-' + saved);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    /* Build picker DOM */
+    const picker = document.createElement('div');
+    picker.className = 'theme-picker';
+    picker.setAttribute('aria-label', 'Background theme picker');
+
+    const panel = document.createElement('div');
+    panel.className = 'theme-picker__panel';
+
+    THEMES.forEach(({ id, title }) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'theme-swatch' + (id === saved ? ' is-active' : '');
+      btn.dataset.theme = id;
+      btn.setAttribute('aria-label', title);
+      btn.setAttribute('title', title);
+      btn.addEventListener('click', () => applyTheme(id));
+      panel.appendChild(btn);
+    });
+
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'theme-picker__toggle';
+    toggle.setAttribute('aria-label', 'Choose background theme');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2"/><circle cx="17.5" cy="10.5" r="2"/><circle cx="8.5" cy="7" r="2"/><circle cx="6" cy="12" r="2"/><circle cx="15" cy="15.5" r="2"/><path d="M2 12c0-5.52 4.48-10 10-10 5.23 0 9.52 3.82 9.98 8.75.13 1.47-.88 2.75-2.35 2.75H17c-1.1 0-2 .9-2 2v2.5c0 1.38-1.12 2.5-2.5 2.5C6.22 20.5 2 16.78 2 12z"/></svg>';
+
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = picker.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!picker.contains(e.target)) {
+        picker.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    picker.appendChild(panel);
+    picker.appendChild(toggle);
+    document.body.appendChild(picker);
+  });
+}());
+
 document.addEventListener('DOMContentLoaded', () => {
 
   /* Scroll-reveal (Tier 2 animation) */
