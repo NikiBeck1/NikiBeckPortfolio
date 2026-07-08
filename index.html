@@ -34,13 +34,13 @@
       background: radial-gradient(ellipse, rgba(144, 101, 234, 0.08) 0%, transparent 70%);
       animation: orb-drift-a 14s ease-in-out infinite alternate;
     }
-    /* Soft success orb — bottom left */
+    /* Soft warm orb — bottom left */
     .hp-hero::after {
       width: 500px;
       height: 400px;
       bottom: -100px;
       left: -120px;
-      background: radial-gradient(ellipse, rgba(95, 168, 118, 0.05) 0%, transparent 70%);
+      background: radial-gradient(ellipse, rgba(216, 90, 48, 0.09) 0%, transparent 70%);
       animation: orb-drift-b 18s ease-in-out infinite alternate;
     }
     @keyframes orb-drift-a {
@@ -79,7 +79,7 @@
       font-size: 11px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--ghost);
+      color: var(--coral-lt);
       margin-bottom: 28px;
       display: flex;
       align-items: center;
@@ -103,7 +103,28 @@
     }
     .hp-hero__title em {
       font-style: italic;
-      color: var(--muted);
+      background: var(--gradient-hero);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .hp-hero__title em {
+        background: none;
+        -webkit-background-clip: unset;
+        background-clip: unset;
+        -webkit-text-fill-color: var(--muted);
+        color: var(--muted);
+      }
+    }
+    .hp-hero__actions .btn--primary {
+      background: var(--gradient-hero);
+      color: #ffffff;
+      border: none;
+    }
+    .hp-hero__actions .btn--primary:hover {
+      opacity: 0.88;
     }
     .hp-hero__sub {
       font-size: 16px;
@@ -569,7 +590,7 @@
               where the wrong design decision has real consequences.
             </p>
             <div class="hp-hero__actions hero-animate" style="transition-delay:0.2s;">
-              <a href="#work" class="btn btn--primary" style="background:var(--accent);border-color:var(--accent);">See the work</a>
+              <a href="#work" class="btn btn--primary">See the work</a>
               <a href="#contact" class="hp-hero__scroll">
                 Get in touch
                 <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>

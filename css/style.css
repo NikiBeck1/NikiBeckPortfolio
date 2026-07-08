@@ -21,6 +21,11 @@
   --accent-lt:  #2D1F5E;   /* Accent light — dark purple fill */
   --success:    #5FA876;   /* Success / positive states */
 
+  /* ── Gradient accent (coral → violet) ── */
+  --coral:      #D85A30;   /* Gradient warm end */
+  --coral-lt:   #F0997B;   /* Gradient warm end, lighter — text on dark */
+  --gradient-hero: linear-gradient(90deg, var(--coral-lt) 0%, var(--accent) 100%);
+
   /* ── Legacy aliases (used by case study overrides) ── */
   --violet:     #9065EA;   /* → --accent */
   --teal:       #14B8A6;
@@ -72,7 +77,6 @@ a { color: inherit; text-decoration: none; }
   background: rgba(17, 17, 16, 0.92);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-
   background: var(--cream);
   border-bottom: 0.5px solid var(--rule);
   padding: 0 var(--page-x);
@@ -86,7 +90,6 @@ a { color: inherit; text-decoration: none; }
   justify-content: space-between;
   height: 60px;
 }
-
 
 /* ─── Nav logo with animated pulse dot ─── */
 .site-nav__logo {
@@ -167,6 +170,15 @@ a { color: inherit; text-decoration: none; }
   background: var(--rule);
 }
 
+/* ─── Gradient text utility — use sparingly, e.g. one section label ─── */
+.text-gradient-accent {
+  background: var(--gradient-hero);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
 /* ─── Eyebrow ─── */
 .eyebrow {
   font-size: 11px;
@@ -185,15 +197,14 @@ a { color: inherit; text-decoration: none; }
   color: var(--ink);
 }
 
-
 /* ─── Animated gradient on italic in hero ─── */
 .display em {
   font-style: italic;
   background: linear-gradient(
     90deg,
-    var(--accent) 0%,
-    var(--success) 40%,
-    var(--accent) 80%
+    var(--coral-lt) 0%,
+    var(--accent) 60%,
+    var(--coral-lt) 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -219,9 +230,6 @@ a { color: inherit; text-decoration: none; }
   }
   .site-nav__logo::after { animation: none; }
 }
-
-.display em { font-style: italic; color: var(--muted); }
-
 
 .headline {
   font-family: var(--serif);
@@ -289,6 +297,18 @@ a { color: inherit; text-decoration: none; }
   color: var(--muted);
 }
 
+/* ─── Tag color variants — apply to 1-2 tags per case study max, rest stay neutral ─── */
+.tag--coral {
+  background: transparent;
+  border: 0.5px solid var(--coral);
+  color: var(--coral-lt);
+}
+.tag--violet {
+  background: transparent;
+  border: 0.5px solid var(--accent);
+  color: var(--accent);
+}
+
 .pill {
   display: inline-block;
   font-size: 12px;
@@ -326,7 +346,6 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ─── Image placeholder ─── */
-/* ─── Image placeholder (swap with real <img>) ─── */
 .img-slot {
   background: var(--dust);
   border: 0.5px dashed var(--stone);
@@ -575,7 +594,6 @@ a { color: inherit; text-decoration: none; }
   padding-left: 0;
   transition: padding-left 0.22s ease;
 }
-
 .work-item-row::before {
   content: '';
   position: absolute;
@@ -589,14 +607,8 @@ a { color: inherit; text-decoration: none; }
   transform-origin: top;
   transition: transform 0.22s ease;
 }
-
-.work-item-row:hover::before {
-  transform: scaleY(1);
-}
-
-.work-item-row:hover {
-  padding-left: 12px;
-}
+.work-item-row:hover::before { transform: scaleY(1); }
+.work-item-row:hover { padding-left: 12px; }
 
 /* ─── Skill cards — dot-grid background ─── */
 .skill-card {
@@ -609,10 +621,8 @@ a { color: inherit; text-decoration: none; }
   padding: 20px 22px;
   transition: border-color 0.18s, background-color 0.18s;
 }
+.skill-card:hover { border-color: var(--ghost); }
 
-.skill-card:hover {
-  border-color: var(--ghost);
-}
 /* ─── Footer ─── */
 .site-footer {
   border-top: 0.5px solid var(--rule);
@@ -639,23 +649,13 @@ a { color: inherit; text-decoration: none; }
 }
 .site-footer__links a:hover { color: var(--ink); }
 
-/* ─── Scroll reveal — sharpened ─── */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* ─── Scroll reveal animation ─── */
+/* ─── Scroll reveal ─── */
 .reveal {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.55s ease, transform 0.55s ease;
 }
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+.reveal.visible { opacity: 1; transform: translateY(0); }
 .reveal-delay-1 { transition-delay: 0.1s; }
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.32s; }
@@ -666,7 +666,6 @@ a { color: inherit; text-decoration: none; }
   from { opacity: 0; transform: translateY(18px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
 .hero-animate > * {
   opacity: 0;
   animation: fadeUp 0.6s ease forwards;
@@ -724,7 +723,6 @@ a { color: inherit; text-decoration: none; }
   background: #11110f;
   border: 1px solid rgba(255, 255, 255, 0.14);
 }
-
 .image-lightbox__img {
   width: 100%;
   max-height: calc(90vh - 66px);
@@ -732,7 +730,6 @@ a { color: inherit; text-decoration: none; }
   border-radius: 10px;
   background: #0a0a09;
 }
-
 .image-lightbox__close {
   position: absolute;
   top: 8px;
@@ -747,12 +744,9 @@ a { color: inherit; text-decoration: none; }
   background: rgba(0, 0, 0, 0.5);
   cursor: pointer;
 }
-
 body.lightbox-open { overflow: hidden; }
 
 /* ─── Background gradient themes ─── */
-
-/* Fixed pseudo-element carries the gradient; fades in/out on theme switch */
 body::before {
   content: '';
   position: fixed;
@@ -762,7 +756,6 @@ body::before {
   opacity: 0;
   transition: opacity 0.5s ease;
 }
-
 body.theme-aurora::before {
   background: linear-gradient(160deg, #050e1c 0%, #081a0e 60%, #0e1116 100%);
   opacity: 1;
@@ -779,8 +772,6 @@ body.theme-mist::before {
   background: linear-gradient(150deg, #060c1c 0%, #081210 50%, #0c0e14 100%);
   opacity: 1;
 }
-
-/* Nav: glass effect on gradient themes */
 body.theme-aurora .site-nav,
 body.theme-ember .site-nav,
 body.theme-iris .site-nav,
@@ -801,7 +792,6 @@ body.theme-mist .site-nav {
   align-items: center;
   gap: 8px;
 }
-
 .theme-picker__panel {
   display: flex;
   flex-direction: column;
@@ -816,13 +806,11 @@ body.theme-mist .site-nav {
   transform: translateY(6px) scale(0.95);
   transition: opacity 0.18s ease, transform 0.18s ease;
 }
-
 .theme-picker.is-open .theme-picker__panel {
   opacity: 1;
   pointer-events: auto;
   transform: translateY(0) scale(1);
 }
-
 .theme-picker__toggle {
   width: 38px;
   height: 38px;
@@ -837,12 +825,10 @@ body.theme-mist .site-nav {
   transition: border-color 0.15s, color 0.15s;
   flex-shrink: 0;
 }
-
 .theme-picker__toggle:hover {
   border-color: var(--ghost);
   color: var(--ink);
 }
-
 .theme-swatch {
   width: 26px;
   height: 26px;
@@ -851,10 +837,8 @@ body.theme-mist .site-nav {
   cursor: pointer;
   transition: transform 0.15s, border-color 0.15s;
 }
-
 .theme-swatch:hover { transform: scale(1.18); }
 .theme-swatch.is-active { border-color: var(--ink); }
-
 .theme-swatch[data-theme="void"]   { background: #3a3530; border-color: var(--stone); }
 .theme-swatch[data-theme="aurora"] { background: radial-gradient(circle at 35% 35%, #2a9a6a, #091a10); }
 .theme-swatch[data-theme="ember"]  { background: radial-gradient(circle at 35% 35%, #d04a18, #2a0a04); }
