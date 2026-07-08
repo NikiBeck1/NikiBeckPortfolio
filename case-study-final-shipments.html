@@ -4,21 +4,656 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Final Shipments Manager — Niki Beck</title>
-  <meta name="description" content="Touch-optimized warehouse UI for gloved hands, mounted tablets, and zero-tolerance for shipping errors." />
+  <meta name="description" content="How a touch-first warehouse interface eliminated mislabeled packages, cut onboarding from half a day to 30 minutes, and gave workers control over their own errors." />
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    @media (max-width: 600px) {
-      .img-slot {
-        height: auto !important;
-      }
-      .img-slot img {
-        width: 100% !important;
-        height: auto !important;
-      }
+
+    /* ── Progress bar ── */
+    #progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--ink);
+      width: 0%;
+      z-index: 200;
+      transition: width 0.05s linear;
+    }
+
+    /* ── Case study overrides ── */
+    .cs-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--subtle);
+      margin-bottom: 40px;
+      transition: color 0.15s;
+    }
+    .cs-back:hover { color: var(--ink); }
+
+    /* ── Hero ── */
+    .cs-hero {
+      padding: 72px 0 0;
+      border-bottom: 0.5px solid var(--rule);
+    }
+    .cs-hero__kicker {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 20px;
+    }
+    .cs-hero__title {
+      font-family: var(--serif);
+      font-size: clamp(42px, 7vw, 72px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    .cs-hero__desc {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 540px;
+      margin-bottom: 40px;
+    }
+    .cs-meta-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 0.5px solid var(--rule);
+    }
+    .cs-meta-item {
+      padding: 18px 20px 18px 0;
+      border-right: 0.5px solid var(--rule);
+    }
+    .cs-meta-item:last-child { border-right: none; }
+    .cs-meta-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 5px;
+    }
+    .cs-meta-value {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .cs-hero__image {
+      margin-top: 48px;
+    }
+    .cs-hero__image img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+      display: block;
+    }
+
+    /* ── Sticky section nav ── */
+    .cs-section-nav {
+      position: sticky;
+      top: 61px;
+      z-index: 50;
+      background: var(--cream);
+      border-bottom: 0.5px solid var(--rule);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .cs-section-nav::-webkit-scrollbar { display: none; }
+    .cs-section-nav__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--page-x);
+      display: flex;
+    }
+    .cs-nav-link {
+      font-size: 12px;
+      color: var(--ghost);
+      padding: 13px 16px;
+      white-space: nowrap;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+      cursor: pointer;
+    }
+    .cs-nav-link:hover { color: var(--ink); }
+    .cs-nav-link.active {
+      color: var(--ink);
+      border-bottom-color: var(--ink);
+    }
+
+    /* ── Exec summary stats ── */
+    .cs-stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .cs-stat {
+      background: var(--white);
+      padding: 28px 24px;
+    }
+    .cs-stat__num {
+      font-family: var(--serif);
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .cs-stat__label {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .cs-stat__sublabel {
+      font-size: 11px;
+      color: var(--ghost);
+      margin-top: 4px;
+    }
+
+    /* ── Role card ── */
+    .cs-role-card {
+      background: var(--white);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .cs-role-block__label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 8px;
+    }
+    .cs-role-block__text {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── Large pull quote ── */
+    .cs-pull-quote {
+      padding: 40px 0;
+      border-top: 0.5px solid var(--rule);
+      border-bottom: 0.5px solid var(--rule);
+      margin: 40px 0;
+    }
+    .cs-pull-quote__text {
+      font-family: var(--serif);
+      font-size: clamp(22px, 4vw, 32px);
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      font-style: italic;
+    }
+    .cs-pull-quote__attr {
+      font-size: 12px;
+      color: var(--ghost);
+      margin-top: 16px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ── Insight callout ── */
+    .cs-insight {
+      background: var(--ink);
+      color: var(--cream);
+      border-radius: var(--radius-lg);
+      padding: 28px 32px;
+      margin: 32px 0;
+    }
+    .cs-insight__label {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 12px;
+    }
+    .cs-insight__text {
+      font-family: var(--serif);
+      font-size: clamp(18px, 3vw, 24px);
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+      font-style: italic;
+      color: var(--cream);
+    }
+
+    /* ── Process flow ── */
+    .cs-flow {
+      display: flex;
+      align-items: center;
+      margin: 32px 0 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .cs-flow-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .cs-flow-step__bubble {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--white);
+      border: 0.5px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .cs-flow-step__bubble.gate {
+      background: var(--ink);
+      color: var(--cream);
+      border-color: var(--ink);
+    }
+    .cs-flow-step__label {
+      font-size: 11px;
+      color: var(--subtle);
+      text-align: center;
+      white-space: nowrap;
+    }
+    .cs-flow-arrow {
+      flex-shrink: 0;
+      width: 28px;
+      height: 1px;
+      background: var(--rule);
+      position: relative;
+      top: -12px;
+    }
+    .cs-flow-arrow::after {
+      content: '';
+      position: absolute;
+      right: -1px;
+      top: -3px;
+      width: 6px;
+      height: 6px;
+      border-right: 1px solid var(--stone);
+      border-top: 1px solid var(--stone);
+      transform: rotate(45deg);
+    }
+
+    /* ── Decision cards ── */
+    .cs-decision-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--rule);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .cs-decision {
+      background: var(--white);
+      padding: 28px 28px 28px 0;
+      display: grid;
+      grid-template-columns: 80px 1fr;
+    }
+    .cs-decision__num {
+      font-family: var(--serif);
+      font-size: 28px;
+      color: var(--ghost);
+      letter-spacing: -0.02em;
+      padding: 0 24px;
+      padding-top: 2px;
+    }
+    .cs-decision__title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+    .cs-decision__context {
+      font-size: 13px;
+      color: var(--ghost);
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
+    .cs-decision__rationale {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .cs-decision__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+    }
+
+    /* ── Before / After ── */
+    .cs-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .cs-compare-side {
+      background: var(--white);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .cs-compare-label {
+      padding: 10px 16px;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      border-bottom: 0.5px solid var(--rule);
+      background: var(--dust);
+    }
+    .cs-compare-label.after {
+      background: var(--ink);
+      color: var(--cream);
+    }
+    .cs-compare-content { padding: 20px 16px; }
+    .cs-tap-chain {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin-top: 16px;
+    }
+    .cs-tap {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 0.5px solid var(--rule);
+      background: var(--dust);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .cs-tap.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+    .cs-tap.fade { opacity: 0.22; }
+    .cs-compare-stat {
+      font-family: var(--serif);
+      font-size: 36px;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .cs-compare-stat.dim { color: var(--stone); font-size: 28px; }
+    .cs-compare-desc { font-size: 12px; color: var(--ghost); line-height: 1.5; }
+
+    /* ── Mismatch callout ── */
+    .cs-mismatch {
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin: 32px 0;
+    }
+    .cs-mismatch__header {
+      background: var(--ink);
+      color: var(--cream);
+      padding: 14px 24px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .cs-mismatch__body {
+      background: var(--white);
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .cs-mismatch__scenario {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .cs-mismatch__response {
+      border-left: 2px solid var(--ink);
+      padding-left: 20px;
+    }
+    .cs-mismatch__response-label {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 8px;
+    }
+    .cs-mismatch__response-text {
+      font-size: 14px;
+      color: var(--ink);
+      line-height: 1.7;
+      font-weight: 500;
+    }
+
+    /* ── Engineering grid ── */
+    .cs-eng-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .cs-eng-card {
+      background: var(--white);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+    .cs-eng-card__label {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 8px;
+    }
+    .cs-eng-card__text {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── Results ── */
+    .cs-results-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .cs-result {
+      background: var(--white);
+      padding: 24px;
+    }
+    .cs-result__num {
+      font-family: var(--serif);
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+    .cs-result__desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Reflection list ── */
+    .cs-reflection-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--rule);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-top: 24px;
+    }
+    .cs-reflection-item {
+      background: var(--white);
+      padding: 20px 24px;
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .cs-reflection-item__dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--stone);
+      margin-top: 7px;
+    }
+    .cs-reflection-item__text {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .cs-reflection-item__text strong {
+      color: var(--ink);
+      font-weight: 500;
+    }
+
+    /* ── Takeaways ── */
+    .cs-takeaway-list {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      margin-top: 24px;
+    }
+    .cs-takeaway {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+    .cs-takeaway__num {
+      font-family: var(--serif);
+      font-size: 24px;
+      color: var(--ghost);
+      letter-spacing: -0.02em;
+      padding-top: 2px;
+    }
+    .cs-takeaway__text {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+    .cs-takeaway__text strong {
+      display: block;
+      font-size: 15px;
+      color: var(--ink);
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    /* ── Figure caption ── */
+    .cs-figure { margin: 32px 0; }
+    .cs-figure img {
+      width: 100%;
+      border-radius: var(--radius-lg);
+      display: block;
+    }
+    .cs-figure-caption {
+      font-size: 12px;
+      color: var(--ghost);
+      margin-top: 10px;
+      line-height: 1.5;
+      padding: 0 2px;
+    }
+
+    /* ── Suggested visual placeholder ── */
+    .cs-visual-note {
+      background: var(--dust);
+      border: 0.5px dashed var(--stone);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      margin: 24px 0;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .cs-visual-note__icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .cs-visual-note__label {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 4px;
+    }
+    .cs-visual-note__text { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+    /* ── Next project ── */
+    .cs-next {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 32px 0;
+      border-top: 0.5px solid var(--rule);
+      gap: 16px;
+      transition: opacity 0.15s;
+    }
+    .cs-next:hover { opacity: 0.7; }
+    .cs-next__label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 6px;
+    }
+    .cs-next__title {
+      font-family: var(--serif);
+      font-size: 22px;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+    }
+    .cs-next__arrow { font-size: 22px; color: var(--stone); flex-shrink: 0; }
+
+    /* ── Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .cs-meta-strip { grid-template-columns: 1fr 1fr; }
+      .cs-stat-row { grid-template-columns: 1fr; }
+      .cs-decision { grid-template-columns: 48px 1fr; }
+      .cs-decision__num { font-size: 20px; padding: 0 12px; }
+      .cs-compare { grid-template-columns: 1fr; }
+      .cs-mismatch__body { grid-template-columns: 1fr; }
+      .cs-eng-grid { grid-template-columns: 1fr; }
+      .cs-results-grid { grid-template-columns: 1fr; }
+      .cs-role-card { grid-template-columns: 1fr; }
+      .cs-hero__image img { height: 220px; }
+      .cs-section-nav { display: none; }
     }
   </style>
 </head>
 <body>
+
+  <div id="progress-bar"></div>
 
   <header class="site-nav">
     <div class="site-nav__inner">
@@ -34,129 +669,254 @@
     </div>
   </header>
 
-  <main>
-
-    <!-- ── Hero ── -->
-    <section class="section" style="padding-top: 64px;">
-      <div class="page-wrap">
-        <a href="index.html" style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--subtle); margin-bottom: 32px; transition: color 0.15s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--subtle)'">← Back to work</a>
-        <div class="hero-animate">
-          <p class="eyebrow">Case study · 01</p>
-          <h1 class="display" style="margin-bottom: 16px;">Final Shipments Manager</h1>
-          <p class="subhead" style="margin-bottom: 0;">Touch-optimized warehouse UI for gloved hands, mounted tablets, and zero tolerance for shipping errors.</p>
-        </div>
-        <div class="meta-grid" style="margin-top: 32px;">
-          <div class="meta-grid__cell">
-            <p class="meta-grid__label">Role</p>
-            <p class="meta-grid__value">Lead designer</p>
-          </div>
-          <div class="meta-grid__cell">
-            <p class="meta-grid__label">Platform</p>
-            <p class="meta-grid__value">Tablet / web app</p>
-          </div>
-          <div class="meta-grid__cell">
-            <p class="meta-grid__label">Skills</p>
-            <p class="meta-grid__value">UX, UI, React handoff</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ── Hero image ── -->
+  <!-- ── Hero ── -->
+  <section class="cs-hero" id="hero">
     <div class="page-wrap">
-      <div class="img-slot reveal" style="height: 380px; margin: 3 3 3;">
-        <img src="./assets/HeroFS.png" alt="Final Shipments Manager on iPad Pro" style="width:100%; height:100%; object-fit:cover; border-radius: var(--radius);">
+      <a href="index.html" class="cs-back">← All work</a>
+      <p class="cs-hero__kicker">Case study · 01 · Final Shipments Manager</p>
+      <h1 class="cs-hero__title">A shipping interface built for gloves, not cursors.</h1>
+      <p class="cs-hero__desc">Warehouse workers were shipping hundreds of packages a day using software designed for a desk. I redesigned it for the environment they actually work in — and rebuilt it in React.</p>
+      <div class="cs-meta-strip">
+        <div class="cs-meta-item">
+          <p class="cs-meta-label">Role</p>
+          <p class="cs-meta-value">Lead designer + front-end</p>
+        </div>
+        <div class="cs-meta-item">
+          <p class="cs-meta-label">Platform</p>
+          <p class="cs-meta-value">Web · Tablet-first</p>
+        </div>
+        <div class="cs-meta-item">
+          <p class="cs-meta-label">Skills</p>
+          <p class="cs-meta-value">UX, UI, React build</p>
+        </div>
+        <div class="cs-meta-item">
+          <p class="cs-meta-label">Status</p>
+          <p class="cs-meta-value">Shipped to production</p>
+        </div>
       </div>
     </div>
+    <div class="cs-hero__image page-wrap">
+      <img src="./assets/HeroFS.png" alt="Final Shipments Manager running on a tablet in a warehouse setting" />
+    </div>
+  </section>
 
-    <!-- ── Problem ── -->
-    <section class="section">
+  <!-- ── Sticky section nav ── -->
+  <nav class="cs-section-nav" id="cs-section-nav">
+    <div class="cs-section-nav__inner">
+      <a class="cs-nav-link" data-target="exec-summary">Summary</a>
+      <a class="cs-nav-link" data-target="challenge">Challenge</a>
+      <a class="cs-nav-link" data-target="discovery">Discovery</a>
+      <a class="cs-nav-link" data-target="strategy">Strategy</a>
+      <a class="cs-nav-link" data-target="ia">Architecture</a>
+      <a class="cs-nav-link" data-target="ux-decisions">Decisions</a>
+      <a class="cs-nav-link" data-target="engineering">Engineering</a>
+      <a class="cs-nav-link" data-target="results">Results</a>
+      <a class="cs-nav-link" data-target="reflection">Reflection</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ── Executive Summary ── -->
+    <section class="section" id="exec-summary">
       <div class="page-wrap">
-        <p class="section__label">The problem</p>
-        <p class="body-text reveal">Warehouse workers were shipping hundreds of packages a day using a desktop-oriented interface that had never been designed for gloves, mounted tablets, or a standing workflow. Every tap required precision. Every mistake meant a mislabeled package going out the door.</p>
-        <p class="body-text reveal reveal-delay-1">The existing system buried printer selection four clicks deep, offered no visual confirmation when a scan registered, and gave workers no way to self-diagnose errors — every problem meant calling IT.</p>
-        <div class="constraint-grid reveal reveal-delay-2">
+        <p class="section__label">Executive summary</p>
+        <div class="cs-stat-row reveal">
+          <div class="cs-stat">
+            <p class="cs-stat__num">2–3</p>
+            <p class="cs-stat__label">Taps to complete a full shipment</p>
+            <p class="cs-stat__sublabel">Down from 8+ in the previous system</p>
+          </div>
+          <div class="cs-stat">
+            <p class="cs-stat__num">30 min</p>
+            <p class="cs-stat__label">Time to onboard a new worker</p>
+            <p class="cs-stat__sublabel">Down from a half-day training session</p>
+          </div>
+          <div class="cs-stat">
+            <p class="cs-stat__num">↓ IT</p>
+            <p class="cs-stat__label">Workers self-diagnose errors via console</p>
+            <p class="cs-stat__sublabel">Fewer escalations, more autonomy</p>
+          </div>
+        </div>
+        <p class="body-text reveal">Warehouse workers at Trinity Apparel ship hundreds of packages a day. The interface they were using had never been reconsidered for gloves, mounted tablets, or a standing workflow. Error feedback was opaque. Printer switching required a four-click detour. Wrong packages shipped silently.</p>
+        <p class="body-text reveal">I redesigned and rebuilt the tool from the ground up — not as a visual refresh, but as a rethinking of the entire interaction model. The result ships in production. Workers adopted it in the same week it launched. No wrong-address packages have shipped since the mismatch detection went live.</p>
+      </div>
+    </section>
+
+    <!-- ── My Role ── -->
+    <section class="section" id="my-role">
+      <div class="page-wrap">
+        <p class="section__label">My role</p>
+        <div class="cs-role-card reveal">
+          <div class="cs-role-block">
+            <p class="cs-role-block__label">What I owned</p>
+            <p class="cs-role-block__text">End-to-end design and front-end implementation. Discovery research, UX flows, Figma prototypes, React components, QA, and production handoff. I worked directly with warehouse workers during research and with engineers during build.</p>
+          </div>
+          <div class="cs-role-block">
+            <p class="cs-role-block__label">What I collaborated on</p>
+            <p class="cs-role-block__text">Printer API integration, USB scanner event handling, label generation, and the address validation logic that powers the mismatch detection. The backend already existed — the question was how the interface should respond to what it returned.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── The Challenge ── -->
+    <section class="section" id="challenge">
+      <div class="page-wrap">
+        <p class="section__label">The challenge</p>
+        <p class="body-text reveal">The warehouse already had a shipping system. Workers knew how to use it. The problem was that it was built for a desk, and nobody at Trinity ships from a desk.</p>
+        <p class="body-text reveal">Workers stand at tablets mounted on carts or walls, wearing thick gloves, often holding a package in one hand. The old interface treated that context as incidental. Tap targets designed for a mouse cursor. Printer selection buried in a settings menu. Scan confirmation that required you to look carefully at a small status indicator to know if it registered. When something went wrong, the interface said nothing useful. The worker called IT.</p>
+        <p class="body-text reveal">The complaint that triggered this project was direct: the system was clunky and outdated. That's not a UX critique. That's an operations problem with a design solution.</p>
+        <div class="constraint-grid reveal" style="margin-top: 28px;">
           <div class="constraint-card">
-            <p class="constraint-card__title">Physical constraints</p>
+            <p class="constraint-card__title">Physical environment</p>
             <ul class="constraint-card__list">
-              <li>Workers wear gloves</li>
-              <li>Tablets mounted on carts or walls</li>
-              <li>Standing, often holding packages</li>
-              <li>Variable lighting and glare</li>
+              <li>Workers wear gloves — precision tapping isn't possible</li>
+              <li>Tablets mounted on carts or walls, not held in hand</li>
+              <li>Standing workflow, often holding packages</li>
+              <li>Variable lighting, glare, ambient noise</li>
             </ul>
           </div>
           <div class="constraint-card">
-            <p class="constraint-card__title">Operational constraints</p>
+            <p class="constraint-card__title">Operational stakes</p>
             <ul class="constraint-card__list">
-              <li>Hundreds of scans per shift</li>
-              <li>Speed is non-negotiable</li>
-              <li>Wrong package = real cost</li>
-              <li>Multi-device environment</li>
+              <li>Hundreds of scans per shift — every friction point multiplies</li>
+              <li>Speed is non-negotiable; workflow cannot pause</li>
+              <li>Wrong package shipped = real cost, real customer impact</li>
+              <li>4 carriers, different label sizes, frequent printer switching</li>
             </ul>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ── Research ── -->
-    <section class="section">
+    <!-- ── Discovery ── -->
+    <section class="section" id="discovery">
       <div class="page-wrap">
-        <p class="section__label">Research</p>
-        <p class="body-text reveal">I spent time on-site during peak shipping hours — watching, not just interviewing. The things workers couldn't articulate became obvious in context: the double-tap to confirm a scan they weren't sure had registered, the detour to a desktop to switch printers, the resigned shrug when something went wrong.</p>
-        <br>
-        <div class="img-single reveal reveal-delay-1">
-          <div class="img-slot" style="height: 380px;">
-            <img src="./assets/researchFS.png" alt="On-site research notes and field observations">
-          </div>
+        <p class="section__label">Discovery</p>
+        <p class="body-text reveal">I spent time on-site during peak shipping hours. Not doing structured interviews — watching. The things that matter in a warehouse don't come up in a conference room.</p>
+        <div class="cs-figure reveal">
+          <img src="./assets/researchFS.png" alt="On-site research notes and field observations from the warehouse floor" />
+          <p class="cs-figure-caption">On-site observation during peak hours. I was looking for the behaviors workers couldn't articulate — the habits that formed around the interface's failures.</p>
         </div>
-        <br>
-        <p class="body-text reveal reveal-delay-2">Key finding: the workflow itself was sound — pick, scan, print, ship, bin. The interface just didn't match it. Every design decision after that traced back to one question: <em>does this survive a glove and a moving cart?</em></p>
+        <p class="body-text reveal">The double-tap to verify a scan that may or may not have registered. The detour to a desktop terminal just to switch printer settings. The resigned shrug when an error screen appeared and there was nothing to do except call for help. These weren't complaints workers would file. They were just the cost of doing the job.</p>
+        <div class="cs-insight reveal">
+          <p class="cs-insight__label">Key insight</p>
+          <p class="cs-insight__text">The workflow itself was sound. Pick, scan, print, ship, bin — workers had internalized it completely. They didn't need a better workflow. They needed an interface that stopped fighting the one they already had.</p>
+        </div>
+        <p class="body-text reveal">That reframe changed the scope of the project. This wasn't about redesigning how the warehouse operates. It was about making the interface invisible — so workers could do in 2 taps what they were already doing in 8.</p>
       </div>
     </section>
 
-    <!-- ── Key decisions ── -->
-    <section class="section">
+    <!-- ── Product Strategy ── -->
+    <section class="section" id="strategy">
       <div class="page-wrap">
-        <p class="section__label">Key decisions</p>
-        <div class="decision-list">
+        <p class="section__label">Product strategy</p>
+        <p class="body-text reveal">I needed one question that could act as a filter for every decision in this project. Not "is this intuitive?" — intuitive is the wrong bar when the person using the interface is standing, moving, often holding a box, wearing thick gloves, and reading a mounted tablet at arm's length.</p>
+        <p class="body-text reveal">The question became: <strong style="color: var(--ink); font-weight: 500;">does this survive a glove and a moving cart?</strong></p>
+        <p class="body-text reveal">Touch-first wasn't an accessibility checkbox or a responsive design consideration. It was the product strategy. Every screen, every control, every piece of feedback had to work with a gloved finger in ambient light in the middle of a shift. If it didn't, it wasn't done.</p>
+        <div class="cs-pull-quote reveal">
+          <p class="cs-pull-quote__text">"The previous interface wasn't broken. It just assumed conditions that don't exist in a warehouse. Those assumptions were the product problem."</p>
+        </div>
+        <p class="body-text reveal">The decision to rebuild rather than iterate was deliberate. A refresh would have produced a cleaner-looking version of the same broken interaction model. The problem wasn't visual — it was structural. Starting from the environment rather than from the existing design meant the result could actually serve it.</p>
+      </div>
+    </section>
 
-          <div class="decision-item reveal">
-            <p class="decision-item__num">01</p>
-            <p class="decision-item__title">60px minimum touch targets throughout</p>
-            <p class="decision-item__body">The primary scan button is 100×100px. Table rows are 80px tall. Every tappable element is oversized on purpose — gloved fingers are imprecise and the cost of a mis-tap in a shipping workflow is high.</p>
-            <div class="decision-item__tags">
-              <span class="tag">Touch-first</span>
-              <span class="tag">Accessibility</span>
+    <!-- ── Information Architecture ── -->
+    <section class="section" id="ia">
+      <div class="page-wrap">
+        <p class="section__label">Information architecture</p>
+        <p class="body-text reveal">The warehouse workflow has five steps and they never change. Pick. Scan. Print. Ship. Confirm. I mapped the interface directly to that sequence — one step per screen state, no extra navigation, nothing buried.</p>
+        <div class="cs-flow reveal">
+          <div class="cs-flow-step">
+            <div class="cs-flow-step__bubble">1</div>
+            <span class="cs-flow-step__label">Scan</span>
+          </div>
+          <div class="cs-flow-arrow"></div>
+          <div class="cs-flow-step">
+            <div class="cs-flow-step__bubble gate">2</div>
+            <span class="cs-flow-step__label">Validate</span>
+          </div>
+          <div class="cs-flow-arrow"></div>
+          <div class="cs-flow-step">
+            <div class="cs-flow-step__bubble">3</div>
+            <span class="cs-flow-step__label">Select printer</span>
+          </div>
+          <div class="cs-flow-arrow"></div>
+          <div class="cs-flow-step">
+            <div class="cs-flow-step__bubble">4</div>
+            <span class="cs-flow-step__label">Print label</span>
+          </div>
+          <div class="cs-flow-arrow"></div>
+          <div class="cs-flow-step">
+            <div class="cs-flow-step__bubble">5</div>
+            <span class="cs-flow-step__label">Confirm</span>
+          </div>
+        </div>
+        <p class="cs-figure-caption reveal" style="margin-bottom: 24px;">Step 2 — Validate — is the critical gate. Address mismatch stops the flow here before anything else moves.</p>
+        <p class="body-text reveal">Three input methods exist in the system, ordered by priority: USB scanner, camera, manual entry. The primary path is optimized for speed. The fallbacks ensure the workflow is never blocked by a dead scanner or a damaged barcode. The debug console lives at the bottom of every screen: collapsed by default, one tap to expand, showing live API responses and printer status.</p>
+      </div>
+    </section>
+
+    <!-- ── UX Decisions ── -->
+    <section class="section" id="ux-decisions">
+      <div class="page-wrap">
+        <p class="section__label">UX decisions</p>
+        <p class="body-text reveal" style="margin-bottom: 28px;">Four decisions defined the product. Each one had a real argument against it — that's what made them worth making explicitly.</p>
+        <div class="cs-decision-list reveal">
+
+          <div class="cs-decision">
+            <p class="cs-decision__num">01</p>
+            <div class="cs-decision__content">
+              <p class="cs-decision__title">60px minimum touch targets. The primary scan button is 100×100px.</p>
+              <p class="cs-decision__context">The pushback: it looked oversized on the mockup. Engineers asked if it was intentional.</p>
+              <p class="cs-decision__rationale">Gloved fingers are imprecise. The cost of a mis-tap in a shipping workflow isn't a wrong selection you undo — it's a package that leaves the building with the wrong label. Table rows are 80px tall. Every tappable element is deliberately oversized. The visual weight is the point.</p>
+              <div class="cs-decision__tags">
+                <span class="tag">Touch-first</span>
+                <span class="tag">Error prevention</span>
+                <span class="tag">Physical constraints</span>
+              </div>
             </div>
           </div>
 
-          <div class="decision-item reveal reveal-delay-1">
-            <p class="decision-item__num">02</p>
-            <p class="decision-item__title">Printer selector on the main screen, always visible</p>
-            <p class="decision-item__body">Workers ship to 4 carriers with different label sizes — switching printers was happening dozens of times per hour. Moving it from a 4-click settings detour to a persistent dropdown on the main view eliminated an entire category of delay.</p>
-            <div class="decision-item__tags">
-              <span class="tag">Workflow efficiency</span>
-              <span class="tag">Frequency mapping</span>
+          <div class="cs-decision">
+            <p class="cs-decision__num">02</p>
+            <div class="cs-decision__content">
+              <p class="cs-decision__title">Printer selector on the main screen. Always visible.</p>
+              <p class="cs-decision__context">The previous system: four clicks into settings, four clicks back. Workers did this dozens of times per hour across four carriers.</p>
+              <p class="cs-decision__rationale">I mapped task frequency against interface depth and found the worst possible combination: the most frequent action buried at the deepest level. Moving printer selection to a persistent dropdown on the main view eliminated an entire category of delay — not by making the action faster, but by removing the navigation that surrounded it.</p>
+              <div class="cs-decision__tags">
+                <span class="tag">Frequency mapping</span>
+                <span class="tag">Workflow efficiency</span>
+              </div>
             </div>
           </div>
 
-          <div class="decision-item reveal reveal-delay-2">
-            <p class="decision-item__num">03</p>
-            <p class="decision-item__title">Three input methods, one primary</p>
-            <p class="decision-item__body">USB scanner → camera → manual entry, in priority order. The primary path is optimized for speed; the fallbacks ensure the workflow is never blocked by a dead scanner or a damaged barcode.</p>
-            <div class="decision-item__tags">
-              <span class="tag">Error prevention</span>
-              <span class="tag">Resilience</span>
+          <div class="cs-decision">
+            <p class="cs-decision__num">03</p>
+            <div class="cs-decision__content">
+              <p class="cs-decision__title">Three input methods. One primary. Zero dead ends.</p>
+              <p class="cs-decision__context">The original interface had one input method. If the scanner failed, the shift stopped.</p>
+              <p class="cs-decision__rationale">USB scanner is the primary path — fastest, most reliable. Camera if it fails. Manual entry if the barcode is damaged. Workers don't make this choice consciously. The fallback is just there. Resilience design in a warehouse means the workflow degrades gracefully instead of stopping.</p>
+              <div class="cs-decision__tags">
+                <span class="tag">Resilience</span>
+                <span class="tag">Error recovery</span>
+                <span class="tag">System design</span>
+              </div>
             </div>
           </div>
 
-          <div class="decision-item reveal reveal-delay-3">
-            <p class="decision-item__num">04</p>
-            <p class="decision-item__title">Toggle-able console for transparent error recovery</p>
-            <p class="decision-item__body">Workers couldn't see what was happening when things went wrong. A collapsible console — hidden by default, one tap to reveal — shows live API responses, scanner events, and printer status. Controversial with stakeholders initially, it became the most-praised feature in worker feedback.</p>
-            <div class="decision-item__tags">
-              <span class="tag">Transparency</span>
-              <span class="tag">Error recovery</span>
+          <div class="cs-decision">
+            <p class="cs-decision__num">04</p>
+            <div class="cs-decision__content">
+              <p class="cs-decision__title">A toggle-able console. Hidden by default.</p>
+              <p class="cs-decision__context">Stakeholder objection: "Workers don't need to see API responses. It'll confuse them."</p>
+              <p class="cs-decision__rationale">The console isn't for debugging — it's for autonomy. When a scan doesn't register or a print job fails, workers tap the console and see exactly what happened. They can describe it. Often they can fix it. The console is hidden by default because it's never needed when things work. It's there when they don't. This became the most-praised feature post-launch.</p>
+              <div class="cs-decision__tags">
+                <span class="tag">Transparency</span>
+                <span class="tag">Progressive disclosure</span>
+                <span class="tag">Worker autonomy</span>
+              </div>
             </div>
           </div>
 
@@ -164,83 +924,184 @@
       </div>
     </section>
 
-    <!-- ── The interface ── -->
-    <section class="section">
+    <!-- ── UI Decisions ── -->
+    <section class="section" id="ui-decisions">
       <div class="page-wrap">
-        <p class="section__label">The interface</p>
-
-        <div class="img-pair reveal">
-          <div class="img-slot" style="height: 250px; overflow: hidden;">
-            <img src="./assets/finalShip1.png" alt="Current shipments tab" style="width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius); background: white;">
+        <p class="section__label">UI decisions</p>
+        <p class="body-text reveal">The visual language had one job: reduce cognitive load in a loud, bright, moving environment. Status had to be instantly legible from two feet away. Controls had to communicate affordance without detailed inspection.</p>
+        <div class="cs-compare reveal">
+          <div class="cs-compare-side">
+            <div class="cs-compare-label before">Before</div>
+            <div class="cs-compare-content">
+              <p class="cs-compare-stat dim">8+</p>
+              <p class="cs-compare-desc">Taps to complete a shipment in the previous interface</p>
+              <div class="cs-tap-chain">
+                <div class="cs-tap fade">1</div>
+                <div class="cs-tap fade">2</div>
+                <div class="cs-tap fade">3</div>
+                <div class="cs-tap fade">4</div>
+                <div class="cs-tap fade">5</div>
+                <div class="cs-tap fade">6</div>
+                <div class="cs-tap fade">7</div>
+                <div class="cs-tap fade">8</div>
+                <span style="font-size: 11px; color: var(--ghost);">+</span>
+              </div>
+            </div>
           </div>
-          <div class="img-slot" style="height: 250px; overflow: hidden;">
-            <img src="./assets/userGuideFS.png" alt="History tab" style="width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius); background: white;">
+          <div class="cs-compare-side">
+            <div class="cs-compare-label after">After</div>
+            <div class="cs-compare-content">
+              <p class="cs-compare-stat">2–3</p>
+              <p class="cs-compare-desc">Taps to complete the same shipment</p>
+              <div class="cs-tap-chain">
+                <div class="cs-tap active">1</div>
+                <div class="cs-tap active">2</div>
+                <div class="cs-tap" style="opacity: 0.35; border-style: dashed;">3</div>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div class="img-single reveal reveal-delay-1">
-          <div class="img-slot" style="height: 250px; overflow: hidden;">
-            <img src="./assets/FSError.png" alt="User flow: scan, print, ship, confirm" style="width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius); background: white;">
+        <div class="cs-figure reveal">
+          <img src="./assets/finalShip1.png" alt="Final Shipments main scanning interface" style="width: 100%; height: 260px; object-fit: contain; background: white; border-radius: var(--radius-lg); border: 0.5px solid var(--rule);" />
+          <p class="cs-figure-caption">The main scanning view. Printer selector always visible. The scan button is 100×100px. Status feedback appears immediately on scan registration.</p>
+        </div>
+        <div class="cs-figure reveal">
+          <img src="./assets/FSError.png" alt="Error state and console view" style="width: 100%; height: 240px; object-fit: contain; background: white; border-radius: var(--radius-lg); border: 0.5px solid var(--rule);" />
+          <p class="cs-figure-caption">Error state with the debug console expanded. Workers can read exactly what happened — and in most cases, act on it themselves.</p>
+        </div>
+        <div class="cs-visual-note reveal">
+          <span class="cs-visual-note__icon">◎</span>
+          <div>
+            <p class="cs-visual-note__label">Suggested visual</p>
+            <p class="cs-visual-note__text">Annotated diagram: a gloved hand silhouette overlaid on the scan button showing finger contact area vs. target size — making the case that 100px isn't oversized, a bare-fingertip target would be undersized for this context.</p>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="quote-block reveal reveal-delay-2">
+    <!-- ── Engineering Collaboration ── -->
+    <section class="section" id="engineering">
+      <div class="page-wrap">
+        <p class="section__label">Engineering collaboration</p>
+        <p class="body-text reveal">I built the React components and owned the front-end implementation. The backend APIs — scanner event streams, printer queues, label generation — already existed. My job was designing how the interface responded to them.</p>
+        <div class="cs-eng-grid reveal">
+          <div class="cs-eng-card">
+            <p class="cs-eng-card__label">USB scanner integration</p>
+            <p class="cs-eng-card__text">Scanner events fire as keyboard inputs at the document level. The interface has to distinguish scanner input from manual typing — different timing characteristics, different response. Getting this wrong means workers can't type and scan in the same session.</p>
+          </div>
+          <div class="cs-eng-card">
+            <p class="cs-eng-card__label">Printer selection state</p>
+            <p class="cs-eng-card__text">Printer preference persists per session. If a worker moves to a different cart, the interface remembers their last-used printer rather than resetting to a system default. This required careful decisions about where state lives.</p>
+          </div>
+          <div class="cs-eng-card">
+            <p class="cs-eng-card__label">Audio feedback</p>
+            <p class="cs-eng-card__text">The address mismatch alert fires a sound before it renders anything visual. In a loud warehouse, eyes-up time is valuable. The audio response is the first signal — visual confirmation follows within 200ms.</p>
+          </div>
+          <div class="cs-eng-card">
+            <p class="cs-eng-card__label">Live console stream</p>
+            <p class="cs-eng-card__text">The console renders a rolling log of API calls, scanner events, and printer responses — truncated lines, color-coded by event type, most recent at top. Not a developer tool; an operator readout.</p>
+          </div>
+        </div>
+        <p class="body-text reveal">The most important engineering conversation was about failure modes. We mapped every scenario where the interface could be in an ambiguous state — scanner connected but not responding, print job queued but printer offline, address check timing out — and made explicit decisions about what to show in each. That work never appears in a screenshot. It's the difference between software that feels solid and software that just looks clean.</p>
+      </div>
+    </section>
+
+    <!-- ── Implementation: Address Mismatch ── -->
+    <section class="section" id="implementation">
+      <div class="page-wrap">
+        <p class="section__label">Implementation · The mismatch problem</p>
+        <p class="body-text reveal">The most consequential feature we built wasn't in the original brief. It came from one observation during research: a worker scanned a garment, printed a label, and dropped it in the bin — for the wrong dealer. The address didn't match the order. Nobody caught it until the package was already in a truck.</p>
+        <div class="cs-mismatch reveal">
+          <div class="cs-mismatch__header">Address mismatch detection — how it works</div>
+          <div class="cs-mismatch__body">
+            <div class="cs-mismatch__scenario">
+              <p style="font-weight: 500; color: var(--ink); margin-bottom: 8px; font-size: 14px;">The scenario</p>
+              <p style="font-size: 14px; color: var(--muted); line-height: 1.75;">A worker is processing a shipment for Robert Vasquez. They scan the next garment. The garment belongs to David Chen — a different dealer at a different address. The system sees the mismatch immediately: the garment's assigned dealer doesn't match the active shipment's destination.</p>
+            </div>
+            <div class="cs-mismatch__response">
+              <p class="cs-mismatch__response-label">System response</p>
+              <p class="cs-mismatch__response-text">Sound alert fires first. Process hard-blocks. The worker cannot print a label, cannot confirm, cannot proceed. The interface presents the mismatch explicitly — which garment was scanned, which dealer it belongs to, what the active shipment expects. The block does not clear until the conflict is resolved.</p>
+            </div>
+          </div>
+        </div>
+        <p class="body-text reveal">The decision to hard-block — rather than warn and allow override — was deliberate. A warning that can be dismissed becomes a checkbox. A hard block communicates that the system means it. Workers learn quickly that the alert isn't an interruption; it's protection.</p>
+        <p class="body-text reveal">The audio fires before the screen updates. That 200ms of lead time changes the experience of being stopped — it doesn't feel like a crash, it feels like a catch.</p>
+      </div>
+    </section>
+
+    <!-- ── Results ── -->
+    <section class="section" id="results">
+      <div class="page-wrap">
+        <p class="section__label">Results</p>
+        <div class="cs-results-grid reveal">
+          <div class="cs-result">
+            <p class="cs-result__num">2–3</p>
+            <p class="cs-result__desc">Taps to complete a full shipment, down from 8+ in the previous interface</p>
+          </div>
+          <div class="cs-result">
+            <p class="cs-result__num">30 min</p>
+            <p class="cs-result__desc">New worker onboarding time, down from a half-day training session</p>
+          </div>
+          <div class="cs-result">
+            <p class="cs-result__num">0</p>
+            <p class="cs-result__desc">Wrong-address packages shipped since mismatch detection launched</p>
+          </div>
+        </div>
+        <div class="quote-block reveal">
           <p class="quote-block__text">"When something goes wrong, I can fix it myself now."</p>
           <p class="quote-block__attr">Warehouse worker, post-launch feedback</p>
         </div>
-
-        <div class="proto-cta reveal reveal-delay-3">
-          <div>
-            <p class="proto-cta__label">Interactive prototype</p>
-            <p class="proto-cta__title">Try the working interface →</p>
-          </div>
-          <a href="https://finalshipments.staging.trinity-apparel.com/login" target="_blank" class="proto-cta__btn">Open prototype ↗</a>
-        </div>
+        <p class="body-text reveal">Worker adoption was immediate — no retraining beyond a 30-minute walkthrough, down from the previous half-day onboarding. The 30-minute figure reflects the interface more than it reflects the training. When a tool matches the way people already work, learning it takes less time because there's less to unlearn.</p>
       </div>
     </section>
 
-    <!-- ── Outcomes ── -->
-    <section class="section">
+    <!-- ── Reflection ── -->
+    <section class="section" id="reflection">
       <div class="page-wrap">
-        <p class="section__label">Outcomes</p>
-        <p class="body-text reveal">The redesign shipped to production. Worker adoption was immediate — no retraining required beyond a 30-minute walkthrough, down from a half-day onboarding.</p>
-        <div class="outcome-row reveal reveal-delay-1">
-          <div class="outcome-card">
-            <p class="outcome-card__stat">2–3</p>
-            <p class="outcome-card__desc">Taps to complete a full shipment, down from 8+</p>
+        <p class="section__label">Reflection</p>
+        <p class="body-text reveal">This project worked because the research was physical. Watching workers in the warehouse surfaced things that would never appear in a stakeholder brief or a user survey. If I had skipped on-site observation, I would have designed for a version of the problem that didn't match the actual environment.</p>
+        <div class="cs-reflection-list reveal">
+          <div class="cs-reflection-item">
+            <div class="cs-reflection-item__dot"></div>
+            <p class="cs-reflection-item__text"><strong>Test prototypes in the actual environment, not on a laptop.</strong> I finalized most visual decisions before testing in the warehouse. Lighting, glare, and standing distance change what's readable in ways that a screen in a conference room doesn't show. I'd run a physical prototype session — tablet mounted, gloves on, in the space — before any visual decisions are locked.</p>
           </div>
-          <div class="outcome-card">
-            <p class="outcome-card__stat">30 min</p>
-            <p class="outcome-card__desc">New worker onboarding, down from half a day</p>
+          <div class="cs-reflection-item">
+            <div class="cs-reflection-item__dot"></div>
+            <p class="cs-reflection-item__text"><strong>Status communication should be redundant by design.</strong> The mismatch alert uses sound and visual feedback together. Most other status indicators use only color. In a warehouse environment, color alone isn't reliable — lighting changes, eyes are elsewhere. Shape and icon backups should be the default, not an afterthought.</p>
           </div>
-          <div class="outcome-card">
-            <p class="outcome-card__stat">↓ IT</p>
-            <p class="outcome-card__desc">Workers self-diagnose via console — fewer escalations</p>
+          <div class="cs-reflection-item">
+            <div class="cs-reflection-item__dot"></div>
+            <p class="cs-reflection-item__text"><strong>Instrument analytics from day one.</strong> We don't know which part of the flow takes longest, which errors appear most often, or where workers tap off-sequence. Building the analytics hooks was always "next sprint" — and it stayed there.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ── Reflections ── -->
-    <section class="section">
+    <!-- ── Key Takeaways ── -->
+    <section class="section" id="takeaways">
       <div class="page-wrap">
-        <p class="section__label">Reflections</p>
-        <div class="reflection-grid reveal">
-          <div class="reflection-card">
-            <p class="reflection-card__head">What worked</p>
-            <ul class="reflection-card__list">
-              <li>On-site observation caught things no interview would have</li>
-              <li>Touch-first constraint sharpened every decision</li>
-              <li>Console view: controversial to ship, loved in use</li>
-            </ul>
+        <p class="section__label">Key takeaways</p>
+        <div class="cs-takeaway-list reveal">
+          <div class="cs-takeaway">
+            <span class="cs-takeaway__num">1</span>
+            <div class="cs-takeaway__text">
+              <strong>The environment is the brief.</strong>
+              Designing without understanding the physical context produces software that works in a demo and fails in use. The glove constraint wasn't a feature request — it was the ground condition that everything else followed from.
+            </div>
           </div>
-          <div class="reflection-card">
-            <p class="reflection-card__head">What I'd do differently</p>
-            <ul class="reflection-card__list">
-              <li>Test prototype in the warehouse environment earlier</li>
-              <li>Strengthen status colors with shape/icon backups</li>
-              <li>Instrument analytics from day one</li>
-            </ul>
+          <div class="cs-takeaway">
+            <span class="cs-takeaway__num">2</span>
+            <div class="cs-takeaway__text">
+              <strong>Transparency is a feature, not a risk.</strong>
+              The console was the most contested decision. The argument against it assumed workers couldn't handle information. In practice, the opposite was true: they used it to take ownership of their own errors. Hiding the system state didn't protect anyone. It just moved the problem to the IT queue.
+            </div>
+          </div>
+          <div class="cs-takeaway">
+            <span class="cs-takeaway__num">3</span>
+            <div class="cs-takeaway__text">
+              <strong>Hard blocks are a form of respect.</strong>
+              A warning that can be dismissed says: "we noticed something, but we trust you to decide." A hard block says: "this is not a suggestion." In a workflow where wrong decisions ship packages to the wrong address, the hard block was the right design. It's easy to mistake friction for bad UX. Sometimes friction is the product.
+            </div>
           </div>
         </div>
       </div>
@@ -248,13 +1109,13 @@
 
     <!-- ── Next project ── -->
     <div class="page-wrap">
-      <a href="case-study-styleflow.html" style="display: block; text-decoration: none; border-top: 0.5px solid var(--rule);">
-        <div class="next-project reveal">
+      <a href="case-study-styleflow.html" style="display: block; text-decoration: none;">
+        <div class="cs-next reveal">
           <div>
-            <p class="next-project__label">Next case study</p>
-            <p class="next-project__title">StyleFlow — Garment Visualization</p>
+            <p class="cs-next__label">Next case study</p>
+            <p class="cs-next__title">Styleflow — Garment Visualizer</p>
           </div>
-          <span class="next-project__arrow">→</span>
+          <span class="cs-next__arrow">→</span>
         </div>
       </a>
     </div>
@@ -273,5 +1134,44 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    // Scroll progress bar
+    const bar = document.getElementById('progress-bar');
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      bar.style.width = (scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0) + '%';
+    }, { passive: true });
+
+    // Sticky nav active section
+    const navLinks = document.querySelectorAll('.cs-nav-link');
+    const sectionIds = ['exec-summary','challenge','discovery','strategy','ia','ux-decisions','engineering','results','reflection'];
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sectionIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el && window.scrollY >= el.offsetTop - 120) current = id;
+      });
+      navLinks.forEach(link => link.classList.toggle('active', link.dataset.target === current));
+    }, { passive: true });
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        const target = document.getElementById(link.dataset.target);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
 </body>
 </html>
