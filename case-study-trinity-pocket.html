@@ -231,6 +231,14 @@
     </div>
   </div>
 
+  <!-- ── Kickoff board overview ── -->
+  <div class="page-wrap" style="margin-top: 40px; margin-bottom: 0;">
+    <div class="reveal">
+      <img src="./assets/skiffle-kickoff-board.png" alt="Full Skiffle kickoff FigJam board showing research, personas, flows, and planning" style="width:100%; border-radius: 12px; border: 0.5px solid var(--rule); background: #f5f5f5;" loading="lazy" />
+      <p style="font-size:12px; color:var(--ghost); margin-top:10px; padding: 0 2px;">The kickoff FigJam board — personas, order hierarchy, screen flows, API gap analysis, and component library decisions, all in one canvas.</p>
+    </div>
+  </div>
+
   <!-- ── Background ── -->
   <section class="section">
     <div class="page-wrap">
@@ -254,6 +262,16 @@
 
       <div class="img-single reveal reveal-delay-3" style="margin-top: 32px;">
         <img class="screen-overview" src="./assets/Old2.png" alt="Full overview of Skiffle app screens mapped against Trinity Dealer app — showing gaps across Home, Orders, Clients, Fabrics, Styleflow, Payments, and Library" />
+      </div>
+
+      <div class="img-single reveal" style="margin-top: 24px;">
+        <img src="./assets/tp-skiffle-old.png" alt="Skiffle 1.0 complete screen reference — all existing screens annotated and mapped against the Trinity dealer web app" style="width:100%; border-radius:12px; border:0.5px solid var(--rule); background:#0a0a0f; object-fit:contain;" loading="lazy" />
+        <p style="font-size:12px; color:var(--ghost); margin-top:10px;">Skiffle 1.0 in full — every screen documented during the audit. Each was classified: carry forward natively, bridge via WebView, omit entirely, or replace with a better mobile pattern.</p>
+      </div>
+
+      <div class="img-single reveal" style="margin-top: 24px;">
+        <img src="./assets/skiffle-kickoff-node.png" alt="Kickoff FigJam board — screen specifications, user stories, and flow mapping from the project kickoff session" style="width:100%; border-radius:12px; border:0.5px solid var(--rule); background:#f9f8f6; object-fit:contain;" loading="lazy" />
+        <p style="font-size:12px; color:var(--ghost); margin-top:10px;">Kickoff board detail — screen specs, user stories, and flow decisions mapped during the initial planning session with the team.</p>
       </div>
     </div>
   </section>
@@ -290,6 +308,18 @@
       <div class="adr-callout reveal reveal-delay-2">
         <p class="adr-callout__label">Architecture Decision Record · ADR 0003</p>
         <p class="adr-callout__text">"Trinity Pocket is a field tool — dealers use it to manage relationships, present fabrics, and track orders. Order creation stays on desktop where dealers have the full configuration interface they need to get it right."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Research: personas ── -->
+  <section class="section">
+    <div class="page-wrap">
+      <p class="section__label">Research &amp; personas</p>
+      <p class="body-text reveal">Understanding who actually uses the app — and how their workflows differ — shaped every navigation and scope decision. Three distinct personas emerged: the field rep managing clients on-the-go, the senior dealer who lives in orders and rankings, and the relationship-led rep who uses Styleflow as a sales presentation tool.</p>
+      <div class="img-single reveal reveal-delay-1" style="margin-top: 20px;">
+        <img src="./assets/tp-personas.png" alt="User personas from the Skiffle kickoff FigJam — field rep, senior dealer, and relationship-led rep" style="width:100%; border-radius:12px; border:0.5px solid var(--rule); background:#f9f8f6; object-fit:contain;" loading="lazy" />
+        <p style="font-size:12px; color:var(--ghost); margin-top:10px;">User personas defined during the kickoff session. Each persona surfaces different priority screens and informs where in the sprint sequence each feature belongs.</p>
       </div>
     </div>
   </section>
@@ -344,6 +374,30 @@
     </div>
   </section>
 
+  <!-- ── Design process visuals ── -->
+  <section class="section">
+    <div class="page-wrap">
+      <p class="section__label">Design process</p>
+      <p class="body-text reveal">The kickoff board was a live working document — not a presentation deck. Every screen decision was made against real flow diagrams and real API availability, not against hypothetical requirements.</p>
+
+      <div class="critique-pair reveal reveal-delay-1" style="margin-top: 24px;">
+        <div>
+          <img src="./assets/tp-dashboard-concept.png" alt="New dashboard concept from FigJam — dealer rank, order pulse, bulletins, and quick actions" style="width:100%; border-radius:12px; border:0.5px solid var(--rule); background:#f9f8f6; object-fit:contain;" loading="lazy" />
+          <p style="font-size:12px; color:var(--ghost); margin-top:8px;">Dashboard concept — dealer rank pill, order pulse card, bulletin feed, and quick action row mapped before any wireframe was drawn.</p>
+        </div>
+        <div>
+          <img src="./assets/tp-orders-spec.png" alt="Orders tab specification — search, status tabs, and card layout defined in FigJam" style="width:100%; border-radius:12px; border:0.5px solid var(--rule); background:#f9f8f6; object-fit:contain;" loading="lazy" />
+          <p style="font-size:12px; color:var(--ghost); margin-top:8px;">Orders tab spec — search bar, status pill tabs, and 56px minimum row height locked before the Figma Make prototype was built.</p>
+        </div>
+      </div>
+
+      <div class="img-single reveal" style="margin-top: 24px;">
+        <img src="./assets/tp-orders-flow.png" alt="In-depth orders flow mapping from Latham's walkthrough — showing the full order lifecycle and screen transitions" style="width:100%; border-radius:12px; border:0.5px solid var(--rule); background:#f9f8f6; object-fit:contain;" loading="lazy" />
+        <p style="font-size:12px; color:var(--ghost); margin-top:10px;">Orders flow in depth — mapped from a walkthrough session with the team. This diagram drove the screen hierarchy in the Orders tab and clarified which states needed native treatment vs. a desktop deep-link.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ── The interface ── -->
   <section class="section">
     <div class="page-wrap">
@@ -367,6 +421,17 @@
       </div>
     </div>
   </section>
+
+  <!-- ── Prototype CTA ── -->
+  <div class="page-wrap" style="margin-bottom: 0;">
+    <div class="proto-cta reveal">
+      <div>
+        <p class="proto-cta__label">Interactive prototype</p>
+        <p class="proto-cta__title">Try the working Trinity Pocket prototype →</p>
+      </div>
+      <a href="https://www.figma.com/make/srD8fyfMiaRwkQwoHgkHFi/Trinity-Pocket?fullscreen=1" target="_blank" class="proto-cta__btn">Open prototype ↗</a>
+    </div>
+  </div>
 
   <!-- ── Outcomes ── -->
   <section class="section">
