@@ -11,6 +11,52 @@
     /* ── Smooth scroll ── */
     html { scroll-behavior: smooth; }
 
+    /* ── Hero background animation ── */
+    .hp-hero {
+      position: relative;
+      overflow: hidden;
+    }
+    .hp-hero::before,
+    .hp-hero::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    /* Soft accent orb — top right */
+    .hp-hero::before {
+      width: 600px;
+      height: 500px;
+      top: -160px;
+      right: -180px;
+      background: radial-gradient(ellipse, rgba(109, 93, 246, 0.07) 0%, transparent 70%);
+      animation: orb-drift-a 14s ease-in-out infinite alternate;
+    }
+    /* Soft success orb — bottom left */
+    .hp-hero::after {
+      width: 500px;
+      height: 400px;
+      bottom: -100px;
+      left: -120px;
+      background: radial-gradient(ellipse, rgba(74, 124, 89, 0.05) 0%, transparent 70%);
+      animation: orb-drift-b 18s ease-in-out infinite alternate;
+    }
+    @keyframes orb-drift-a {
+      0%   { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-40px, 30px) scale(1.08); }
+    }
+    @keyframes orb-drift-b {
+      0%   { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(30px, -20px) scale(1.05); }
+    }
+    .hp-hero .page-wrap { position: relative; z-index: 1; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hp-hero::before, .hp-hero::after { animation: none; }
+    }
+
     /* ── Reveal ── */
     .reveal {
       opacity: 0;
@@ -387,11 +433,11 @@
     }
     .hp-contact__link:hover { color: var(--ink); border-color: var(--stone); }
     .hp-contact__link--primary {
-      background: var(--ink);
-      color: var(--cream);
-      border-color: var(--ink);
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
     }
-    .hp-contact__link--primary:hover { background: #2e2e2b; color: var(--cream); border-color: #2e2e2b; }
+    .hp-contact__link--primary:hover { background: #5b4de0; color: #ffffff; border-color: #5b4de0; }
 
     /* ── Responsive ── */
     @media (max-width: 640px) {
@@ -436,7 +482,7 @@
           where the wrong design decision has real consequences.
         </p>
         <div class="hp-hero__actions hero-animate" style="transition-delay:0.2s;">
-          <a href="#work" class="btn btn--primary">See the work</a>
+          <a href="#work" class="btn btn--primary" style="background:var(--accent);border-color:var(--accent);">See the work</a>
           <a href="#contact" class="hp-hero__scroll">
             Get in touch
             <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
