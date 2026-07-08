@@ -580,6 +580,64 @@
       padding: 0 2px;
     }
 
+    /* ── Diagram section ── */
+    .cs-diagram-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 28px 0;
+    }
+    .cs-diagram-card {
+      background: var(--white);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .cs-diagram-card__header {
+      padding: 12px 16px;
+      border-bottom: 0.5px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cs-diagram-card__title {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink);
+    }
+    .cs-diagram-card__type {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ghost);
+    }
+    .cs-diagram-card__img {
+      width: 100%;
+      display: block;
+      border-radius: 0;
+      background: #f9f8f6;
+    }
+    .cs-diagram-full {
+      background: var(--white);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin: 12px 0;
+    }
+    .cs-diagram-full__header {
+      padding: 12px 16px;
+      border-bottom: 0.5px solid var(--rule);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cs-diagram-full__img {
+      width: 100%;
+      display: block;
+      border-radius: 0;
+      background: #f9f8f6;
+    }
+
     /* ── Suggested visual placeholder ── */
     .cs-visual-note {
       background: var(--dust);
@@ -708,6 +766,7 @@
       <a class="cs-nav-link" data-target="discovery">Discovery</a>
       <a class="cs-nav-link" data-target="strategy">Strategy</a>
       <a class="cs-nav-link" data-target="ia">Architecture</a>
+      <a class="cs-nav-link" data-target="diagrams">Diagrams</a>
       <a class="cs-nav-link" data-target="ux-decisions">Decisions</a>
       <a class="cs-nav-link" data-target="engineering">Engineering</a>
       <a class="cs-nav-link" data-target="results">Results</a>
@@ -855,6 +914,47 @@
         </div>
         <p class="cs-figure-caption reveal" style="margin-bottom: 24px;">Step 2 — Validate — is the critical gate. Address mismatch stops the flow here before anything else moves.</p>
         <p class="body-text reveal">Three input methods exist in the system, ordered by priority: USB scanner, camera, manual entry. The primary path is optimized for speed. The fallbacks ensure the workflow is never blocked by a dead scanner or a damaged barcode. The debug console lives at the bottom of every screen: collapsed by default, one tap to expand, showing live API responses and printer status.</p>
+      </div>
+    </section>
+
+    <!-- ── Process Diagrams ── -->
+    <section class="section" id="diagrams">
+      <div class="page-wrap">
+        <p class="section__label">Process diagrams</p>
+        <p class="body-text reveal">These diagrams map the system from three angles — the end-to-end workflow and address mismatch branch, the input fallback sequence between worker and system, and the data model underneath it all.</p>
+
+        <div class="cs-diagram-grid reveal">
+          <div class="cs-diagram-card">
+            <div class="cs-diagram-card__header">
+              <span class="cs-diagram-card__title">Core Workflow + Address Mismatch States</span>
+              <span class="cs-diagram-card__type">Flowchart · State</span>
+            </div>
+            <img class="cs-diagram-card__img" src="./assets/diagram-workflow.png" alt="Flowchart showing the core shipment workflow and address mismatch state machine" loading="lazy" />
+          </div>
+          <div class="cs-diagram-card">
+            <div class="cs-diagram-card__header">
+              <span class="cs-diagram-card__title">Input Fallback Sequence</span>
+              <span class="cs-diagram-card__type">Sequence</span>
+            </div>
+            <img class="cs-diagram-card__img" src="./assets/diagram-sequence.png" alt="Sequence diagram showing USB scanner, camera, and manual entry fallback chain" loading="lazy" />
+          </div>
+        </div>
+
+        <div class="cs-diagram-full reveal">
+          <div class="cs-diagram-full__header">
+            <span class="cs-diagram-card__title">Project Timeline</span>
+            <span class="cs-diagram-card__type">Gantt · Oct 2023 – Feb 2024</span>
+          </div>
+          <img class="cs-diagram-full__img" src="./assets/diagram-timeline.png" alt="Gantt chart showing project phases from discovery through warehouse rollout" loading="lazy" />
+        </div>
+
+        <div class="cs-diagram-full reveal">
+          <div class="cs-diagram-full__header">
+            <span class="cs-diagram-card__title">Data Model</span>
+            <span class="cs-diagram-card__type">ER Diagram</span>
+          </div>
+          <img class="cs-diagram-full__img" src="./assets/diagram-datamodel.png" alt="Entity relationship diagram showing Shipment, Garment, Dealer, Label, Printer, and Worker entities" loading="lazy" />
+        </div>
       </div>
     </section>
 
@@ -1145,7 +1245,7 @@
 
     // Sticky nav active section
     const navLinks = document.querySelectorAll('.cs-nav-link');
-    const sectionIds = ['exec-summary','challenge','discovery','strategy','ia','ux-decisions','engineering','results','reflection'];
+    const sectionIds = ['exec-summary','challenge','discovery','strategy','ia','diagrams','ux-decisions','engineering','results','reflection'];
     window.addEventListener('scroll', () => {
       let current = '';
       sectionIds.forEach(id => {
