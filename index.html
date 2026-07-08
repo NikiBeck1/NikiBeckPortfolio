@@ -3,22 +3,417 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Niki Beck — Senior UI/UX Designer</title>
-  <meta name="description" content="Senior UI/UX Designer and front-end developer specializing in B2B apps and consumer-facing web." />
+  <title>Niki Beck — Product Designer</title>
+  <meta name="description" content="Senior product designer who codes. 8+ years building B2B tools, mobile apps, and production interfaces at Trinity Apparel and Hamburger Creative." />
   <link rel="stylesheet" href="css/style.css" />
+  <style>
+
+    /* ── Smooth scroll ── */
+    html { scroll-behavior: smooth; }
+
+    /* ── Reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+
+    /* ════════════════════════════
+       HERO
+    ════════════════════════════ */
+    .hp-hero {
+      padding: 96px 0 80px;
+      border-bottom: 0.5px solid var(--rule);
+    }
+    .hp-hero__label {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hp-hero__label::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--stone);
+    }
+    .hp-hero__title {
+      font-family: var(--serif);
+      font-size: clamp(40px, 7vw, 68px);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 28px;
+      max-width: 700px;
+    }
+    .hp-hero__title em {
+      font-style: italic;
+      color: var(--muted);
+    }
+    .hp-hero__sub {
+      font-size: 16px;
+      color: var(--muted);
+      line-height: 1.75;
+      max-width: 480px;
+      margin-bottom: 40px;
+    }
+    .hp-hero__actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .hp-hero__scroll {
+      font-size: 13px;
+      color: var(--subtle);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.15s;
+    }
+    .hp-hero__scroll:hover { color: var(--ink); }
+    .hp-hero__scroll svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.5;
+    }
+
+    /* ════════════════════════════
+       INTRO
+    ════════════════════════════ */
+    .hp-intro {
+      padding: 72px 0;
+      border-bottom: 0.5px solid var(--rule);
+    }
+    .hp-intro__text {
+      font-family: var(--serif);
+      font-size: clamp(20px, 3vw, 26px);
+      line-height: 1.55;
+      letter-spacing: -0.015em;
+      color: var(--ink);
+      max-width: 660px;
+    }
+    .hp-intro__text em {
+      font-style: italic;
+      color: var(--muted);
+    }
+    .hp-intro__footer {
+      margin-top: 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .hp-intro__stat {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .hp-intro__stat-num {
+      font-family: var(--serif);
+      font-size: 22px;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .hp-intro__stat-label {
+      font-size: 11px;
+      color: var(--ghost);
+      letter-spacing: 0.04em;
+    }
+    .hp-intro__divider {
+      width: 1px;
+      height: 32px;
+      background: var(--rule);
+    }
+
+    /* ════════════════════════════
+       WORK — editorial
+    ════════════════════════════ */
+    .hp-work {
+      padding: 72px 0;
+      border-bottom: 0.5px solid var(--rule);
+    }
+    .hp-work__header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 56px;
+    }
+    .hp-work__more {
+      font-size: 13px;
+      color: var(--subtle);
+      transition: color 0.15s;
+      white-space: nowrap;
+    }
+    .hp-work__more:hover { color: var(--ink); }
+
+    .hp-case {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 0 32px;
+      padding: 40px 0;
+      border-top: 0.5px solid var(--rule);
+      text-decoration: none;
+      transition: opacity 0.15s;
+      cursor: pointer;
+    }
+    .hp-case:hover { opacity: 0.75; }
+    .hp-case__num {
+      font-family: var(--serif);
+      font-size: 15px;
+      color: var(--ghost);
+      padding-top: 6px;
+      letter-spacing: -0.01em;
+    }
+    .hp-case__body {}
+    .hp-case__eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 10px;
+    }
+    .hp-case__title {
+      font-family: var(--serif);
+      font-size: clamp(22px, 3.5vw, 30px);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+    .hp-case__hook {
+      font-family: var(--serif);
+      font-size: 16px;
+      font-style: italic;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 14px;
+      max-width: 560px;
+    }
+    .hp-case__desc {
+      font-size: 14px;
+      color: var(--subtle);
+      line-height: 1.7;
+      max-width: 560px;
+      margin-bottom: 16px;
+    }
+    .hp-case__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .hp-case__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .hp-case__arrow {
+      font-size: 18px;
+      color: var(--stone);
+      flex-shrink: 0;
+    }
+
+    /* 4th case study — compact ── */
+    .hp-case--compact {
+      padding: 24px 0;
+      align-items: center;
+    }
+    .hp-case--compact .hp-case__num { padding-top: 0; }
+    .hp-case--compact .hp-case__title {
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+    .hp-case--compact .hp-case__desc {
+      font-size: 13px;
+      margin-bottom: 0;
+    }
+    .hp-case--compact .hp-case__body {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* ════════════════════════════
+       PROCESS
+    ════════════════════════════ */
+    .hp-process {
+      padding: 72px 0;
+      border-bottom: 0.5px solid var(--rule);
+    }
+    .hp-process__intro {
+      max-width: 480px;
+      margin-bottom: 56px;
+    }
+    .hp-process__intro p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-top: 12px;
+    }
+    .hp-process__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--rule);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .hp-process__step {
+      background: var(--white);
+      padding: 24px;
+    }
+    .hp-process__step-num {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      margin-bottom: 12px;
+    }
+    .hp-process__step-title {
+      font-family: var(--serif);
+      font-size: 18px;
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+    .hp-process__step-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ════════════════════════════
+       PERSONALITY
+    ════════════════════════════ */
+    .hp-personality {
+      padding: 72px 0;
+      border-bottom: 0.5px solid var(--rule);
+    }
+    .hp-personality__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .hp-personality__text {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .hp-personality__text p + p { margin-top: 14px; }
+    .hp-personality__text strong { color: var(--ink); font-weight: 500; }
+    .hp-personality__facts {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--rule);
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .hp-personality__fact {
+      background: var(--white);
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .hp-personality__fact-icon {
+      font-size: 13px;
+      color: var(--stone);
+      padding-top: 1px;
+    }
+    .hp-personality__fact-text {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .hp-personality__fact-text strong { color: var(--ink); font-weight: 500; }
+
+    /* ════════════════════════════
+       CONTACT
+    ════════════════════════════ */
+    .hp-contact {
+      padding: 80px 0;
+      border-bottom: none;
+    }
+    .hp-contact__title {
+      font-family: var(--serif);
+      font-size: clamp(28px, 5vw, 44px);
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      color: var(--ink);
+      margin-bottom: 12px;
+      max-width: 480px;
+    }
+    .hp-contact__sub {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 400px;
+      margin-bottom: 36px;
+    }
+    .hp-contact__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .hp-contact__link {
+      font-size: 14px;
+      color: var(--subtle);
+      padding: 10px 18px;
+      border: 0.5px solid var(--rule);
+      border-radius: var(--radius);
+      transition: color 0.15s, border-color 0.15s;
+      background: var(--white);
+    }
+    .hp-contact__link:hover { color: var(--ink); border-color: var(--stone); }
+    .hp-contact__link--primary {
+      background: var(--ink);
+      color: var(--cream);
+      border-color: var(--ink);
+    }
+    .hp-contact__link--primary:hover { background: #2e2e2b; color: var(--cream); border-color: #2e2e2b; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .hp-process__grid { grid-template-columns: 1fr; }
+      .hp-personality__inner { grid-template-columns: 1fr; }
+      .hp-case { grid-template-columns: 32px 1fr; gap: 0 16px; }
+      .hp-case__num { font-size: 12px; }
+      .hp-work__header { flex-direction: column; gap: 4px; }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ── Nav ── -->
   <header class="site-nav">
     <div class="site-nav__inner">
       <a href="index.html" class="site-nav__logo">Niki Beck</a>
       <nav>
         <ul class="site-nav__links">
-          <li><a href="index.html#work">Work</a></li>
+          <li><a href="#work">Work</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="NikiBeck_Resume.pdf" target="_blank">Resume</a></li>
-          <li><a href="index.html#contact">Contact</a></li>
+          <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
     </div>
@@ -26,145 +421,258 @@
 
   <main>
 
-    <!-- ── Hero ── -->
-    <section class="section" style="padding-top: 80px; padding-bottom: 72px;">
+    <!-- ══════════════════════════════
+         HERO
+    ══════════════════════════════ -->
+    <section class="hp-hero">
       <div class="page-wrap">
-        <div class="hero-animate">
-          <p class="eyebrow">Senior UI/UX Designer · Birmingham, AL</p>
-          <h1 class="display" style="margin-bottom: 20px;">
-            Design that ships.<br><em>Code that holds.</em>
-          </h1>
-          <p class="subhead" style="margin-bottom: 32px;">
-            I design B2B and consumer-facing products — and build them too. 
-            8+ years across custom apps, design systems, and client websites.
-          </p>
-          <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px;">
-            <span class="pill">Figma &amp; design systems</span>
-            <span class="pill">React development</span>
-            <span class="pill">B2B apps</span>
-            <span class="pill">Warehouse &amp; ops UX</span>
-            <span class="pill">Consumer web</span>
+        <p class="hp-hero__label">Senior Product Designer · Birmingham, AL</p>
+        <h1 class="hp-hero__title hero-animate">
+          I design the parts of software<br>
+          <em>people depend on, not just use.</em>
+        </h1>
+        <p class="hp-hero__sub hero-animate" style="transition-delay:0.1s;">
+          8+ years building B2B tools, mobile apps, and production interfaces
+          where the wrong design decision has real consequences.
+        </p>
+        <div class="hp-hero__actions hero-animate" style="transition-delay:0.2s;">
+          <a href="#work" class="btn btn--primary">See the work</a>
+          <a href="#contact" class="hp-hero__scroll">
+            Get in touch
+            <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         INTRO
+    ══════════════════════════════ -->
+    <section class="hp-intro">
+      <div class="page-wrap">
+        <p class="hp-intro__text reveal">
+          I'm a designer who builds. Not "I know a little code" —
+          I write React components and ship production features.
+          That changes how I design: I think about what I'm asking
+          engineers to build <em>before</em> I finalize what I'm asking
+          users to use. My best work happens when the problem is
+          genuinely hard and the stakes are real.
+        </p>
+        <div class="hp-intro__footer reveal reveal-delay-1">
+          <div class="hp-intro__stat">
+            <span class="hp-intro__stat-num">8+</span>
+            <span class="hp-intro__stat-label">Years in product design</span>
           </div>
-          <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
-            <a href="index.html#work" class="btn btn--primary">View my work</a>
-            <a href="NikiBeck_Resume.pdf" target="_blank" class="btn btn--ghost">Download resume ↓</a>
+          <div class="hp-intro__divider"></div>
+          <div class="hp-intro__stat">
+            <span class="hp-intro__stat-num">3</span>
+            <span class="hp-intro__stat-label">Shipped production apps</span>
+          </div>
+          <div class="hp-intro__divider"></div>
+          <div class="hp-intro__stat">
+            <span class="hp-intro__stat-num">Full stack</span>
+            <span class="hp-intro__stat-label">Design + React build</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ── Work ── -->
-    <section class="section" id="work">
+    <!-- ══════════════════════════════
+         WORK
+    ══════════════════════════════ -->
+    <section class="hp-work" id="work">
       <div class="page-wrap">
-        <p class="section__label">Selected work</p>
 
-        <!-- Project 01 -->
-        <a href="case-study-trinity-pocket.html" class="work-item-row" style="display: block; text-decoration: none;">
-          <div class="reveal">
-            <div style="display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 16px; padding: 24px 0; border-top: 0.5px solid var(--rule); cursor: pointer; transition: opacity 0.15s;">
-              <div>
-                <p style="font-size: 11px; color: var(--ghost); margin-bottom: 6px;">01</p>
-                <p style="font-family: var(--serif); font-size: 22px; color: var(--ink); margin-bottom: 6px; letter-spacing: -0.01em;">Trinity Pocket</p>
-                <p style="font-size: 14px; color: var(--subtle); line-height: 1.6; max-width: 480px; margin-bottom: 10px;">Native B2B mobile app for apparel sales reps — designed and architected from scratch after a full audit of the existing third-party app it replaced.</p>
-                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-                  <span class="tag">Mobile architecture</span>
-                  <span class="tag">React Native</span>
-                  <span class="tag">B2B app</span>
-                  <span class="tag">Gap analysis</span>
-                </div>
+        <div class="hp-work__header reveal">
+          <p class="section__label" style="margin-bottom:0;">Selected work</p>
+          <a href="case-study-client-sites.html" class="hp-work__more">More work ↗</a>
+        </div>
+
+        <!-- Case 01 — Final Shipments -->
+        <a href="case-study-final-shipments.html" class="hp-case reveal">
+          <span class="hp-case__num">01</span>
+          <div class="hp-case__body">
+            <p class="hp-case__eyebrow">Ops UX · Tablet · React · Trinity Apparel</p>
+            <h2 class="hp-case__title">Final Shipments Manager</h2>
+            <p class="hp-case__hook">"Warehouse workers were shipping packages wrong. The interface let them."</p>
+            <p class="hp-case__desc">Redesigned a warehouse shipping UI for workers wearing gloves on mounted tablets. Reduced a shipment from 8+ taps to 2–3. Added address mismatch detection that hard-blocks bad shipments before they leave. Gave workers a debug console so they could self-diagnose errors instead of calling IT.</p>
+            <div class="hp-case__footer">
+              <div class="hp-case__tags">
+                <span class="tag">Touch-first</span>
+                <span class="tag">Hardware integration</span>
+                <span class="tag">Error prevention</span>
+                <span class="tag">React build</span>
               </div>
-              <div style="text-align: right; padding-top: 4px;">
-                <p style="font-size: 12px; color: var(--ghost); margin-bottom: 8px;">Trinity Apparel</p>
-                <span style="font-size: 20px; color: var(--stone);">↗</span>
-              </div>
+              <span class="hp-case__arrow">↗</span>
             </div>
           </div>
         </a>
 
-        <!-- Project 02 -->
-        <a href="case-study-final-shipments.html" class="work-item-row" style="display: block; text-decoration: none;">
-          <div class="reveal reveal-delay-1">
-            <div style="display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 16px; padding: 24px 0; border-top: 0.5px solid var(--rule); cursor: pointer; transition: opacity 0.15s;">
-              <div>
-                <p style="font-size: 11px; color: var(--ghost); margin-bottom: 6px;">02</p>
-                <p style="font-family: var(--serif); font-size: 22px; color: var(--ink); margin-bottom: 6px; letter-spacing: -0.01em;">Final Shipments Manager</p>
-                <p style="font-size: 14px; color: var(--subtle); line-height: 1.6; max-width: 480px; margin-bottom: 10px;">Touch-first warehouse UI for gloved hands and mounted tablets. 2-tap workflow, three barcode input methods, live console for self-service error recovery.</p>
-                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-                  <span class="tag">Ops UX</span>
-                  <span class="tag">Tablet-first</span>
-                  <span class="tag">Hardware integration</span>
-                  <span class="tag">React</span>
-                </div>
+        <!-- Case 02 — Trinity Pocket -->
+        <a href="case-study-trinity-pocket.html" class="hp-case reveal reveal-delay-1">
+          <span class="hp-case__num">02</span>
+          <div class="hp-case__body">
+            <p class="hp-case__eyebrow">Mobile · React Native · Product strategy · Trinity Apparel</p>
+            <h2 class="hp-case__title">Trinity Pocket</h2>
+            <p class="hp-case__hook">"An app so generic it could have been anyone's. Now it belongs to Trinity."</p>
+            <p class="hp-case__desc">Audited the existing third-party app screen by screen. Found 22 missing screens. Designed a native B2B mobile app from scratch — biometric login, Styleflow garment configurator, order tracking, client management — and sequenced five production sprints before a line of code was written.</p>
+            <div class="hp-case__footer">
+              <div class="hp-case__tags">
+                <span class="tag">Product strategy</span>
+                <span class="tag">Mobile architecture</span>
+                <span class="tag">9 ADRs</span>
+                <span class="tag">Expo React Native</span>
               </div>
-              <div style="text-align: right; padding-top: 4px;">
-                <p style="font-size: 12px; color: var(--ghost); margin-bottom: 8px;">Trinity Apparel</p>
-                <span style="font-size: 20px; color: var(--stone);">↗</span>
-              </div>
+              <span class="hp-case__arrow">↗</span>
             </div>
           </div>
         </a>
 
-        <!-- Project 03 -->
-        <a href="case-study-styleflow.html" class="work-item-row" style="display: block; text-decoration: none;">
-          <div class="reveal reveal-delay-2">
-            <div style="display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 16px; padding: 24px 0; border-top: 0.5px solid var(--rule); cursor: pointer; transition: opacity 0.15s;">
-              <div>
-                <p style="font-size: 11px; color: var(--ghost); margin-bottom: 6px;">03</p>
-                <p style="font-family: var(--serif); font-size: 22px; color: var(--ink); margin-bottom: 6px; letter-spacing: -0.01em;">Styleflow</p>
-                <p style="font-size: 14px; color: var(--subtle); line-height: 1.6; max-width: 480px; margin-bottom: 10px;">Styleflow is a garment visualizer that transforms the way users interact with fashion design, providing an intuitive and immersive experience.</p>
-                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-                  <span class="tag">Dashboard</span>
-                  <span class="tag">Information architecture</span>
-                  <span class="tag">Notification systems</span>
-                </div>
+        <!-- Case 03 — Styleflow -->
+        <a href="case-study-styleflow.html" class="hp-case reveal reveal-delay-2">
+          <span class="hp-case__num">03</span>
+          <div class="hp-case__body">
+            <p class="hp-case__eyebrow">Web app · Configurator · React · Trinity Apparel</p>
+            <h2 class="hp-case__title">Styleflow</h2>
+            <p class="hp-case__hook">"Dealers were choosing from thousands of fabrics using static PDFs. I gave them a live preview."</p>
+            <p class="hp-case__desc">Designed and built a garment visualizer inside Trinity's dealer portal. Dealers select a base garment, filter a fabric catalog, pick trims, and watch a Picario-rendered preview update in real time. The final configuration generates a production-ready order summary — structured data, not a description.</p>
+            <div class="hp-case__footer">
+              <div class="hp-case__tags">
+                <span class="tag">Configurator UX</span>
+                <span class="tag">IA</span>
+                <span class="tag">API-driven UI</span>
+                <span class="tag">React build</span>
               </div>
-              <div style="text-align: right; padding-top: 4px;">
-                <p style="font-size: 12px; color: var(--ghost); margin-bottom: 8px;">Trinity Apparel</p>
-                <span style="font-size: 20px; color: var(--stone);">↗</span>
-              </div>
+              <span class="hp-case__arrow">↗</span>
             </div>
           </div>
         </a>
 
-        <!-- Project 04 -->
-        <a href="case-study-client-sites.html" class="work-item-row" style="display: block; text-decoration: none;">
-          <div class="reveal reveal-delay-3">
-            <div style="display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 16px; padding: 24px 0; border-top: 0.5px solid var(--rule); cursor: pointer; transition: opacity 0.15s;">
-              <div>
-                <p style="font-size: 11px; color: var(--ghost); margin-bottom: 6px;">04</p>
-                <p style="font-family: var(--serif); font-size: 22px; color: var(--ink); margin-bottom: 6px; letter-spacing: -0.01em;">Client work — Hamburger Creative</p>
-                <p style="font-size: 14px; color: var(--subtle); line-height: 1.6; max-width: 480px; margin-bottom: 10px;">Five responsive websites across four years as a solo designer-developer. Brand identity, CMS, React builds, and front-end code delivered across different industries.</p>
-                <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-                  <span class="tag">Consumer web</span>
-                  <span class="tag">Brand identity</span>
-                  <span class="tag">React + JS</span>
-                  <span class="tag">WordPress</span>
-                </div>
-              </div>
-              <div style="text-align: right; padding-top: 4px;">
-                <p style="font-size: 12px; color: var(--ghost); margin-bottom: 8px;">Hamburger Creative</p>
-                <span style="font-size: 20px; color: var(--stone);">↗</span>
-              </div>
+        <!-- Case 04 — Client sites, compact -->
+        <a href="case-study-client-sites.html" class="hp-case hp-case--compact reveal reveal-delay-3">
+          <span class="hp-case__num">04</span>
+          <div class="hp-case__body">
+            <div>
+              <h2 class="hp-case__title">Client Work — Hamburger Creative</h2>
+              <p class="hp-case__desc">Five responsive websites across four years. Brand identity, CMS, React builds, and front-end code delivered as a solo designer-developer.</p>
             </div>
+            <span class="hp-case__arrow">↗</span>
           </div>
         </a>
 
-        <!-- closing border on last item -->
         <div style="border-top: 0.5px solid var(--rule);"></div>
 
       </div>
     </section>
 
-    <!-- ── Contact ── -->
-    <section class="section" id="contact" style="border-bottom: none;">
+    <!-- ══════════════════════════════
+         HOW I WORK
+    ══════════════════════════════ -->
+    <section class="hp-process" id="process">
       <div class="page-wrap">
-        <div class="reveal" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 32px; flex-wrap: wrap;">
-          <h2 class="headline" style="max-width: 340px;">Let's talk about your next product.</h2>
-          <div style="display: flex; flex-direction: column; gap: 10px; align-items: flex-end; padding-top: 4px;">
-            <a href="mailto:niki@wearehamburger.com" style="font-size: 14px; color: var(--subtle); transition: color 0.15s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--subtle)'">niki@wearehamburger.com</a>
-            <a href="https://www.linkedin.com/in/niki-beck-49bb80b8/" target="_blank" style="font-size: 14px; color: var(--subtle); transition: color 0.15s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--subtle)'">LinkedIn ↗</a>
-            <a href="https://github.com/Nikibeck1" target="_blank" style="font-size: 14px; color: var(--subtle); transition: color 0.15s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--subtle)'">GitHub ↗</a>
-            <a href="NikiBeck_Resume.pdf" target="_blank" style="font-size: 14px; color: var(--subtle); transition: color 0.15s;" onmouseover="this.style.color='var(--ink)'" onmouseout="this.style.color='var(--subtle)'">Download resume ↓</a>
+
+        <div class="hp-process__intro reveal">
+          <p class="section__label">How I work</p>
+          <p>I follow a loop, not a waterfall. Every project starts with understanding the actual problem and ends with evidence about whether the solution worked — then starts again.</p>
+        </div>
+
+        <div class="hp-process__grid reveal reveal-delay-1">
+
+          <div class="hp-process__step">
+            <p class="hp-process__step-num">01 · Understand</p>
+            <p class="hp-process__step-title">Read the room — and the codebase.</p>
+            <p class="hp-process__step-desc">Talk to the people who do the job. Map the constraints before opening Figma. The best design decisions come from understanding what's actually hard, not what looks like a problem from the outside.</p>
+          </div>
+
+          <div class="hp-process__step">
+            <p class="hp-process__step-num">02 · Simplify</p>
+            <p class="hp-process__step-title">Cut until what's left is essential.</p>
+            <p class="hp-process__step-desc">The first wireframe should answer: what's the smallest version of this that's worth building? Scope that can't be defended against a user need gets removed. Complexity hidden in the UI has a way of reappearing in the code.</p>
+          </div>
+
+          <div class="hp-process__step">
+            <p class="hp-process__step-num">03 · Prototype</p>
+            <p class="hp-process__step-title">Build something clickable before writing the spec.</p>
+            <p class="hp-process__step-desc">A prototype surfaces every assumption the brief made. I prefer interactive over static — the right thing to argue about is how it feels, not how it looks in a mockup.</p>
+          </div>
+
+          <div class="hp-process__step">
+            <p class="hp-process__step-num">04 · Build</p>
+            <p class="hp-process__step-title">I write the front-end. Not redlines.</p>
+            <p class="hp-process__step-desc">React components, production CSS, real edge cases. Working alongside engineers rather than handing off to them means the design survives contact with the real codebase.</p>
+          </div>
+
+          <div class="hp-process__step">
+            <p class="hp-process__step-num">05 · Validate</p>
+            <p class="hp-process__step-title">Ship, then watch.</p>
+            <p class="hp-process__step-desc">I want to see users who depend on the thing every day. Not a usability test — real usage. The edge cases the prototype missed always appear in the first week.</p>
+          </div>
+
+          <div class="hp-process__step">
+            <p class="hp-process__step-num">06 · Iterate</p>
+            <p class="hp-process__step-title">The first version is a hypothesis.</p>
+            <p class="hp-process__step-desc">Everything after launch is evidence. The goal isn't to be right the first time — it's to be right quickly, and to build systems flexible enough to absorb what you learn.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         PERSONALITY
+    ══════════════════════════════ -->
+    <section class="hp-personality" id="about">
+      <div class="page-wrap">
+        <p class="section__label reveal">Outside the work</p>
+        <div class="hp-personality__inner">
+
+          <div class="hp-personality__text reveal">
+            <p>I'm based in <strong>Birmingham, AL</strong>, where I've spent 8+ years building products for Trinity Apparel and brand sites for clients across the country through Hamburger Creative.</p>
+            <p>I got into design through photography — learning that a single decision about framing changes everything. The same logic applies to interface design. The constraint isn't the enemy; it's the thing that makes the work interesting.</p>
+            <p>I'm at the point in my career where I want to work on <strong>harder problems with stronger teams</strong>. I ask good questions, I read the codebase before I open Figma, and I'm comfortable disagreeing — respectfully — when I think a direction is wrong.</p>
+          </div>
+
+          <div class="hp-personality__facts reveal reveal-delay-1">
+            <div class="hp-personality__fact">
+              <span class="hp-personality__fact-icon">→</span>
+              <p class="hp-personality__fact-text"><strong>Designer + developer</strong> — I write production React. Not a portfolio skill; it's how I think about design problems.</p>
+            </div>
+            <div class="hp-personality__fact">
+              <span class="hp-personality__fact-icon">→</span>
+              <p class="hp-personality__fact-text"><strong>8 years at one company</strong> — deep domain knowledge, complex stakeholder navigation, and real shipped product experience.</p>
+            </div>
+            <div class="hp-personality__fact">
+              <span class="hp-personality__fact-icon">→</span>
+              <p class="hp-personality__fact-text"><strong>Started with photography</strong> — constraint-based thinking before product design had a name for it.</p>
+            </div>
+            <div class="hp-personality__fact">
+              <span class="hp-personality__fact-icon">→</span>
+              <p class="hp-personality__fact-text"><strong>Comfortable in the details</strong> — I read API responses before wireframing. I write the component, not the spec for someone else's component.</p>
+            </div>
+            <div class="hp-personality__fact">
+              <span class="hp-personality__fact-icon">→</span>
+              <p class="hp-personality__fact-text"><strong>Looking for harder problems</strong> — teams moving fast, stakes that matter, and room to own the work end-to-end.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════
+         CONTACT
+    ══════════════════════════════ -->
+    <section class="hp-contact" id="contact">
+      <div class="page-wrap">
+        <div class="reveal">
+          <p class="section__label">Get in touch</p>
+          <h2 class="hp-contact__title">Let's work on something worth building.</h2>
+          <p class="hp-contact__sub">I'm open to senior IC roles, contract work, and interesting conversations. If you're building something hard and want a designer who can hold their own in a PR review, let's talk.</p>
+          <div class="hp-contact__links">
+            <a href="mailto:niki@wearehamburger.com" class="hp-contact__link hp-contact__link--primary">niki@wearehamburger.com</a>
+            <a href="https://www.linkedin.com/in/niki-beck-49bb80b8/" target="_blank" class="hp-contact__link">LinkedIn ↗</a>
+            <a href="https://github.com/Nikibeck1" target="_blank" class="hp-contact__link">GitHub ↗</a>
+            <a href="NikiBeck_Resume.pdf" target="_blank" class="hp-contact__link">Resume ↓</a>
           </div>
         </div>
       </div>
@@ -176,7 +684,7 @@
     <span class="site-footer__copy">© 2026 Niki Beck</span>
     <nav>
       <ul class="site-footer__links">
-        <li><a href="index.html#work">Work</a></li>
+        <li><a href="#work">Work</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="mailto:niki@wearehamburger.com">Contact</a></li>
       </ul>
@@ -184,5 +692,28 @@
   </footer>
 
   <script src="js/main.js"></script>
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.07 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Hero animate
+    document.querySelectorAll('.hero-animate').forEach((el, i) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = `opacity 0.7s ease ${i * 0.1}s, transform 0.7s ease ${i * 0.1}s`;
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      }));
+    });
+  </script>
 </body>
 </html>
