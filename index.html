@@ -233,7 +233,11 @@
     .hp-case__num {
       font-family: var(--serif);
       font-size: 15px;
-      color: var(--ghost);
+      background: var(--gradient-hero);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
       padding-top: 6px;
       letter-spacing: -0.01em;
     }
@@ -283,7 +287,7 @@
     }
     .hp-case__arrow {
       font-size: 18px;
-      color: var(--stone);
+      color: var(--coral-lt);
       flex-shrink: 0;
     }
 
@@ -647,7 +651,7 @@
             <p class="hp-case__desc">Redesigned a warehouse shipping UI for workers wearing gloves on mounted tablets. Reduced a shipment from 8+ taps to 2–3. Added address mismatch detection that hard-blocks bad shipments before they leave. Gave workers a debug console so they could self-diagnose errors instead of calling IT.</p>
             <div class="hp-case__footer">
               <div class="hp-case__tags">
-                <span class="tag">Touch-first</span>
+                <span class="tag tag--coral">Touch-first</span>
                 <span class="tag">Hardware integration</span>
                 <span class="tag">Error prevention</span>
                 <span class="tag">React build</span>
@@ -667,7 +671,7 @@
             <p class="hp-case__desc">Audited the existing third-party app screen by screen. Found 22 missing screens. Designed a native B2B mobile app from scratch — biometric login, Styleflow garment configurator, order tracking, client management — and sequenced five production sprints before a line of code was written.</p>
             <div class="hp-case__footer">
               <div class="hp-case__tags">
-                <span class="tag">Product strategy</span>
+                <span class="tag tag--coral">Product strategy</span>
                 <span class="tag">Mobile architecture</span>
                 <span class="tag">9 ADRs</span>
                 <span class="tag">Expo React Native</span>
@@ -687,7 +691,7 @@
             <p class="hp-case__desc">Designed and built a garment visualizer inside Trinity's dealer portal. Dealers select a base garment, filter a fabric catalog, pick trims, and watch a Picario-rendered preview update in real time. The final configuration generates a production-ready order summary — structured data, not a description.</p>
             <div class="hp-case__footer">
               <div class="hp-case__tags">
-                <span class="tag">Configurator UX</span>
+                <span class="tag tag--coral">Configurator UX</span>
                 <span class="tag">IA</span>
                 <span class="tag">API-driven UI</span>
                 <span class="tag">React build</span>

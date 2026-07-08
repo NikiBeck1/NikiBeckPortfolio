@@ -307,7 +307,11 @@
     .cs-decision__num {
       font-family: var(--serif);
       font-size: 28px;
-      color: var(--ghost);
+      background: var(--gradient-hero);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
       letter-spacing: -0.02em;
       padding: 0 24px;
       padding-top: 2px;
@@ -952,7 +956,7 @@
               <p class="cs-decision__context">The pushback: it looked oversized on the mockup. Engineers asked if it was intentional.</p>
               <p class="cs-decision__rationale">Gloved fingers are imprecise. The cost of a mis-tap in a shipping workflow isn't a wrong selection you undo — it's a package that leaves the building with the wrong label. Table rows are 80px tall. Every tappable element is deliberately oversized. The visual weight is the point.</p>
               <div class="cs-decision__tags">
-                <span class="tag">Touch-first</span>
+                <span class="tag tag--coral">Touch-first</span>
                 <span class="tag">Error prevention</span>
                 <span class="tag">Physical constraints</span>
               </div>
@@ -966,7 +970,7 @@
               <p class="cs-decision__context">The previous system: four clicks into settings, four clicks back. Workers did this dozens of times per hour across four carriers.</p>
               <p class="cs-decision__rationale">I mapped task frequency against interface depth and found the worst possible combination: the most frequent action buried at the deepest level. Moving printer selection to a persistent dropdown on the main view eliminated an entire category of delay — not by making the action faster, but by removing the navigation that surrounded it.</p>
               <div class="cs-decision__tags">
-                <span class="tag">Frequency mapping</span>
+                <span class="tag tag--coral">Frequency mapping</span>
                 <span class="tag">Workflow efficiency</span>
               </div>
             </div>
@@ -979,7 +983,7 @@
               <p class="cs-decision__context">The original interface had one input method. If the scanner failed, the shift stopped.</p>
               <p class="cs-decision__rationale">USB scanner is the primary path — fastest, most reliable. Camera if it fails. Manual entry if the barcode is damaged. Workers don't make this choice consciously. The fallback is just there. Resilience design in a warehouse means the workflow degrades gracefully instead of stopping.</p>
               <div class="cs-decision__tags">
-                <span class="tag">Resilience</span>
+                <span class="tag tag--coral">Resilience</span>
                 <span class="tag">Error recovery</span>
                 <span class="tag">System design</span>
               </div>
@@ -993,7 +997,7 @@
               <p class="cs-decision__context">Stakeholder objection: "Workers don't need to see API responses. It'll confuse them."</p>
               <p class="cs-decision__rationale">The console isn't for debugging — it's for autonomy. When a scan doesn't register or a print job fails, workers tap the console and see exactly what happened. They can describe it. Often they can fix it. The console is hidden by default because it's never needed when things work. It's there when they don't. This became the most-praised feature post-launch.</p>
               <div class="cs-decision__tags">
-                <span class="tag">Transparency</span>
+                <span class="tag tag--coral">Transparency</span>
                 <span class="tag">Progressive disclosure</span>
                 <span class="tag">Worker autonomy</span>
               </div>

@@ -266,7 +266,11 @@
     .cs-decision__num {
       font-family: var(--serif);
       font-size: 28px;
-      color: var(--ghost);
+      background: var(--gradient-hero);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
       letter-spacing: -0.02em;
       padding: 0 24px;
       padding-top: 2px;
@@ -621,7 +625,7 @@
               <p class="cs-decision__context">The obvious alternative: show all fabrics and let dealers search. Simple to build, familiar pattern.</p>
               <p class="cs-decision__rationale">The catalog is too large for search to feel manageable. Presenting thousands of options and asking dealers to filter down produces a different cognitive experience than presenting a small, filtered set and letting them expand. High-signal filters — material family, weight, use case — reduce the visible option set to something that feels curated rather than overwhelming. Dealers feel like they're finding the right fabric, not eliminating wrong ones.</p>
               <div class="cs-decision__tags">
-                <span class="tag">Information architecture</span>
+                <span class="tag tag--coral">Information architecture</span>
                 <span class="tag">Catalog UX</span>
                 <span class="tag">Option overload</span>
               </div>
@@ -635,7 +639,7 @@
               <p class="cs-decision__context">The alternative: show a preview at the end, after all selections are made.</p>
               <p class="cs-decision__rationale">End-of-flow confirmation is a test. Live preview is exploration. When the garment renders immediately and updates with every trim selection, dealers explore combinations they wouldn't have thought to try. The preview changes the nature of the interaction from "filling out a form" to "building something." State persistence — selections survive navigation between steps — removes the anxiety of exploration. Trying a different lining doesn't mean starting over.</p>
               <div class="cs-decision__tags">
-                <span class="tag">Visual feedback</span>
+                <span class="tag tag--coral">Visual feedback</span>
                 <span class="tag">Interaction design</span>
                 <span class="tag">State management</span>
               </div>
@@ -649,7 +653,7 @@
               <p class="cs-decision__context">The easy path: build a fixed sequence of trim steps (lining → button → thread) and show all of them every time.</p>
               <p class="cs-decision__rationale">This breaks for topcoats (no button), casual shirts (different lining logic), and any future garment type the backend adds. The <code style="font-size:12px;font-family:monospace;background:var(--dust);padding:2px 5px;border-radius:4px;">relevantMaterials</code> array in the API response defines exactly which trim steps apply to the selected garment type. The interface reads that array and renders the right steps in order. Adding a new garment type to the backend requires zero front-end changes. That's the right relationship between a UI and an API.</p>
               <div class="cs-decision__tags">
-                <span class="tag">API-driven UI</span>
+                <span class="tag tag--coral">API-driven UI</span>
                 <span class="tag">System design</span>
                 <span class="tag">Scalability</span>
               </div>
@@ -663,7 +667,7 @@
               <p class="cs-decision__context">Many configurators show a "confirmation" screen that summarizes choices visually. That's for the dealer. Operations needs something different.</p>
               <p class="cs-decision__rationale">The Rack that Styleflow saves isn't a pretty summary — it's a structured record containing every selected ID: fabric, lining, button, thread, zipper, ribknit, base model, garment type. That data maps directly to the fields that production needs to fulfill the order. There's no translation step, no interpretation, no "what did they mean by this?" Every ambiguity in the old email workflow is eliminated because the output is structured data, not a description of what the dealer chose.</p>
               <div class="cs-decision__tags">
-                <span class="tag">System design</span>
+                <span class="tag tag--coral">System design</span>
                 <span class="tag">Error prevention</span>
                 <span class="tag">Production handoff</span>
               </div>
