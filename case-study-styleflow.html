@@ -88,8 +88,9 @@
       position: sticky;
       top: 61px;
       z-index: 50;
-      background: var(--cream);
-      border-bottom: 0.5px solid var(--rule);
+      background: linear-gradient(105deg, rgba(216, 90, 48, 0.12) 0%, rgba(144, 101, 234, 0.09) 100%), var(--white);
+      border-bottom: 0.5px solid rgba(216, 90, 48, 0.28);
+      box-shadow: 0 6px 28px rgba(0, 0, 0, 0.45);
       overflow-x: auto;
       scrollbar-width: none;
     }
@@ -102,7 +103,7 @@
     }
     .cs-nav-link {
       font-size: 12px;
-      color: var(--ghost);
+      color: var(--subtle);
       padding: 13px 16px;
       white-space: nowrap;
       border-bottom: 2px solid transparent;
@@ -110,7 +111,7 @@
       cursor: pointer;
     }
     .cs-nav-link:hover { color: var(--ink); }
-    .cs-nav-link.active { color: var(--ink); border-bottom-color: var(--ink); }
+    .cs-nav-link.active { color: var(--coral-lt); border-bottom-color: var(--coral-lt); }
 
     /* ── Stats ── */
     .cs-stat-row {
