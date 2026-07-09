@@ -21,7 +21,7 @@
   }
 
   /* Restore saved theme immediately */
-  const saved = localStorage.getItem(KEY) || 'void';
+  const saved = localStorage.getItem(KEY) || 'mist';
   if (saved !== 'void') document.body.classList.add('theme-' + saved);
 
   document.addEventListener('DOMContentLoaded', () => {
