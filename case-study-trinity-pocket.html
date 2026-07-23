@@ -7,18 +7,18 @@
   <meta name="description" content="Designing and building Trinity Pocket: a native B2B mobile app for apparel sales reps, built from a full audit of an existing competitor app." />
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    /* ── Violet brand token ── */
+    /* ── Trinity brand token ── */
     :root {
-      --violet:     #7C3AED;
-      --violet-lt:  #f5f0ff;
-      --violet-mid: #ede9fe;
+      --tp-accent:     #4F8FEB;
+      --tp-accent-lt:  #EDF3FD;
+      --tp-accent-mid: #95BCF3;
     }
 
     /* ── Hero accent bar ── */
     .tp-hero-bar {
       width: 40px;
       height: 3px;
-      background: var(--violet);
+      background: var(--tp-accent);
       border-radius: 2px;
       margin-bottom: 20px;
     }
@@ -43,7 +43,7 @@
       color: var(--ghost);
     }
     .before-after__label--new {
-      color: var(--violet);
+      color: var(--tp-accent);
     }
     .before-after__img {
       width: 100%;
@@ -52,9 +52,9 @@
       background: #f8f8f8;
       object-fit: contain;
     }
-    /* Subtle violet glow on the "after" image */
+    /* Subtle sky-blue glow on the "after" image */
     .before-after__cell--new .before-after__img {
-      box-shadow: 0 0 0 2px var(--violet-mid);
+      box-shadow: 0 0 0 2px var(--tp-accent-mid);
     }
 
     /* ── Annotated critique images ── */
@@ -100,15 +100,15 @@
       background: transparent;
     }
     .scope-badge--active {
-      border-color: var(--violet);
-      color: var(--violet);
-      background: var(--violet-lt);
+      border-color: var(--tp-accent);
+      color: var(--tp-accent);
+      background: var(--tp-accent-lt);
     }
 
-    /* ── ADR callout — violet left border ── */
+    /* ── ADR callout — sky-blue left border ── */
     .adr-callout {
-      border-left: 3px solid var(--violet);
-      background: var(--violet-lt);
+      border-left: 3px solid var(--tp-accent);
+      background: var(--tp-accent-lt);
       border-radius: 0 8px 8px 0;
       padding: 16px 20px;
       margin-top: 20px;
@@ -118,48 +118,50 @@
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--violet);
+      color: var(--tp-accent);
       margin-bottom: 6px;
     }
     .adr-callout__text {
       font-family: 'DM Serif Display', Georgia, serif;
       font-style: italic;
       font-size: 15px;
-      color: #3b1a6e;
+      color: #1a2f57;
       line-height: 1.65;
       margin: 0;
     }
 
-    /* ── Outcome cards — first stat gets violet treatment ── */
+    /* ── Outcome cards — first stat gets accent treatment ── */
     .outcome-card:first-child .outcome-card__stat {
-      color: var(--violet);
+      background: none;
+      -webkit-text-fill-color: var(--tp-accent);
+      color: var(--tp-accent);
     }
 
-    /* ── Decision item numbers — violet ── */
+    /* ── Decision item numbers — accent ── */
     .decision-item__num {
-      color: var(--violet) !important;
+      color: var(--tp-accent) !important;
       font-weight: 700;
     }
 
     /* ── Section label accent dot ── */
-    .section__label--violet::before {
+    .section__label--tp-accent::before {
       content: '';
       display: inline-block;
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: var(--violet);
+      background: var(--tp-accent);
       margin-right: 8px;
       vertical-align: middle;
     }
 
-    /* ── Quote block override — violet left border ── */
-    .quote-block--violet {
-      border-left-color: var(--violet);
-      background: var(--violet-lt);
+    /* ── Quote block override — sky-blue left border ── */
+    .quote-block--tp-accent {
+      border-left-color: var(--tp-accent);
+      background: var(--tp-accent-lt);
     }
-    .quote-block--violet .quote-block__text {
-      color: #3b1a6e;
+    .quote-block--tp-accent .quote-block__text {
+      color: #1a2f57;
     }
 
     @media (max-width: 600px) {
@@ -402,7 +404,7 @@
   <section class="section">
     <div class="page-wrap">
       <p class="section__label">The interface</p>
-      <p class="body-text reveal">The production design uses violet <code style="font-size: 12px; font-family: monospace; background: #f1f5f9; padding: 2px 5px; border-radius: 4px;">#7C3AED</code> as the locked brand color — a deliberate break from the navy-and-grey world of Skiffle. Every interactive state, active tab, and CTA uses violet. The tab bar never disappears during normal browsing. Styleflow uses navy filter chips to feel visually distinct from the rest of the app — a creative tool, not a reference screen.</p>
+      <p class="body-text reveal">Early builds used a placeholder violet as a stand-in accent while the brand team finished Trinity's actual identity system. Once that landed, the interface was rebuilt against the real palette — Heritage Sky <code style="font-size: 12px; font-family: monospace; background: #f1f5f9; padding: 2px 5px; border-radius: 4px;">#4F8FEB</code> for every interactive state, active tab, and CTA, with Midnight Blue and Deep Navy carrying headers and text. It's a small thing on paper, but it's the difference between a prototype that looks like a demo and one a dealer mistakes for Trinity's own software. The tab bar never disappears during normal browsing, and Styleflow keeps a deeper navy chip treatment so it still reads as a distinct creative tool rather than a reference screen.</p>
 
       <div class="scope-strip reveal reveal-delay-1">
         <span class="scope-badge scope-badge--active">Expo React Native</span>
@@ -415,7 +417,7 @@
         <span class="scope-badge">Picario XPO</span>
       </div>
 
-      <div class="quote-block quote-block--violet reveal reveal-delay-2">
+      <div class="quote-block quote-block--tp-accent reveal reveal-delay-2">
         <p class="quote-block__text">"A field tool a sales rep is proud to open in front of a client."</p>
         <p class="quote-block__attr">Product brief — Trinity Pocket</p>
       </div>
@@ -435,6 +437,24 @@
         <p class="proto-cta__title">Try the working Trinity Pocket prototype →</p>
       </div>
       <a href="https://www.figma.com/make/srD8fyfMiaRwkQwoHgkHFi/Trinity-Pocket?fullscreen=1" target="_blank" class="proto-cta__btn">Open prototype ↗</a>
+    </div>
+
+    <div class="proto-cta reveal reveal-delay-1" style="margin-top: 16px;">
+      <div style="display: flex; align-items: center; gap: 20px;">
+        <img src="./assets/tp-expo-qr.png" alt="QR code to launch the Trinity Pocket Sprint 1 build in Expo Go" style="width: 84px; height: auto; border-radius: 10px; flex-shrink: 0;" />
+        <div>
+          <p class="proto-cta__label">Live build · Sprint 1 (auth) in progress</p>
+          <p class="proto-cta__title">Scan with Expo Go to run the real native build on your phone</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="proto-cta reveal reveal-delay-2" style="margin-top: 16px;">
+      <div>
+        <p class="proto-cta__label">Internal marketing one-pager</p>
+        <p class="proto-cta__title">How the rebuild was pitched to stakeholders →</p>
+      </div>
+      <a href="trinity-pocket-marketing.html" target="_blank" class="proto-cta__btn">View site ↗</a>
     </div>
   </div>
 
