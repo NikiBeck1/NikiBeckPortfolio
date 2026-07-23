@@ -168,6 +168,40 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* ── Working build screenshots ── */
+    .app-screens-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .app-screens-grid__cell {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .app-screens-grid__img {
+      width: 100%;
+      border-radius: 12px;
+      border: 0.5px solid var(--rule);
+      background: #0a0a0f;
+      object-fit: contain;
+    }
+    .app-screens-grid__label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ghost);
+      text-align: center;
+    }
+    @media (max-width: 900px) {
+      .app-screens-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .app-screens-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -312,6 +346,18 @@
     </div>
   </section>
 
+  <!-- ── Functional requirements board ── -->
+  <section class="section">
+    <div class="page-wrap">
+      <p class="section__label">From scope to functional requirements</p>
+      <p class="body-text reveal">Every native screen carried its scope decision into a numbered functional requirement — FR-1 through FR-29, plus a parallel set of fix tickets (FIX-1, FIX-2…) for behaviors Skiffle got wrong. Grouping the board by screen area kept Auth, Home, Orders, Clients, Fabrics, Search, the inclinometer, Tools, Push, Support, and Account each auditable on their own, instead of one flat backlog.</p>
+      <div class="img-single reveal reveal-delay-1" style="margin-top: 20px;">
+        <img src="./assets/tp-functional-requirements.png" alt="Functional requirements board from the Skiffle kickoff FigJam — screens grouped by area with FR and FIX ticket numbers for Auth, Home, Orders, Clients, Fabrics, Search, Inclinometer, Measurements, Tools, Push, Support, Account, and navigation" style="width:100%; border-radius:12px; border:0.5px solid var(--rule); background:#f9f8f6; object-fit:contain;" loading="lazy" />
+        <p style="font-size:12px; color:var(--ghost); margin-top:10px;">The full functional requirements grid — every screen area broken into individually numbered requirements and fix tickets, so each one could be scoped, estimated, and checked off independently during sprint planning.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ── Research: personas ── -->
   <section class="section">
     <div class="page-wrap">
@@ -333,7 +379,7 @@
         <div class="decision-item reveal">
           <p class="decision-item__num">01</p>
           <p class="decision-item__title">Five-tab nav — no more, no less</p>
-          <p class="decision-item__body">Skiffle had a fragmented navigation model that didn't reflect how reps actually work. I mapped dealer workflows to five intent-based tabs: Home, Orders, Tools, Clients, Fabrics. The Account screen lives behind a dealer avatar in the Home header — preserving the five-tab constraint while giving payments and profile a clear home.</p>
+          <p class="decision-item__body">Skiffle had a fragmented navigation model that didn't reflect how reps actually work. I mapped dealer workflows to five intent-based tabs: Home, Orders, Production, Clients, Settings — folding Fabrics, Styleflow, and the rest of the tools set into Production, and giving Account, payments, and preferences their own dedicated tab instead of hiding them behind an avatar.</p>
           <div class="decision-item__tags">
             <span class="tag">Information architecture</span>
             <span class="tag">Navigation design</span>
@@ -374,6 +420,18 @@
     </div>
   </section>
 
+  <!-- ── Backend scoping & sprint board ── -->
+  <section class="section">
+    <div class="page-wrap">
+      <p class="section__label">Backend scoping &amp; sprint execution</p>
+      <p class="body-text reveal">Styleflow's Custom Model Creation flow needed backend work Trinity's API didn't have yet — new endpoints for custom copy, mounting, and model visibility, plus a "quick win" fallback using existing dealer upload storage until the real ones shipped. Mapping the frontend flow (Home → Model Library → "Create My Model" → Confirmation) against exactly which backend pieces existed vs. needed to be built kept the Rack Builder sprint from stalling on an API that wasn't ready.</p>
+      <div class="img-single reveal reveal-delay-1" style="margin-top: 20px;">
+        <img src="./assets/tp-backend-sprint-board.png" alt="Skiffle kickoff FigJam board section — app screen flow diagram, Custom Model Creation backend requirements and frontend flow, API endpoint list, QA verification checklists, and the five-sprint execution timeline" style="width:100%; border-radius:12px; border:0.5px solid var(--rule); background:#f9f8f6; object-fit:contain;" loading="lazy" />
+        <p style="font-size:12px; color:var(--ghost); margin-top:10px;">The planning surface behind the scenes: the full app screen-flow diagram, Custom Model Creation's backend requirements and frontend flow side by side, the API endpoint inventory, QA verification checklists for auth and orders, and the five-sprint execution timeline that sequenced all of it.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- ── Design process visuals ── -->
   <section class="section">
     <div class="page-wrap">
@@ -387,7 +445,7 @@
         </div>
         <div>
           <img src="./assets/tp-orders-spec.png" alt="Orders tab specification — search, status tabs, and card layout defined in FigJam" style="width:100%; border-radius:12px; border:0.5px solid var(--rule); background:#f9f8f6; object-fit:contain;" loading="lazy" />
-          <p style="font-size:12px; color:var(--ghost); margin-top:8px;">Orders tab spec — search bar, status pill tabs, and 56px minimum row height locked before the Figma Make prototype was built.</p>
+          <p style="font-size:12px; color:var(--ghost); margin-top:8px;">Orders tab spec — search bar, status pill tabs, and 56px minimum row height locked before the production UI was built.</p>
         </div>
       </div>
 
@@ -422,27 +480,42 @@
 
       <div class="img-single reveal" style="margin-top: 32px;">
         <img src="./assets/tp-screen-spec.png" alt="Trinity Pocket prototype screens — Login, Dashboard, Orders, Fabrics, Clients, and Tools hub" style="width: 100%; border-radius: 12px; border: 0.5px solid var(--rule); display: block;" loading="lazy" />
-        <p style="font-size: 12px; color: var(--ghost); margin-top: 10px;">Six screens from the Figma Make prototype — Login, Dashboard with order pulse, Orders list with status tabs, Fabrics explorer, Clients directory, and the Tools hub with Styleflow as the featured creation tool.</p>
+        <p style="font-size: 12px; color: var(--ghost); margin-top: 10px;">Six core screens from the production UI spec — Login, Dashboard with order pulse, Orders list with status tabs, Fabrics explorer, Clients directory, and the Tools hub with Styleflow as the featured creation tool.</p>
       </div>
     </div>
   </section>
 
-  <!-- ── Prototype CTA ── -->
-  <div class="page-wrap" style="margin-bottom: 0;">
-    <div class="proto-cta reveal">
-      <div>
-        <p class="proto-cta__label">Interactive prototype</p>
-        <p class="proto-cta__title">Try the working Trinity Pocket prototype →</p>
+  <!-- ── The working build ── -->
+  <section class="section">
+    <div class="page-wrap">
+      <p class="section__label">The working build</p>
+      <p class="body-text reveal">Trinity Pocket now exists as a running Expo build, navigable end-to-end across all 27 screens against mocked data ahead of backend integration. A few screens from the current build:</p>
+      <div class="app-screens-grid reveal reveal-delay-1">
+        <div class="app-screens-grid__cell">
+          <img class="app-screens-grid__img" src="./assets/tp-app-login.png" alt="Trinity Pocket login screen — work email and password fields, Sign In button, Google and Apple SSO, and a demo returning-user link" loading="lazy" />
+          <p class="app-screens-grid__label">Login</p>
+        </div>
+        <div class="app-screens-grid__cell">
+          <img class="app-screens-grid__img" src="./assets/tp-app-orders.png" alt="Orders screen — searchable order list with a Presentation mode toggle, Open and Completed segmented tabs, and status pills including In Production, Fabric Hold, Delivered, Cutting, and Delayed" loading="lazy" />
+          <p class="app-screens-grid__label">Orders</p>
+        </div>
+        <div class="app-screens-grid__cell">
+          <img class="app-screens-grid__img" src="./assets/tp-app-clients.png" alt="Clients screen — searchable client list with company names and units month-to-date, and bottom navigation with Home, Orders, Production, Clients, and Settings" loading="lazy" />
+          <p class="app-screens-grid__label">Clients</p>
+        </div>
+        <div class="app-screens-grid__cell">
+          <img class="app-screens-grid__img" src="./assets/tp-app-rank-report.png" alt="Rank Report screen — current rank number 40 of 147, a rank-over-time bar chart, and insight cards for positive momentum, next rank target, and best order day" loading="lazy" />
+          <p class="app-screens-grid__label">Rank Report</p>
+        </div>
       </div>
-      <a href="https://www.figma.com/make/srD8fyfMiaRwkQwoHgkHFi/Trinity-Pocket?fullscreen=1" target="_blank" class="proto-cta__btn">Open prototype ↗</a>
     </div>
-  </div>
+  </section>
 
   <!-- ── Outcomes ── -->
   <section class="section">
     <div class="page-wrap">
       <p class="section__label">Outcomes</p>
-      <p class="body-text reveal">Trinity Pocket is currently in active development with Sprint 1 (authentication) in progress. The scope, tech stack, navigation architecture, and nine Architecture Decision Records are locked. The Figma Make prototype covers all twelve Sprint 2 screens and the full Styleflow configurator flow.</p>
+      <p class="body-text reveal">Trinity Pocket has moved from spec to a working build. All 27 screens are built and running end-to-end in Expo Router — Auth, Home, Orders with a 4-step New Order wizard, Clients, the AR-based Shoulder Slope measurement tool, Styleflow, Rankings, and Payments — currently against mocked data. The scope, tech stack, navigation architecture, and nine Architecture Decision Records are locked; the next milestone is wiring the build to Trinity's live backend in place of the mock data layer.</p>
       <div class="outcome-row reveal reveal-delay-1">
         <div class="outcome-card">
           <p class="outcome-card__stat">22</p>
@@ -453,8 +526,8 @@
           <p class="outcome-card__desc">Architecture decisions locked before a line of production code was written</p>
         </div>
         <div class="outcome-card">
-          <p class="outcome-card__stat">5 sprints</p>
-          <p class="outcome-card__desc">Sequenced from auth to full Rack Builder, scoped to a January 2027 launch</p>
+          <p class="outcome-card__stat">27</p>
+          <p class="outcome-card__desc">Screens built and running end-to-end in Expo Router, from Auth through Styleflow</p>
         </div>
       </div>
     </div>
@@ -476,7 +549,7 @@
         <div class="reflection-card">
           <p class="reflection-card__head">Next challenges</p>
           <ul class="reflection-card__list">
-            <li>Translating Figma Make prototype components to their NativeWind/rnr equivalents at scale</li>
+            <li>Wiring all 27 built screens to Trinity's live backend in place of mocked data</li>
             <li>Native Braintree integration vs. WebView bridge — a Sprint 3 team decision</li>
             <li>Validating the Styleflow configurator flow with real dealer feedback once TestFlight ships</li>
           </ul>
